@@ -2,11 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 export default function Navigation() {
   const path = usePathname();
-
   return (
     <nav>
       <ul>
