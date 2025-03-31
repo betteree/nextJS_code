@@ -1,3 +1,5 @@
+import NavBar from "@/components/navBar";
+
 export const metadata = {
   title: "About us",
 };
@@ -5,7 +7,7 @@ export const metadata = {
 export default function AboutUs() {
   return (
     <div>
-      <h1>About us!</h1>
+      <NavBar />
     </div>
   );
 }

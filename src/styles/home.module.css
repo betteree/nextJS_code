@@ -1,8 +1,50 @@
 .container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 25px;
-  max-width: 90%;
-  width: 100%;
-  margin: 0 auto;
+  display: flex;
+  flex-flow: column;
+  padding: 200px;
+  gap: 10px;
+
+  & h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  & span {
+    display: flex;
+    flex-flow: column;
+    color: gray;
+    font-size: 12px;
+
+    & input {
+      border: 0;
+      border-bottom: 1px solid gray;
+      padding-block: 3px;
+    }
+
+    & select {
+      border: 0;
+      border-bottom: 1px solid gray;
+      padding-block: 3px;
+    }
+  }
+
+  & .reset {
+    background-color: #fff;
+    width: 20%;
+    border: 2px solid gray;
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
+
+  & .apply {
+    background: black;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+  }
 }
