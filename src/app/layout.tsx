@@ -1,18 +1,23 @@
 import "../styles/global.css";
 import { Metadata } from "next";
+import NavBar from "@/components/navBar";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Next Movies",
-    default: "Next Movies",
+    template: "%s | page",
+    default: "Next page",
   },
-  description: "The best movies on the best framework",
+  description: "next practice",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <NavBar />
+
+        {children}
+      </body>
     </html>
   );
 }

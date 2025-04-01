@@ -1,0 +1,26 @@
+.container {
+  padding: 5px 10px;
+  display: flex;
+  flex-flow: column;
+  gap: 15px;
+
+  & h3 {
+    color: gray;
+    font-size: 14px;
+  }
+
+  & h1 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  & div {
+    display: flex;
+    justify-content: space-between;
+    & .chooseGame {
+      & span {
+        font-size: 14px;
+      }
+    }
+  }
+}

@@ -1,8 +1,15 @@
 .navContainer {
   background-color: black;
+  display: flex;
   width: 100%;
 
   & button {
     border: 0;
+    background: transparent;
+    color: gray;
+
+    &:focus {
+      color: white;
+    }
   }
 }
