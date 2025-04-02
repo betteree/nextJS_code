@@ -11,7 +11,8 @@ export default function CoachPlayer() {
     "최민수",
     "정하늘",
   ]);
-  const [draggedIndex, setDraggedIndex] = useState(null);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const handleDragStart = (index) => {
     setDraggedIndex(index);
