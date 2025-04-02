@@ -1,17 +1,107 @@
 .container {
   display: flex;
   flex-flow: column;
-  justify-content: center;
-  align-items: center;
   height: 100%;
+  gap: 20px;
+  padding: 20px;
 
   & h2 {
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 600;
-    text-align: start;
   }
 
-  & span {
-    font-size: ;
+  & section {
+    background-color: #fff;
+    display: flex;
+    flex-flow: column;
+    gap: 15px;
+    width: 50%;
+
+    & span {
+      display: flex;
+      flex-flow: column;
+      justify-content: start;
+      font-size: 15px;
+      color: silver;
+      gap: 5px;
+
+      & input {
+        border: 0;
+        border-bottom: 1px solid silver;
+      }
+
+      & select {
+        border: 0;
+        border-bottom: 1px solid silver;
+        color: gray;
+      }
+    }
+
+    & .gender {
+      font-size: 16px;
+      flex-flow: row;
+    }
+
+    & button {
+      border: 0;
+      color: white;
+      background-color: black;
+      border-radius: 5px;
+      padding-block: 5px;
+    }
+  }
+}
+
+/* 제목 밑 헤더 쪽 */
+.header {
+  display: flex;
+  gap: 100px;
+
+  & .contestList {
+    & h3 {
+      font-size: 16px;
+    }
+
+    & table {
+      background: snow;
+
+      border-radius: 5px;
+      & thead {
+        border-bottom: 2px solid silver;
+
+        & tr {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+
+          & th:first-child {
+            margin-right: 5px;
+            width: 30px;
+            border-right: 2px solid silver;
+          }
+        }
+      }
+
+      & tbody {
+        display: flex;
+        flex-flow: column;
+        margin-top: 10px;
+        height: 200px;
+        overflow-y: scroll;
+
+        & tr {
+          display: flex;
+          align-items: center;
+          line-height: 40px;
+
+          & td:first-child {
+            width: 30px;
+            text-align: center;
+            border-right: 2px solid silver;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
   }
 }

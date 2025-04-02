@@ -22,7 +22,7 @@ export default async function HomePage() {
           <label htmlFor="type">타입</label>
           <select name="type" id="type">
             <option value="admin">관리자</option>
-            <option value="judge">심판</option>
+            <option value="judge">지도자</option>
           </select>
         </span>
 

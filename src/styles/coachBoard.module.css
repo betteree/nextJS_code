@@ -1,0 +1,64 @@
+.container {
+  padding: 20px;
+}
+/* 승인 컴포넌트 */
+& .Approvecontainer {
+  padding-top: 100px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 20px;
+
+  & h2 {
+    font-size: 30px;
+    font-weight: 600;
+  }
+
+  & section {
+    background-color: #fff;
+    display: flex;
+    flex-flow: column;
+    gap: 15px;
+    width: 70%;
+
+    & span {
+      display: flex;
+      flex-flow: column;
+      justify-content: start;
+      font-size: 15px;
+      color: silver;
+      gap: 5px;
+
+      & input {
+        border: 0;
+        border-bottom: 1px solid silver;
+      }
+
+      & select {
+        border: 0;
+        border-bottom: 1px solid silver;
+        color: gray;
+      }
+    }
+
+    & .gender {
+      font-size: 16px;
+      flex-flow: row;
+    }
+
+    & button {
+      border: 0;
+      color: white;
+      background-color: black;
+      border-radius: 5px;
+      padding-block: 5px;
+    }
+  }
+}
+
+& .schoolSelect {
+  max-height: 100px;
+  overflow-y: scroll;
+}
