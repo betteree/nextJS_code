@@ -58,7 +58,29 @@
   }
 }
 
-& .schoolSelect {
-  max-height: 100px;
-  overflow-y: scroll;
+/* 선수 순서 컴포넌트 */
+& .playerContainer {
+  & .partContainer {
+    background-color: snow;
+  }
+
+  & .playerList {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    & ul {
+      padding: 20px;
+
+      & li {
+        background-color: salmon;
+        border-radius: 5px;
+        margin-block: 5px;
+        padding-block: 5px;
+
+        &:active {
+          background-color: red;
+        }
+      }
+    }
+  }
 }
