@@ -3,6 +3,7 @@
   flex-flow: column;
   padding: 200px;
   gap: 10px;
+  height: 100%;
 
   & h2 {
     font-size: 30px;
