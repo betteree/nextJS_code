@@ -1,4 +1,7 @@
+"use client";
+
 import styles from "@/styles/adminBoard.module.css";
+import { useState } from "react";
 
 export default function AdminPage() {
   const gymnasticsTournaments = [
@@ -13,7 +16,9 @@ export default function AdminPage() {
     "추계체조대회",
     "협회장배체조대회",
   ];
+  const [clickContest, SetClickContest] = useState("");
 
+  const handleContest = (item: string) => SetClickContest(item);
   return (
     <div className={styles.container}>
       <h2>관리자</h2>
@@ -61,7 +66,7 @@ export default function AdminPage() {
               {gymnasticsTournaments.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{item}</td>
+                  <td onClick={() => handleContest(item)}>{item}</td>
                 </tr>
               ))}
             </tbody>
@@ -72,6 +77,27 @@ export default function AdminPage() {
       <section className={styles.contestDetail}>
         <h3>대회 상세</h3>
       </section>
+
+      <table>
+        <thead>
+          <tr>
+            <th>대회명</th>
+            <th>대회날짜</th>
+            <th>장소</th>
+            <th>주관</th>
+            <th>성별</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{clickContest}</td>
+            <td>2025-04-10</td>
+            <td>서울</td>
+            <td>기관 A</td>
+            <td>남</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
