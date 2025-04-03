@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/styles/adminBoard.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function AdminPage() {
   const gymnasticsTournaments = [
@@ -18,6 +18,15 @@ export default function AdminPage() {
   ];
   const [clickContest, SetClickContest] = useState("");
 
+  const [admins, setAdmins] = useState([]);
+  const [table, setTable] = useState("competition");
+
+  useEffect(() => {
+    fetch(`/api/database?table=${table}`)
+      .then((res) => res.json())
+      .then((data) => setAdmins(data))
+      .catch((err) => console.error("Error fetching admins:", err));
+  }, []);
   const handleContest = (item: string) => SetClickContest(item);
   return (
     <div className={styles.container}>
@@ -89,13 +98,15 @@ export default function AdminPage() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{clickContest}</td>
-            <td>2025-04-10</td>
-            <td>서울</td>
-            <td>기관 A</td>
-            <td>남</td>
-          </tr>
+          {admins.map((item, index) => (
+            <tr key={index}>
+              <td>{item.title}</td>
+              <td>{item.date}</td>
+              <td>{item.location}</td>
+              <td>{item.organizer}</td>
+              <td>{item.gender}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
