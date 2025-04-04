@@ -4,11 +4,28 @@
   height: 100%;
   gap: 20px;
 
-  & h2 {
-    font-size: 30px;
-    font-weight: 400;
+  & nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 20px;
-    border-bottom: 1px solid gainsboro;
+    border-bottom: 2px solid lightgray;
+    & h2 {
+      font-size: 30px;
+      font-weight: 400;
+    }
+
+    & ul {
+      display: flex;
+      gap: 10px;
+
+      & button {
+        font-size: 16px;
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
+      }
+    }
   }
 
   & .contestDetail {

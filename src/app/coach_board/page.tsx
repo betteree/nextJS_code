@@ -1,7 +1,8 @@
 import styles from "@/styles/coachBoard.module.css";
-import Approve from "@/components/approve";
+import Approve from "@/components/coach/approve";
 
-import CoachPlayer from "@/components/coachPlayer";
+import CoachPlayer from "@/components/coach/coachPlayer";
+
 export default function Contest() {
   return (
     <div className={styles.container}>

@@ -1,5 +1,7 @@
 .container {
   padding: 20px;
+  background-color: #f0f4f8;
+  height: 100%;
 }
 /* 승인 컴포넌트 */
 & .Approvecontainer {
@@ -60,29 +62,91 @@
 
 /* 선수 순서 컴포넌트 */
 & .playerContainer {
+  & header {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid whitesmoke;
+
+    & h2 {
+      margin-bottom: 10px;
+    }
+
+    & input {
+      border: 0;
+      border-bottom: 1px solid gray;
+      margin-inline: 10px;
+      font-size: 18px;
+    }
+
+    & button {
+      border: 0;
+      background: green;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+
+    & .randomButton {
+      background: lightcoral;
+      margin: 10px;
+    }
+  }
+
+  & p {
+    margin-block: 10px;
+    color: lightgray;
+  }
+
   & .partContainer {
     background-color: snow;
+    width: 100%;
+    border: 2px solid gainsboro;
+    border-radius: 10px;
+
+    & h3 {
+      background: whitesmoke;
+      padding: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      text-align: center;
+      color: gray;
+    }
   }
 
   & .playerList {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     width: 100%;
-    justify-content: space-around;
+    gap: 20px;
+
     & ul {
       padding: 20px;
 
       & li {
-        background-color: salmon;
-        border-radius: 5px;
-        margin-block: 5px;
+        text-align: center;
+        background-color: lightgrey;
+        border: 1px solid gray;
+        margin-block: 2px;
         padding-block: 5px;
         cursor: grab;
         transition: transform 0.3s ease-in-out;
 
-        &:active {
+        &:active,
+        &:hover {
           transform: scale(1.05);
         }
       }
     }
+  }
+
+  & .submit {
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 5px 15px;
+    background-color: dodgerblue;
+    color: white;
+    border: 0;
+    border-radius: 5px;
   }
 }

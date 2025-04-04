@@ -88,20 +88,27 @@ export default function CoachPlayer() {
     <div className={styles.playerContainer}>
       <header>
         <h2>선수 등록</h2>
-        <span>
-          <label htmlFor="name" className="sr-only">
-            name
-          </label>
-          <input
-            type="text"
-            placeholder="홍길동"
-            value={newPlayer}
-            onChange={(e) => setNewPlayer(e.target.value)}
-          />
-        </span>
-        <button onClick={handleAddPlayer}>추가</button>
+        <div className={styles.addContainer}>
+          <span>
+            <label htmlFor="name" className="sr-only">
+              name
+            </label>
+            <input
+              type="text"
+              placeholder="ex) 홍길동"
+              value={newPlayer}
+              onChange={(e) => setNewPlayer(e.target.value)}
+            />
+          </span>
+          <button onClick={handleAddPlayer}>추가</button>
+          <button onClick={handleShffle} className={styles.randomButton}>
+            랜덤배치
+          </button>
+        </div>
       </header>
-      <button onClick={handleShffle}>배치</button>
+
+      <p>드래그로 순서변경이 가능합니다</p>
+
       <section className={styles.playerList}>
         <div className={styles.partContainer}>
           <h3>도마 순서</h3>
@@ -121,7 +128,7 @@ export default function CoachPlayer() {
             ))}
           </ul>
         </div>
-        <div>
+        <div className={styles.partContainer}>
           <h3>철봉 순서</h3>
           <ul>
             {barItems.map((name, index) => (
@@ -137,7 +144,64 @@ export default function CoachPlayer() {
             ))}
           </ul>
         </div>
-        <div>
+        <div className={styles.partContainer}>
+          <h3>평행봉 순서</h3>
+          <ul>
+            {parallelBarItems.map((name, index) => (
+              <li
+                key={index}
+                draggable
+                onDragStart={() => handleDragStart(index, "parallelBar")}
+                onDragOver={handleDragOver}
+                onDrop={() =>
+                  handleDrop(
+                    index,
+                    "parallelBar",
+                    parallelBarItems,
+                    setParallelBarItems
+                  )
+                }
+              >
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className={styles.partContainer}>
+          <h3>도마 순서</h3>
+          <ul>
+            {vaultItems.map((name, index) => (
+              <li
+                key={index}
+                draggable
+                onDragStart={() => handleDragStart(index, "vault")}
+                onDragOver={handleDragOver}
+                onDrop={() =>
+                  handleDrop(index, "vault", vaultItems, setVaultItems)
+                }
+              >
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className={styles.partContainer}>
+          <h3>철봉 순서</h3>
+          <ul>
+            {barItems.map((name, index) => (
+              <li
+                key={index}
+                draggable
+                onDragStart={() => handleDragStart(index, "bar")}
+                onDragOver={handleDragOver}
+                onDrop={() => handleDrop(index, "bar", barItems, setBarItems)}
+              >
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className={styles.partContainer}>
           <h3>평행봉 순서</h3>
           <ul>
             {parallelBarItems.map((name, index) => (
@@ -161,6 +225,7 @@ export default function CoachPlayer() {
           </ul>
         </div>
       </section>
+      <button className={styles.submit}>제출</button>
     </div>
   );
 }
