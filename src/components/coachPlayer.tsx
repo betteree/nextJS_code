@@ -4,7 +4,21 @@ import { useState } from "react";
 import styles from "@/styles/coachBoard.module.css";
 
 export default function CoachPlayer() {
-  const [items, setItems] = useState([
+  const [vaultItems, setVaultItems] = useState([
+    "김나은",
+    "박지민",
+    "이서연",
+    "최민수",
+    "정하늘",
+  ]);
+  const [barItems, setBarItems] = useState([
+    "김나은",
+    "박지민",
+    "이서연",
+    "최민수",
+    "정하늘",
+  ]);
+  const [parallelBarItems, setParallelBarItems] = useState([
     "김나은",
     "박지민",
     "이서연",
@@ -12,8 +26,8 @@ export default function CoachPlayer() {
     "정하늘",
   ]);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  const [newPlayer, setNewPlayer] = useState("");
   const handleDragStart = (index) => {
     setDraggedIndex(index);
   };
@@ -31,6 +45,16 @@ export default function CoachPlayer() {
     setItems(newItems);
     setDraggedIndex(null);
   };
+
+  const handleAddPlayer = () => {
+    if (!newPlayer.trim()) return;
+
+    setVaultItems([...vaultItems, newPlayer]);
+    setBarItems([...barItems, newPlayer]);
+    setParallelBarItems([...parallelBarItems, newPlayer]);
+
+    setNewPlayer(""); // 입력값 초기화
+  };
   return (
     <div className={styles.playerContainer}>
       <header>
@@ -39,9 +63,14 @@ export default function CoachPlayer() {
           <label htmlFor="name" className="sr-only">
             name
           </label>
-          <input type="text" placeholder="홍길동" />
+          <input
+            type="text"
+            placeholder="홍길동"
+            value={newPlayer}
+            onChange={(e) => setNewPlayer(e.target.value)}
+          />
         </span>
-        <button>추가</button>
+        <button onClick={handleAddPlayer}>추가</button>
       </header>
       <button>배치</button>
       <section className={styles.playerList}>
