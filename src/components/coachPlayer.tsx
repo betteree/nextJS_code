@@ -25,11 +25,13 @@ export default function CoachPlayer() {
     "최민수",
     "정하늘",
   ]);
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-
   const [newPlayer, setNewPlayer] = useState("");
-  const handleDragStart = (index) => {
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [draggedCategory, setDraggedCategory] = useState<string | null>(null);
+
+  const handleDragStart = (index: number, category: string) => {
     setDraggedIndex(index);
+    setDraggedCategory(category);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLLIElement>) => {
@@ -37,15 +39,25 @@ export default function CoachPlayer() {
     // 기존동작 방지해서 드롭이 가능하도록 한다
   };
 
-  const handleDrop = (index) => {
+  // index 드롭 시에
+  const handleDrop = (
+    index: number,
+    category: string,
+    items: string[],
+    setItems: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    if (draggedIndex === null || draggedCategory !== category) return;
+
     const newItems = [...items];
     const [removed] = newItems.splice(draggedIndex, 1);
     newItems.splice(index, 0, removed);
 
     setItems(newItems);
     setDraggedIndex(null);
+    setDraggedCategory(null);
   };
 
+  // 선수 추가
   const handleAddPlayer = () => {
     if (!newPlayer.trim()) return;
 
@@ -55,6 +67,23 @@ export default function CoachPlayer() {
 
     setNewPlayer(""); // 입력값 초기화
   };
+
+  // 모든 배열
+  function handleShffle() {
+    shuffleArray(vaultItems, setVaultItems);
+    shuffleArray(barItems, setBarItems);
+    shuffleArray(parallelBarItems, setParallelBarItems);
+  }
+
+  // 랜덤 배치
+  const shuffleArray = (
+    array: string[],
+    setArray: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    const shuffled = [...array].sort(() => Math.random() - 0.5);
+    setArray(shuffled);
+  };
+
   return (
     <div className={styles.playerContainer}>
       <header>
@@ -72,18 +101,20 @@ export default function CoachPlayer() {
         </span>
         <button onClick={handleAddPlayer}>추가</button>
       </header>
-      <button>배치</button>
+      <button onClick={handleShffle}>배치</button>
       <section className={styles.playerList}>
         <div className={styles.partContainer}>
           <h3>도마 순서</h3>
           <ul>
-            {items.map((name, index) => (
+            {vaultItems.map((name, index) => (
               <li
                 key={index}
                 draggable
-                onDragStart={() => handleDragStart(index)}
+                onDragStart={() => handleDragStart(index, "vault")}
                 onDragOver={handleDragOver}
-                onDrop={() => handleDrop(index)}
+                onDrop={() =>
+                  handleDrop(index, "vault", vaultItems, setVaultItems)
+                }
               >
                 {name}
               </li>
@@ -93,13 +124,13 @@ export default function CoachPlayer() {
         <div>
           <h3>철봉 순서</h3>
           <ul>
-            {items.map((name, index) => (
+            {barItems.map((name, index) => (
               <li
                 key={index}
                 draggable
-                onDragStart={() => handleDragStart(index)}
+                onDragStart={() => handleDragStart(index, "bar")}
                 onDragOver={handleDragOver}
-                onDrop={() => handleDrop(index)}
+                onDrop={() => handleDrop(index, "bar", barItems, setBarItems)}
               >
                 {name}
               </li>
@@ -109,13 +140,20 @@ export default function CoachPlayer() {
         <div>
           <h3>평행봉 순서</h3>
           <ul>
-            {items.map((name, index) => (
+            {parallelBarItems.map((name, index) => (
               <li
                 key={index}
                 draggable
-                onDragStart={() => handleDragStart(index)}
+                onDragStart={() => handleDragStart(index, "parallelBar")}
                 onDragOver={handleDragOver}
-                onDrop={() => handleDrop(index)}
+                onDrop={() =>
+                  handleDrop(
+                    index,
+                    "parallelBar",
+                    parallelBarItems,
+                    setParallelBarItems
+                  )
+                }
               >
                 {name}
               </li>

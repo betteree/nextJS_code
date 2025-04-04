@@ -3,105 +3,98 @@
   flex-flow: column;
   height: 100%;
   gap: 20px;
-  padding: 20px;
 
   & h2 {
     font-size: 30px;
-    font-weight: 600;
+    font-weight: 400;
+    padding: 20px;
+    border-bottom: 1px solid gainsboro;
   }
 
-  & section {
-    background-color: #fff;
+  & .contestDetail {
+    font-size: 20px;
     display: flex;
-    flex-flow: column;
-    gap: 15px;
-    width: 50%;
-
-    & span {
-      display: flex;
-      flex-flow: column;
-      justify-content: start;
-      font-size: 15px;
-      color: silver;
-      gap: 5px;
-
-      & input {
-        border: 0;
-        border-bottom: 1px solid silver;
-      }
-
-      & select {
-        border: 0;
-        border-bottom: 1px solid silver;
-        color: gray;
-      }
-    }
-
-    & .gender {
-      font-size: 16px;
-      flex-flow: row;
-    }
+    justify-content: space-between;
+    padding-inline: 20px;
 
     & button {
-      border: 0;
-      color: white;
-      background-color: black;
-      border-radius: 5px;
-      padding-block: 5px;
+      cursor: pointer;
     }
   }
 }
 
-/* 제목 밑 헤더 쪽 */
-.header {
+& .Modal {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+}
+/* 등록 모달 스타일 */
+& .registerContainer {
+  background-color: #fff;
   display: flex;
-  gap: 100px;
+  flex-flow: column;
+  gap: 15px;
+  height: 100%;
+  margin-left: 400px;
+  padding: 10px;
+  & span {
+    display: flex;
+    flex-flow: column;
+    justify-content: start;
+    font-size: 15px;
+    color: silver;
+    gap: 5px;
 
-  & .contestList {
-    & h3 {
-      font-size: 16px;
+    & input {
+      border: 0;
+      border-bottom: 1px solid silver;
     }
 
-    & table {
-      background: snow;
-
-      border-radius: 5px;
-      & thead {
-        border-bottom: 2px solid silver;
-
-        & tr {
-          display: flex;
-          align-items: center;
-          margin-bottom: 10px;
-
-          & th:first-child {
-            margin-right: 5px;
-            width: 30px;
-            border-right: 2px solid silver;
-          }
-        }
-      }
-
-      & tbody {
-        display: flex;
-        flex-flow: column;
-        margin-top: 10px;
-        height: 200px;
-        overflow-y: scroll;
-
-        & tr {
-          display: flex;
-          align-items: center;
-          line-height: 40px;
-
-          & td:first-child {
-            width: 30px;
-            text-align: center;
-            border-right: 2px solid silver;
-            margin-right: 10px;
-          }
-        }
-      }
+    & select {
+      border: 0;
+      border-bottom: 1px solid silver;
+      color: gray;
     }
+  }
+
+  & .gender {
+    font-size: 16px;
+    flex-flow: row;
+  }
+
+  & button {
+    border: 0;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    padding-block: 5px;
+  }
+
+  & .close {
+    background: gray;
+    width: 20%;
+  }
+}
+
+.contestTable {
+  border: 3px solid rgb(234, 234, 234);
+  font-size: 14px;
+  margin-inline: 20px;
+
+  & tr {
+    border-bottom: 2px solid rgb(234, 234, 234);
+  }
+
+  & td,
+  & th {
+    text-align: start;
+    padding: 10px;
+  }
+
+  & thead {
+    color: gray;
+    background: rgb(241, 241, 241);
   }
 }
