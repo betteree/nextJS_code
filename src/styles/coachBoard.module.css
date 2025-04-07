@@ -33,7 +33,7 @@
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+
   gap: 20px;
 
   & h2 {
@@ -47,13 +47,15 @@
     flex-flow: column;
     gap: 15px;
     width: 70%;
+    padding: 20px;
+    border-radius: 5px;
 
     & span {
       display: flex;
       flex-flow: column;
       justify-content: start;
       font-size: 15px;
-      color: silver;
+      color: black;
       gap: 5px;
 
       & input {
@@ -79,6 +81,13 @@
       background-color: black;
       border-radius: 5px;
       padding-block: 5px;
+      cursor: pointer;
+
+      &:last-child {
+        border: 2px solid black;
+        background-color: transparent;
+        color: black;
+      }
     }
   }
 }

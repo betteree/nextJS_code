@@ -1,11 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import styles from "../../styles/home.module.css";
 import Link from "next/link";
 
-export const metadata = {
-  title: "Home",
-};
+export default function HomePage() {
+  const [type, setType] = useState("/admin_page");
 
-export default async function HomePage() {
+  function handleType(e: React.ChangeEvent<HTMLSelectElement>) {
+    setType(e.target.value);
+  }
   return (
     <>
       <div className={styles.container}>
@@ -20,16 +24,16 @@ export default async function HomePage() {
         </span>
         <span>
           <label htmlFor="type">타입</label>
-          <select name="type" id="type">
-            <option value="admin">관리자</option>
-            <option value="judge">지도자</option>
+          <select name="type" id="type" onChange={handleType}>
+            <option value="/admin_page">관리자</option>
+            <option value="/coach_page">지도자</option>
           </select>
         </span>
 
         <button className={styles.reset}>설정 초기화</button>
-        <button className={styles.apply}>
-          <Link href="/admin_page">적용</Link>
-        </button>
+        <Link href={type} className={styles.apply}>
+          적용
+        </Link>
       </div>
     </>
   );

@@ -1,4 +1,7 @@
+"use client";
+
 import styles from "@/styles/coachBoard.module.css";
+import { useRouter } from "next/navigation";
 
 export default function Approve() {
   // 임시 학교 데이터
@@ -18,7 +21,7 @@ export default function Approve() {
     "대구체고",
     "서울체고",
   ];
-
+  const router = useRouter();
   return (
     <div className={styles.Approvecontainer}>
       <h2>지도자</h2>
@@ -44,6 +47,7 @@ export default function Approve() {
           </select>
         </span>
 
+        <button onClick={() => router.push("/coach_board")}>로그인</button>
         <button>승인요청</button>
       </section>
     </div>

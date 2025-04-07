@@ -21,7 +21,7 @@ export default function Request() {
             <td>1</td>
             <td>홍길동</td>
             <td>대구체육고등학교</td>
-            <td>010-1234-4444</td>
+            <td>010-1234-5678</td>
             <td>
               <button>수락</button>
               <button>반려</button>

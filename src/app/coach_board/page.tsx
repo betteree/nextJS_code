@@ -1,5 +1,4 @@
 import styles from "@/styles/coachBoard.module.css";
-import Approve from "@/components/coach/approve";
 import CoachInfo from "@/components/coach/coachInfo";
 import CoachPlayer from "@/components/coach/coachPlayer";
 

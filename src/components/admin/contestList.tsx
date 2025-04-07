@@ -12,7 +12,9 @@ export default function ContestList() {
   useEffect(() => {
     fetch(`/api/database?table=${table}`)
       .then((res) => res.json())
-      .then((data) => setAdmins(data))
+      .then((data) => {
+        setAdmins(data);
+      })
       .catch((err) => console.error("Error fetching admins:", err));
   }, []);
 
@@ -20,6 +22,10 @@ export default function ContestList() {
     setIsOpen((isOpen) => !isOpen);
   };
 
+  const changeDate = (date: string) => {
+    const NewDate = new Date(date);
+    return NewDate.toLocaleDateString("ko-KR");
+  };
   return (
     <div className={styles.container}>
       <section className={styles.contestDetail}>
@@ -32,7 +38,8 @@ export default function ContestList() {
           <tr>
             <th>#</th>
             <th>대회명</th>
-            <th>대회날짜</th>
+            <th>대회시작</th>
+            <th>대회종료</th>
             <th>장소</th>
             <th>주관</th>
             <th>성별</th>
@@ -44,7 +51,8 @@ export default function ContestList() {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{item.title}</td>
-              <td>{item.date}</td>
+              <td>{changeDate(item.start_date)}</td>
+              <td>{changeDate(item.end_date)}</td>
               <td>{item.location}</td>
               <td>{item.organizer}</td>
               <td>{item.gender}</td>

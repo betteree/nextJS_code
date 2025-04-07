@@ -12,8 +12,12 @@ export default function Register({ isClose }) {
           <input type="text" name="title" />
         </span>
         <span>
-          <label htmlFor="date">대회날짜</label>
-          <input type="date" name="startday" />
+          <label htmlFor="startday">시작 날짜</label>
+          <input type="date" name="startday" id="startday" />
+        </span>
+        <span>
+          <label htmlFor="endday">종료 날짜</label>
+          <input type="date" name="endday" id="endday" />
         </span>
         <span>
           <label htmlFor="place">장소</label>
@@ -29,9 +33,9 @@ export default function Register({ isClose }) {
         </span>
         <span className={styles.gender}>
           <label htmlFor="male">남자</label>
-          <input type="radio" id="male" name="gender" />
+          <input type="checkbox" id="male" name="gender" />
           <label htmlFor="female">여자</label>
-          <input type="radio" id="female" name="gender" />
+          <input type="checkbox" id="female" name="gender" />
         </span>
         <button>등록</button>
       </section>
