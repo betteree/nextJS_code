@@ -76,7 +76,7 @@ export default function CoachPlayer() {
     setNewPlayer(""); // 입력값 초기화
   };
 
-  // 모든 배열
+  //랜덤 배치 실행 함수
   function handleShffle() {
     shuffleArray(vaultItems, setVaultItems);
     shuffleArray(barItems, setBarItems);
@@ -92,6 +92,12 @@ export default function CoachPlayer() {
     setArray(shuffled);
   };
 
+  const handleRemove = (removePlayer) => {
+    setPlayerList(playerList.filter((player) => player !== removePlayer));
+    setVaultItems(vaultItems.filter((player) => player !== removePlayer));
+    setBarItems(vaultItems.filter((player) => player !== removePlayer));
+    setParallelBarItems(vaultItems.filter((player) => player !== removePlayer));
+  };
   return (
     <div className={styles.playerContainer}>
       <header>
@@ -116,7 +122,12 @@ export default function CoachPlayer() {
         <p>선수 목록</p>
         <ul>
           {playerList.map((item, index) => (
-            <li key={index}>{item}</li>
+            <li key={index}>
+              {item}
+              <button onClick={() => handleRemove(item)}>
+                <img src="/icon/cancel.png" alt="삭제" />
+              </button>
+            </li>
           ))}
         </ul>
       </section>

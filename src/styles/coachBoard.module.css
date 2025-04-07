@@ -17,7 +17,8 @@
 
   & main {
     background-color: white;
-    border-radius: 5px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     position: absolute;
     translate: 50%;
     top: 250px;
@@ -105,6 +106,10 @@
       padding: 5px 15px;
       border-radius: 5px;
       cursor: pointer;
+
+      &:hover {
+        opacity: 0.5;
+      }
     }
   }
 
@@ -115,11 +120,20 @@
     color: white;
     padding-block: 5px;
     width: 100%;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.5;
+    }
   }
 
   & p {
     margin-block: 10px;
-    color: lightgray;
+    background-color: #f8f9fa;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
   }
 
   & .allPlayerContainer {
@@ -138,10 +152,19 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+
       & li {
         border: 2px solid dodgerblue;
         padding: 5px 10px;
         border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        & button {
+          padding: 0;
+          border: 0;
+          background-color: transparent;
+        }
       }
     }
   }
@@ -185,7 +208,7 @@
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       text-align: center;
-      color: dodgerblue;
+      color: black;
     }
   }
 
@@ -198,6 +221,10 @@
     border: 0;
     border-radius: 5px;
     cursor: pointer;
+
+    &:hover {
+      opacity: 0.5;
+    }
   }
 }
 
