@@ -2,7 +2,6 @@
   display: flex;
   flex-flow: column;
   height: 100%;
-  gap: 20px;
 
   & nav {
     display: flex;
@@ -10,6 +9,7 @@
     align-items: center;
     padding: 20px;
     border-bottom: 2px solid lightgray;
+
     & h2 {
       font-size: 30px;
       font-weight: 400;
@@ -32,7 +32,7 @@
     font-size: 20px;
     display: flex;
     justify-content: space-between;
-    padding-inline: 20px;
+    padding: 20px;
 
     & button {
       cursor: pointer;
@@ -50,12 +50,17 @@
 /* 등록 모달 스타일 */
 & .registerContainer {
   background-color: #fff;
-  display: flex;
-  flex-flow: column;
   gap: 15px;
   height: 100%;
-  margin-left: 400px;
+  margin-left: 50%;
   padding: 10px;
+
+  & form {
+    display: flex;
+    flex-flow: column;
+    gap: 15px;
+  }
+
   & span {
     display: flex;
     flex-flow: column;
@@ -87,6 +92,7 @@
     background-color: black;
     border-radius: 5px;
     padding-block: 5px;
+    margin-block: 0 15px;
   }
 
   & .close {

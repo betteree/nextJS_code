@@ -22,13 +22,15 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { title, date, location, organizer, gender, created_by } =
+    const { title, start_date, end_date, location, organizer, gender } =
       await req.json();
-
+    // 성별 배열을 문자열로 변환
+    const genderString = Array.isArray(gender) ? gender.join(",") : gender;
     // MySQL INSERT 쿼리 실행
     const [result] = await pool.query(
-      "INSERT INTO competition (title, date, location, organizer, gender, created_by) VALUES (?, ?, ?, ?, ?, ?)",
-      [title, date, location, organizer, gender, created_by]
+      `INSERT INTO competition (title, start_date,end_date, location, organizer, gender, created_by) 
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [title, start_date, end_date, location, organizer, genderString, 1]
     );
 
     return NextResponse.json({ success: true, id: result.insertId });
