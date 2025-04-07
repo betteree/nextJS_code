@@ -1,18 +1,30 @@
 .container {
   background-color: #f0f4f8;
-  height: 100%;
+  height: 150vh;
+  position: relative;
 
   & nav {
     padding: 20px;
-
-    border-bottom: 2px solid lightgray;
+    padding-bottom: 200px;
+    color: white;
+    background-color: #476ff3;
 
     & h2 {
       font-size: 30px;
       font-weight: 400;
     }
   }
+
+  & main {
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    translate: 50%;
+    top: 250px;
+    width: 50%;
+  }
 }
+
 /* 승인 컴포넌트 */
 & .Approvecontainer {
   padding-top: 100px;
@@ -73,12 +85,8 @@
 /* 선수 순서 컴포넌트 */
 & .playerContainer {
   padding: 20px;
-  & header {
-    background: white;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid whitesmoke;
 
+  & header {
     & h2 {
       margin-bottom: 10px;
     }
@@ -98,11 +106,15 @@
       border-radius: 5px;
       cursor: pointer;
     }
+  }
 
-    & .randomButton {
-      background: lightcoral;
-      margin: 10px;
-    }
+  & .randomButton {
+    background-color: black;
+    border: 0;
+    border-radius: 5px;
+    color: white;
+    padding-block: 5px;
+    width: 100%;
   }
 
   & p {
@@ -110,19 +122,27 @@
     color: lightgray;
   }
 
-  & .partContainer {
-    background-color: snow;
-    width: 100%;
-    border: 2px solid gainsboro;
-    border-radius: 10px;
+  & .allPlayerContainer {
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+    margin-block: 10px;
 
-    & h3 {
-      background: whitesmoke;
-      padding: 10px;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      text-align: center;
-      color: gray;
+    & p {
+      margin: 0;
+      color: black;
+      margin-block: 0 10px;
+    }
+
+    & ul {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      & li {
+        border: 2px solid dodgerblue;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
     }
   }
 
@@ -137,18 +157,35 @@
 
       & li {
         text-align: center;
-        background-color: lightgrey;
-        border: 1px solid gray;
+        background-color: #edf1fd;
+        border: 1px solid dodgerblue;
         margin-block: 2px;
         padding-block: 5px;
         cursor: grab;
         transition: transform 0.3s ease-in-out;
+        border-radius: 5px;
 
         &:active,
         &:hover {
           transform: scale(1.05);
         }
       }
+    }
+  }
+
+  & .partContainer {
+    background-color: snow;
+    width: 100%;
+    border: 2px solid dodgerblue;
+    border-radius: 10px;
+
+    & h3 {
+      background: #edf1fd;
+      padding: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      text-align: center;
+      color: dodgerblue;
     }
   }
 
@@ -161,5 +198,43 @@
     border: 0;
     border-radius: 5px;
     cursor: pointer;
+  }
+}
+
+& .addContainer {
+  border: 2px solid lightgray;
+  border-radius: 5px;
+  padding-block: 10px;
+}
+
+/* 지도자 정보 컴포넌트 */
+& .coachInfoContainer {
+  margin: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+
+  & h2 {
+    color: gray;
+    font-size: 20px;
+  }
+
+  & dl {
+    display: flex;
+    gap: 30px;
+    margin-block: 10px;
+  }
+
+  & span {
+    & dt {
+      font-size: 15px;
+      color: gray;
+    }
+
+    & dd {
+      font-size: 16px;
+      margin-top: 5px;
+      color: black;
+    }
   }
 }

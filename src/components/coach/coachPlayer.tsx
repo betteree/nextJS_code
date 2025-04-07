@@ -4,6 +4,13 @@ import { useState } from "react";
 import styles from "@/styles/coachBoard.module.css";
 
 export default function CoachPlayer() {
+  const [playerList, setPlayerList] = useState([
+    "김나은",
+    "박지민",
+    "이서연",
+    "최민수",
+    "정하늘",
+  ]);
   const [vaultItems, setVaultItems] = useState([
     "김나은",
     "박지민",
@@ -61,6 +68,7 @@ export default function CoachPlayer() {
   const handleAddPlayer = () => {
     if (!newPlayer.trim()) return;
 
+    setPlayerList([...playerList, newPlayer]);
     setVaultItems([...vaultItems, newPlayer]);
     setBarItems([...barItems, newPlayer]);
     setParallelBarItems([...parallelBarItems, newPlayer]);
@@ -101,12 +109,20 @@ export default function CoachPlayer() {
             />
           </span>
           <button onClick={handleAddPlayer}>추가</button>
-          <button onClick={handleShffle} className={styles.randomButton}>
-            랜덤배치
-          </button>
         </div>
       </header>
 
+      <section className={styles.allPlayerContainer}>
+        <p>선수 목록</p>
+        <ul>
+          {playerList.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </section>
+      <button onClick={handleShffle} className={styles.randomButton}>
+        랜덤배치
+      </button>
       <p>드래그로 순서변경이 가능합니다</p>
 
       <section className={styles.playerList}>
