@@ -1,6 +1,6 @@
 import styles from "@/styles/adminBoard.module.css";
 
-export default function Register({ isClose }) {
+export default function Register({ modalType, isClose }) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -81,7 +81,9 @@ export default function Register({ isClose }) {
             <label htmlFor="female">여자</label>
             <input type="checkbox" id="female" name="gender" value="여" />
           </span>
-          <button type="submit">등록</button>
+          <button type="submit">
+            {modalType === "register" ? "등록 " : "수정"}
+          </button>
         </form>
       </section>
     </div>

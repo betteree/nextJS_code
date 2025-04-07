@@ -5,7 +5,6 @@ import { useState } from "react";
 import ContestList from "@/components/admin/contestList";
 import Request from "@/components/admin/request";
 export default function AdminPage() {
-  const [clickContest, SetClickContest] = useState("");
   const [adminList, setAdminList] = useState("contest");
 
   const handleNav = (list) => {
