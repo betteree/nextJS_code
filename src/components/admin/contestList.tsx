@@ -8,7 +8,7 @@ export default function ContestList() {
   const [admins, setAdmins] = useState([]);
   const [table, setTable] = useState("competition");
   const [isOpen, setIsOpen] = useState(false);
-  const [modalType, setModalType] = useState("");
+  const [itemData, setItemData] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,20 +25,16 @@ export default function ContestList() {
       });
   }, [table]);
 
-  const handleModal = (type: string) => {
+  const handleModal = (item: string[]) => {
     setIsOpen((isOpen) => !isOpen);
-    setModalType(type);
+    setItemData(item);
   };
 
-  const changeDate = (date: string) => {
-    const NewDate = new Date(date);
-    return NewDate.toLocaleDateString("ko-KR");
-  };
   return (
     <div className={styles.container}>
       <section className={styles.contestDetail}>
         <h3>대회 LIST</h3>
-        <button onClick={() => handleModal("register")}>대회 추가</button>
+        <button onClick={() => handleModal([])}>대회 추가</button>
       </section>
       {loading ? (
         <p>로딩 중...</p>
@@ -63,13 +59,13 @@ export default function ContestList() {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.title}</td>
-                <td>{changeDate(item.start_date)}</td>
-                <td>{changeDate(item.end_date)}</td>
+                <td>{item.start_date}</td>
+                <td>{item.end_date}</td>
                 <td>{item.location}</td>
                 <td>{item.organizer}</td>
                 <td>{item.gender}</td>
                 <td>
-                  <button onClick={() => handleModal("modify")}>수정</button>
+                  <button onClick={() => handleModal(item)}>수정</button>
                 </td>
               </tr>
             ))}
@@ -77,7 +73,7 @@ export default function ContestList() {
         </table>
       )}
       {isOpen && (
-        <Register modalType={modalType} isClose={handleModal}></Register>
+        <Register itemData={itemData} isClose={handleModal}></Register>
       )}
     </div>
   );
