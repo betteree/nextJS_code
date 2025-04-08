@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "@/styles/adminBoard.module.css";
 export default function Request() {
   return (

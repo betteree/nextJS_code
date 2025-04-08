@@ -25,6 +25,11 @@
         background-color: transparent;
         cursor: pointer;
       }
+
+      & .active {
+        color: dodgerblue;
+        border-bottom: 2px solid dodgerblue;
+      }
     }
   }
 
@@ -61,7 +66,7 @@
     gap: 15px;
   }
 
-  & span {
+  & div {
     display: flex;
     flex-flow: column;
     justify-content: start;

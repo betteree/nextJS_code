@@ -15,25 +15,26 @@ export default function HomePage() {
       <div className={styles.container}>
         <h2>메인</h2>
 
-        <span>
-          <label htmlFor="">언어</label>
-          <select name="lang" id="lang">
-            <option value="Korea">한국어</option>
-            <option value="English">영어</option>
-          </select>
-        </span>
-        <span>
-          <label htmlFor="type">타입</label>
-          <select name="type" id="type" onChange={handleType}>
-            <option value="/admin_page">관리자</option>
-            <option value="/coach_page">지도자</option>
-          </select>
-        </span>
+        <section className={styles.homeWrapper}>
+          <span>
+            <label htmlFor="">언어</label>
+            <select name="lang" id="lang">
+              <option value="Korea">한국어</option>
+              <option value="English">영어</option>
+            </select>
+          </span>
+          <span>
+            <label htmlFor="type">타입</label>
+            <select name="type" id="type" onChange={handleType}>
+              <option value="/admin_page">관리자</option>
+              <option value="/coach_page">지도자</option>
+            </select>
+          </span>
 
-        <button className={styles.reset}>설정 초기화</button>
-        <Link href={type} className={styles.apply}>
-          적용
-        </Link>
+          <Link href={type} className={styles.apply}>
+            적용
+          </Link>
+        </section>
       </div>
     </>
   );

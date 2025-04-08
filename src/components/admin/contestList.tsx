@@ -3,22 +3,27 @@
 import styles from "@/styles/adminBoard.module.css";
 import { useState, useEffect } from "react";
 import Register from "@/components/admin/register";
-import { register } from "module";
 
 export default function ContestList() {
   const [admins, setAdmins] = useState([]);
   const [table, setTable] = useState("competition");
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`/api/database?table=${table}`)
       .then((res) => res.json())
       .then((data) => {
         setAdmins(data);
+        setLoading(false);
       })
-      .catch((err) => console.error("Error fetching admins:", err));
-  }, []);
+      .catch((err) => {
+        console.error("Error fetching admins:", err);
+        setLoading(false);
+      });
+  }, [table]);
 
   const handleModal = (type: string) => {
     setIsOpen((isOpen) => !isOpen);
@@ -35,38 +40,42 @@ export default function ContestList() {
         <h3>대회 LIST</h3>
         <button onClick={() => handleModal("register")}>대회 추가</button>
       </section>
-
-      <table className={styles.contestTable}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>대회명</th>
-            <th>대회시작</th>
-            <th>대회종료</th>
-            <th>장소</th>
-            <th>주관</th>
-            <th>성별</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {admins.map((item, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item.title}</td>
-              <td>{changeDate(item.start_date)}</td>
-              <td>{changeDate(item.end_date)}</td>
-              <td>{item.location}</td>
-              <td>{item.organizer}</td>
-              <td>{item.gender}</td>
-              <td>
-                <button onClick={() => handleModal("modify")}>수정</button>
-              </td>
+      {loading ? (
+        <p>로딩 중...</p>
+      ) : admins.length === 0 ? (
+        <p>등록된 대회가 없습니다.</p>
+      ) : (
+        <table className={styles.contestTable}>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>대회명</th>
+              <th>대회시작</th>
+              <th>대회종료</th>
+              <th>장소</th>
+              <th>주관</th>
+              <th>성별</th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody>
+            {admins.map((item, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item.title}</td>
+                <td>{changeDate(item.start_date)}</td>
+                <td>{changeDate(item.end_date)}</td>
+                <td>{item.location}</td>
+                <td>{item.organizer}</td>
+                <td>{item.gender}</td>
+                <td>
+                  <button onClick={() => handleModal("modify")}>수정</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       {isOpen && (
         <Register modalType={modalType} isClose={handleModal}></Register>
       )}

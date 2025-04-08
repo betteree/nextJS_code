@@ -7,7 +7,7 @@ import Request from "@/components/admin/request";
 export default function AdminPage() {
   const [adminList, setAdminList] = useState("contest");
 
-  const handleNav = (list) => {
+  const handleNav = (list: string) => {
     setAdminList(list);
   };
   return (
@@ -16,10 +16,20 @@ export default function AdminPage() {
         <h2>관리자</h2>
         <ul>
           <li>
-            <button onClick={() => handleNav("contest")}>대회 LIST</button>
+            <button
+              onClick={() => handleNav("contest")}
+              className={adminList === "contest" ? styles.active : ""}
+            >
+              대회 LIST
+            </button>
           </li>
           <li>
-            <button onClick={() => handleNav("request")}>요청 LIST</button>
+            <button
+              onClick={() => handleNav("request")}
+              className={adminList === "request" ? styles.active : ""}
+            >
+              요청 LIST
+            </button>
           </li>
         </ul>
       </nav>
