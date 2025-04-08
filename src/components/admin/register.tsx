@@ -7,12 +7,12 @@ export default function Register({ itemData, isClose }) {
 
   // 등록
   const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
+    e: React.FormEvent<HTMLFormElement>,
     id?: number
   ) => {
-    event.preventDefault();
+    e.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(e.currentTarget);
 
     const requestData = {
       id: id || undefined,

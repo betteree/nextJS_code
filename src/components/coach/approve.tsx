@@ -23,7 +23,28 @@ export default function Approve() {
   ];
   const router = useRouter();
 
-  function handleLogin() {}
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    const requestData = {
+      name: formData.get("name") as string,
+      phone: formData.get("phone"),
+      affiliation: formData.get("affiliation"),
+    };
+
+    const response = await fetch("/api/database/coach", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestData),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert("로그인 되었습니다");
+    }
+  }
   return (
     <div className={styles.Approvecontainer}>
       <h2>지도자</h2>
