@@ -1,10 +1,10 @@
 "use client";
 import styles from "@/styles/adminBoard.module.css";
+import { useState, useEffect } from "react";
 
 export default function Register({ itemData, isClose }) {
-  const organization = ["대한체육협회", "체조협회", "고등체조협회"];
+  const organization = ["대한체조협회", "체조협회", "고등체조협회"];
   const checkedGender = itemData?.gender?.split(",") || []; //itemData가 있고 gender가 있다면 나누고 null이거나 undefined이면 [] 빈배열
-
   // 등록
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
