@@ -22,33 +22,36 @@ export default function Approve() {
     "서울체고",
   ];
   const router = useRouter();
+
+  function handleLogin() {}
   return (
     <div className={styles.Approvecontainer}>
       <h2>지도자</h2>
       <section>
-        <span>
-          <label htmlFor="name">이름</label>
-          <input type="text" name="name" />
-        </span>
-        <span>
-          <label htmlFor="number">연락처</label>
-          <input type="text" name="number" />
-        </span>
+        <form onSubmit={handleLogin}>
+          <span>
+            <label htmlFor="name">이름</label>
+            <input type="text" name="name" />
+          </span>
+          <span>
+            <label htmlFor="number">연락처</label>
+            <input type="text" name="number" />
+          </span>
 
-        <span>
-          <label htmlFor="host">소속</label>
-          <select name="host" id="host">
-            <option value="0">학교선택</option>
-            {schoolList.map((item, index) => (
-              <option value={index + 1} key={index + 1}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </span>
-
-        <button onClick={() => router.push("/coach_board")}>로그인</button>
-        <button>승인요청</button>
+          <span>
+            <label htmlFor="host">소속</label>
+            <select name="host" id="host">
+              <option value="0">학교선택</option>
+              {schoolList.map((item, index) => (
+                <option value={index + 1} key={index + 1}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </span>
+          <button type="submit">로그인</button>
+        </form>
+        <button className={styles.approveButton}>승인요청</button>
       </section>
     </div>
   );

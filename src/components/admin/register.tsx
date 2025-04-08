@@ -25,7 +25,7 @@ export default function Register({ itemData, isClose }) {
     };
 
     const method = id ? "PUT" : "POST";
-    const url = "/api/database";
+    const url = "/api/database/admin";
 
     const response = await fetch(url, {
       method,

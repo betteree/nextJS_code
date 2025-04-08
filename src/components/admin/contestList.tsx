@@ -13,7 +13,7 @@ export default function ContestList() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/database?table=${table}`)
+    fetch(`/api/database/admin?table=${table}`)
       .then((res) => res.json())
       .then((data) => {
         setAdmins(data);
