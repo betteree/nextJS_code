@@ -1,9 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "@/styles/coachBoard.module.css";
 
 export default function CoachPlayer() {
+  const [malePlayers, setMalePlayers] = useState([]);
+  const [femalePlayers, setFemalePlayers] = useState([]);
+
   const [playerList, setPlayerList] = useState([
     "김나은",
     "박지민",
@@ -35,6 +38,8 @@ export default function CoachPlayer() {
   const [newPlayer, setNewPlayer] = useState("");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [draggedCategory, setDraggedCategory] = useState<string | null>(null);
+
+  const [gender, setGender] = useState("남");
 
   const handleDragStart = (index: number, category: string) => {
     setDraggedIndex(index);
@@ -92,14 +97,44 @@ export default function CoachPlayer() {
     setArray(shuffled);
   };
 
+  // 삭제
   const handleRemove = (removePlayer) => {
     setPlayerList(playerList.filter((player) => player !== removePlayer));
     setVaultItems(vaultItems.filter((player) => player !== removePlayer));
     setBarItems(vaultItems.filter((player) => player !== removePlayer));
     setParallelBarItems(vaultItems.filter((player) => player !== removePlayer));
   };
+
+  const handleGender = (e) => {
+    setGender(e.target.value);
+  };
+
+  useEffect(() => {
+    const coachId = localStorage.getItem("userId");
+
+    const fetchPlayers = async (gender, setPlayers) => {
+      const res = await fetch(
+        `/api/database/player?coach_id=${coachId}&gender=${gender}`
+      );
+      const data = await res.json();
+      setPlayers(data);
+    };
+
+    fetchPlayers("남", setMalePlayers);
+    fetchPlayers("여", setFemalePlayers);
+  }, []);
+
   return (
     <div className={styles.playerContainer}>
+      <section className={styles.genderContainer}>
+        <button value="남" onClick={handleGender}>
+          남
+        </button>
+        <button value="여" onClick={handleGender}>
+          여
+        </button>
+      </section>
+
       <header>
         <h2>선수 등록</h2>
         <div className={styles.addContainer}>
@@ -121,14 +156,16 @@ export default function CoachPlayer() {
       <section className={styles.allPlayerContainer}>
         <p>선수 목록</p>
         <ul>
-          {playerList.map((item, index) => (
-            <li key={index}>
-              {item}
-              <button onClick={() => handleRemove(item)}>
-                <img src="/icon/cancel.png" alt="삭제" />
-              </button>
-            </li>
-          ))}
+          {(gender === "남" ? malePlayers : femalePlayers).map(
+            (item, index) => (
+              <li key={index}>
+                {item.name}
+                <button onClick={() => handleRemove(item)}>
+                  <img src="/icon/cancel.png" alt="삭제" />
+                </button>
+              </li>
+            )
+          )}
         </ul>
       </section>
       <button onClick={handleShffle} className={styles.randomButton}>

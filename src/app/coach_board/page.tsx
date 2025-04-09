@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "@/styles/coachBoard.module.css";
 import CoachInfo from "@/components/coach/coachInfo";
 import CoachPlayer from "@/components/coach/coachPlayer";

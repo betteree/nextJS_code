@@ -6,20 +6,10 @@ import { useRouter } from "next/navigation";
 export default function Approve() {
   // 임시 학교 데이터
   const schoolList = [
-    "충남체고",
-    "대전체고",
-    "경남체고",
-    "광주체고",
-    "전남체고",
-    "충북체고",
-    "울산스과고",
-    "경기체고",
-    "강원체고",
-    "부산체고",
-    "전북체고",
-    "인천체고",
-    "대구체고",
-    "서울체고",
+    "서울초등학교",
+    "북부초등학교",
+    "서부초등학교",
+    "남부초등학교",
   ];
   const router = useRouter();
 
@@ -29,12 +19,12 @@ export default function Approve() {
 
     const requestData = {
       name: formData.get("name") as string,
-      phone: formData.get("phone"),
-      affiliation: formData.get("affiliation"),
+      phone: formData.get("phone") as string,
+      affiliation: formData.get("affiliation") as string,
     };
 
     const response = await fetch("/api/database/coach", {
-      method: "GET",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestData),
     });
@@ -42,7 +32,13 @@ export default function Approve() {
     const result = await response.json();
 
     if (result.success) {
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("userId", result.id);
       alert("로그인 되었습니다");
+      window.location.reload();
+    } else {
+      console.log(result);
+      alert(result.message);
     }
   }
   return (
@@ -55,16 +51,16 @@ export default function Approve() {
             <input type="text" name="name" />
           </span>
           <span>
-            <label htmlFor="number">연락처</label>
-            <input type="text" name="number" />
+            <label htmlFor="phone">연락처</label>
+            <input type="text" name="phone" />
           </span>
 
           <span>
-            <label htmlFor="host">소속</label>
-            <select name="host" id="host">
-              <option value="0">학교선택</option>
+            <label htmlFor="affiliation">소속</label>
+            <select name="affiliation" id="affiliation" defaultValue="">
+              <option value="">학교선택</option>
               {schoolList.map((item, index) => (
-                <option value={index + 1} key={index + 1}>
+                <option value={item} key={index}>
                   {item}
                 </option>
               ))}

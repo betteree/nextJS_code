@@ -1,30 +1,31 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db.js";
+import db from "@/lib/db.js";
+import jwt from "jsonwebtoken";
 
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
-    const phone = searchParams.get("phone");
+    const coachId = searchParams.get("coach_id");
 
-    if (!phone) {
+    if (!coachId) {
       return NextResponse.json(
-        { success: false, error: "전화번호가 필요합니다." },
+        { success: false, message: "코치 ID가 필요합니다." },
         { status: 400 }
       );
     }
 
-    const [rows] = await pool.query("SELECT * FROM coach WHERE phone = ?", [
-      phone,
+    const [rows] = await db.query("SELECT * FROM coach WHERE id = ?", [
+      coachId,
     ]);
 
     if (rows.length === 0) {
-      return NextResponse.json({
-        success: false,
-        error: "코치를 찾을 수 없습니다.",
-      });
+      return NextResponse.json(
+        { success: false, message: "해당 코치가 없습니다." },
+        { status: 404 }
+      );
     }
 
-    return NextResponse.json({ success: true, coach: rows[0] });
+    return NextResponse.json({ success: true, data: rows[0] });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: error.message },
@@ -32,21 +33,41 @@ export async function GET(req) {
     );
   }
 }
-// 등록 insert 함수
+
+// POST 함수
 export async function POST(req) {
   try {
-    const { title, start_date, end_date, location, organizer, gender } =
-      await req.json();
-    // 성별 배열을 문자열로 변환
-    const genderString = Array.isArray(gender) ? gender.join(",") : gender;
+    const { name, phone, affiliation } = await req.json();
 
-    const [result] = await pool.query(
-      `INSERT INTO competition (title, start_date,end_date, location, organizer, gender, created_by) 
-      VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [title, start_date, end_date, location, organizer, genderString, 1]
+    if (!name || !phone || !affiliation) {
+      return NextResponse.json(
+        { success: false, message: "모든 필드를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
+    const [rows] = await db.query(
+      "SELECT * FROM coach WHERE name = ? AND phone = ? AND affiliation = ?",
+      [name, phone, affiliation]
     );
 
-    return NextResponse.json({ success: true, id: result.insertId });
+    if (rows.length > 0) {
+      const token = jwt.sign(
+        { id: rows[0].id, name: rows[0].name },
+        process.env.JWT_SECRET // 환경변수에서 비밀키 가져오기
+      );
+      return NextResponse.json({
+        success: true,
+        message: "로그인 성공",
+        token,
+        id: rows[0].id,
+      });
+    } else {
+      return NextResponse.json(
+        { success: false, message: "일치하는 사용자가 없습니다." },
+        { status: 401 }
+      );
+    }
   } catch (error) {
     return NextResponse.json(
       { success: false, error: error.message },
