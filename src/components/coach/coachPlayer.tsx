@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import styles from "@/styles/coachBoard.module.css";
 
 export default function CoachPlayer() {
-  const [malePlayers, setMalePlayers] = useState([]);
-  const [femalePlayers, setFemalePlayers] = useState([]);
-
+  const [players, setPlayers] = useState<Record<string, Player[]>>({
+    남: [],
+    여: [],
+  });
   const [playerList, setPlayerList] = useState([
     "김나은",
     "박지민",
@@ -38,8 +39,14 @@ export default function CoachPlayer() {
   const [newPlayer, setNewPlayer] = useState("");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [draggedCategory, setDraggedCategory] = useState<string | null>(null);
-
+  const [coachId, setCoachId] = useState(null);
   const [gender, setGender] = useState("남");
+
+  const eventCategories: Record<"남" | "여", string[]> = {
+    남: ["마루", "안마", "링", "도마", "평행봉", "철봉"],
+    여: ["도마", "2단 평행봉", "평균대", "마루"],
+  };
+  const [eventData, setEventData] = useState<Record<string, string[]>>({});
 
   const handleDragStart = (index: number, category: string) => {
     setDraggedIndex(index);
@@ -73,56 +80,108 @@ export default function CoachPlayer() {
   const handleAddPlayer = () => {
     if (!newPlayer.trim()) return;
 
-    setPlayerList([...playerList, newPlayer]);
-    setVaultItems([...vaultItems, newPlayer]);
-    setBarItems([...barItems, newPlayer]);
-    setParallelBarItems([...parallelBarItems, newPlayer]);
+    setPlayers((prev) => ({
+      ...prev,
+      [gender]: [...(prev[gender] || []), { name: newPlayer }],
+    }));
 
-    setNewPlayer(""); // 입력값 초기화
+    setEventData((prev) => {
+      const updatedData = { ...prev };
+
+      eventCategories[gender].forEach((event) => {
+        updatedData[event] = [...(updatedData[event] || []), newPlayer];
+      });
+
+      return updatedData;
+    });
+
+    setNewPlayer("");
   };
 
-  //랜덤 배치 실행 함수
-  function handleShffle() {
-    shuffleArray(vaultItems, setVaultItems);
-    shuffleArray(barItems, setBarItems);
-    shuffleArray(parallelBarItems, setParallelBarItems);
-  }
-
   // 랜덤 배치
-  const shuffleArray = (
-    array: string[],
-    setArray: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
-    const shuffled = [...array].sort(() => Math.random() - 0.5);
-    setArray(shuffled);
+  const handleShffle = () => {
+    setEventData((prev) => {
+      const shuffledData = { ...prev };
+
+      Object.keys(shuffledData).forEach((event) => {
+        shuffledData[event] = [...shuffledData[event]].sort(
+          () => Math.random() - 0.5
+        );
+      });
+
+      return shuffledData;
+    });
   };
 
   // 삭제
-  const handleRemove = (removePlayer) => {
-    setPlayerList(playerList.filter((player) => player !== removePlayer));
-    setVaultItems(vaultItems.filter((player) => player !== removePlayer));
-    setBarItems(vaultItems.filter((player) => player !== removePlayer));
-    setParallelBarItems(vaultItems.filter((player) => player !== removePlayer));
+  const handleRemove = (removePlayer: string) => {
+    setPlayers((prev) => ({
+      ...prev,
+      [gender]: prev[gender].filter((player) => player.name !== removePlayer),
+    }));
+
+    setEventData((prev) => {
+      const updatedData = { ...prev };
+
+      eventCategories[gender].forEach((event) => {
+        updatedData[event] =
+          updatedData[event]?.filter((name) => name !== removePlayer) || [];
+      });
+
+      return updatedData;
+    });
   };
 
+  // 성별 바꾸기
   const handleGender = (e) => {
     setGender(e.target.value);
   };
 
+  // 남녀 별 선수목록
   useEffect(() => {
     const coachId = localStorage.getItem("userId");
+    if (!gender || !coachId) return;
 
-    const fetchPlayers = async (gender, setPlayers) => {
+    const fetchPlayers = async () => {
       const res = await fetch(
         `/api/database/player?coach_id=${coachId}&gender=${gender}`
       );
       const data = await res.json();
-      setPlayers(data);
+      setPlayers((prev) => ({ ...prev, [gender]: data }));
+      console.log(data);
     };
 
-    fetchPlayers("남", setMalePlayers);
-    fetchPlayers("여", setFemalePlayers);
-  }, []);
+    fetchPlayers();
+  }, [gender]);
+
+  // 종목 별로 순서 받아오기
+  useEffect(() => {
+    const coachId = localStorage.getItem("userId");
+    if (!gender || !coachId) return;
+
+    fetch(`/api/database/event?gender=${gender}&coach_id=${coachId}`)
+      .then((res) => res.json())
+      .then((data: PlayerEvent[]) => {
+        const categorizedData: Record<string, string[]> = {};
+
+        // 종목별 초기화
+        eventCategories[gender].forEach((event) => {
+          categorizedData[event] = [];
+        });
+
+        // 데이터 분류
+        data.forEach((item) => {
+          if (categorizedData[item.event_name]) {
+            categorizedData[item.event_name].push(item.player_name);
+          }
+        });
+
+        setEventData(categorizedData);
+      })
+      .catch((err) => {
+        console.error("Error fetching event list:", err);
+      });
+  }, [gender]);
 
   return (
     <div className={styles.playerContainer}>
@@ -147,6 +206,7 @@ export default function CoachPlayer() {
               placeholder="ex) 홍길동"
               value={newPlayer}
               onChange={(e) => setNewPlayer(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleAddPlayer()}
             />
           </span>
           <button onClick={handleAddPlayer}>추가</button>
@@ -156,16 +216,14 @@ export default function CoachPlayer() {
       <section className={styles.allPlayerContainer}>
         <p>선수 목록</p>
         <ul>
-          {(gender === "남" ? malePlayers : femalePlayers).map(
-            (item, index) => (
-              <li key={index}>
-                {item.name}
-                <button onClick={() => handleRemove(item)}>
-                  <img src="/icon/cancel.png" alt="삭제" />
-                </button>
-              </li>
-            )
-          )}
+          {players[gender]?.map((player, index) => (
+            <li key={index}>
+              {player.name}
+              <button onClick={() => handleRemove(player.name)}>
+                <img src="/icon/cancel.png" alt="삭제" />
+              </button>
+            </li>
+          ))}
         </ul>
       </section>
       <button onClick={handleShffle} className={styles.randomButton}>
@@ -174,120 +232,28 @@ export default function CoachPlayer() {
       <p>드래그로 순서변경이 가능합니다</p>
 
       <section className={styles.playerList}>
-        <div className={styles.partContainer}>
-          <h3>도마 순서</h3>
-          <ul>
-            {vaultItems.map((name, index) => (
-              <li
-                key={index}
-                draggable
-                onDragStart={() => handleDragStart(index, "vault")}
-                onDragOver={handleDragOver}
-                onDrop={() =>
-                  handleDrop(index, "vault", vaultItems, setVaultItems)
-                }
-              >
-                {name}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className={styles.partContainer}>
-          <h3>철봉 순서</h3>
-          <ul>
-            {barItems.map((name, index) => (
-              <li
-                key={index}
-                draggable
-                onDragStart={() => handleDragStart(index, "bar")}
-                onDragOver={handleDragOver}
-                onDrop={() => handleDrop(index, "bar", barItems, setBarItems)}
-              >
-                {name}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className={styles.partContainer}>
-          <h3>평행봉 순서</h3>
-          <ul>
-            {parallelBarItems.map((name, index) => (
-              <li
-                key={index}
-                draggable
-                onDragStart={() => handleDragStart(index, "parallelBar")}
-                onDragOver={handleDragOver}
-                onDrop={() =>
-                  handleDrop(
-                    index,
-                    "parallelBar",
-                    parallelBarItems,
-                    setParallelBarItems
-                  )
-                }
-              >
-                {name}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className={styles.partContainer}>
-          <h3>도마 순서</h3>
-          <ul>
-            {vaultItems.map((name, index) => (
-              <li
-                key={index}
-                draggable
-                onDragStart={() => handleDragStart(index, "vault")}
-                onDragOver={handleDragOver}
-                onDrop={() =>
-                  handleDrop(index, "vault", vaultItems, setVaultItems)
-                }
-              >
-                {name}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className={styles.partContainer}>
-          <h3>철봉 순서</h3>
-          <ul>
-            {barItems.map((name, index) => (
-              <li
-                key={index}
-                draggable
-                onDragStart={() => handleDragStart(index, "bar")}
-                onDragOver={handleDragOver}
-                onDrop={() => handleDrop(index, "bar", barItems, setBarItems)}
-              >
-                {name}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className={styles.partContainer}>
-          <h3>평행봉 순서</h3>
-          <ul>
-            {parallelBarItems.map((name, index) => (
-              <li
-                key={index}
-                draggable
-                onDragStart={() => handleDragStart(index, "parallelBar")}
-                onDragOver={handleDragOver}
-                onDrop={() =>
-                  handleDrop(
-                    index,
-                    "parallelBar",
-                    parallelBarItems,
-                    setParallelBarItems
-                  )
-                }
-              >
-                {name}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {eventCategories[gender].map((event) => (
+          <div key={event} className={styles.partContainer}>
+            <h3>{event} 순서</h3>
+            <ul>
+              {eventData[event]?.map((name, index) => (
+                <li
+                  key={index}
+                  draggable
+                  onDragStart={() => handleDragStart(index, event)}
+                  onDragOver={handleDragOver}
+                  onDrop={() =>
+                    handleDrop(index, event, eventData[event], (newList) =>
+                      setEventData((prev) => ({ ...prev, [event]: newList }))
+                    )
+                  }
+                >
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </section>
       <button className={styles.submit}>제출</button>
     </div>
