@@ -44,7 +44,7 @@ export default function CoachPlayer() {
 
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["마루", "안마", "링", "도마", "평행봉", "철봉"],
-    여: ["도마", "2단 평행봉", "평균대", "마루"],
+    여: ["도마", "이단 평행봉", "평균대", "마루"],
   };
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
 
@@ -249,6 +249,9 @@ export default function CoachPlayer() {
                   }
                 >
                   {name}
+                  <button>
+                    <img src="/icon/cancel.png" alt="삭제" />
+                  </button>
                 </li>
               ))}
             </ul>

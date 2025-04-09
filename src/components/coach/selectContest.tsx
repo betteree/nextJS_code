@@ -22,27 +22,22 @@ export default function SelectContest() {
     setSelectedContest(e.target.value); // ✅ 선택한 competition_id 저장
   };
 
-  const handleSubmit = async () => {
-    localStorage.setItem("selectedCompetition", selectedContest);
+  const handleSubmit = (contestTitle: string) => {
+    localStorage.setItem("selectedCompetition", contestTitle);
     router.push("/coach_board");
   };
 
   return (
     <div>
-      <select
-        name="contest"
-        id="contest"
-        defaultValue=""
-        onChange={handleSelect}
-      >
-        <option value="">대회선택</option>
+      <ul>
         {competition.map((item, index) => (
-          <option value={item.title} key={index}>
-            {item.title}
-          </option>
+          <li key={index}>
+            <button onClick={() => handleSubmit(item.title)}>
+              {item.title}
+            </button>
+          </li>
         ))}
-      </select>
-      <button onClick={handleSubmit}>다음</button>
+      </ul>
     </div>
   );
 }
