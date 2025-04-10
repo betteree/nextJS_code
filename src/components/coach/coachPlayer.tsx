@@ -2,56 +2,34 @@
 
 import { useState, useEffect } from "react";
 import styles from "@/styles/coachBoard.module.css";
+import VaultModal from "./vaultModal";
 
 export default function CoachPlayer() {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
     남: [],
     여: [],
   });
-  const [playerList, setPlayerList] = useState([
-    "김나은",
-    "박지민",
-    "이서연",
-    "최민수",
-    "정하늘",
-  ]);
-  const [vaultItems, setVaultItems] = useState([
-    "김나은",
-    "박지민",
-    "이서연",
-    "최민수",
-    "정하늘",
-  ]);
-  const [barItems, setBarItems] = useState([
-    "김나은",
-    "박지민",
-    "이서연",
-    "최민수",
-    "정하늘",
-  ]);
-  const [parallelBarItems, setParallelBarItems] = useState([
-    "김나은",
-    "박지민",
-    "이서연",
-    "최민수",
-    "정하늘",
-  ]);
+
   const [newPlayer, setNewPlayer] = useState("");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [draggedCategory, setDraggedCategory] = useState<string | null>(null);
-  const [coachId, setCoachId] = useState(null);
   const [gender, setGender] = useState("남");
 
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["마루", "안마", "링", "도마", "평행봉", "철봉"],
     여: ["도마", "이단 평행봉", "평균대", "마루"],
   };
+  // 각 종목의 순서 리스트데이터
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
 
+  const [isVault, setIsVault] = useState(false);
   const handleDragStart = (index: number, category: string) => {
     setDraggedIndex(index);
     setDraggedCategory(category);
   };
+
+  // 코치아이디
+  const [coachId, setCoachId] = useState("");
 
   const handleDragOver = (e: React.DragEvent<HTMLLIElement>) => {
     e.preventDefault();
@@ -100,17 +78,16 @@ export default function CoachPlayer() {
 
   // 랜덤 배치
   const handleShffle = () => {
-    setEventData((prev) => {
-      const shuffledData = { ...prev };
+    const shuffledEventData = { ...eventData };
 
-      Object.keys(shuffledData).forEach((event) => {
-        shuffledData[event] = [...shuffledData[event]].sort(
-          () => Math.random() - 0.5
-        );
-      });
-
-      return shuffledData;
+    // 각 종목마다 선수 목록을 랜덤으로 섞기
+    Object.keys(shuffledEventData).forEach((event) => {
+      shuffledEventData[event] = [...players[gender]]
+        .map((player) => player.name)
+        .sort(() => Math.random() - 0.5);
     });
+
+    setEventData(shuffledEventData);
   };
 
   // 삭제
@@ -148,7 +125,6 @@ export default function CoachPlayer() {
       );
       const data = await res.json();
       setPlayers((prev) => ({ ...prev, [gender]: data }));
-      console.log(data);
     };
 
     fetchPlayers();
@@ -157,6 +133,7 @@ export default function CoachPlayer() {
   // 종목 별로 순서 받아오기
   useEffect(() => {
     const coachId = localStorage.getItem("userId");
+    setCoachId(coachId);
     if (!gender || !coachId) return;
 
     fetch(`/api/database/event?gender=${gender}&coach_id=${coachId}`)
@@ -176,6 +153,7 @@ export default function CoachPlayer() {
           }
         });
 
+        // 도마 데이터 따로 가져오기
         setEventData(categorizedData);
       })
       .catch((err) => {
@@ -183,6 +161,31 @@ export default function CoachPlayer() {
       });
   }, [gender]);
 
+  // 도마 상세 모달창
+  const handleValutModal = () => {
+    setIsVault((isVault) => !isVault);
+  };
+
+  async function handleSubmit() {
+    const response = await fetch("/api/database/event", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        coachId: coachId,
+        gender: gender,
+        eventData: eventData,
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("데이터가 성공적으로 저장되었습니다.");
+    } else {
+      console.error("에러:", data.error);
+    }
+  }
   return (
     <div className={styles.playerContainer}>
       <section className={styles.genderContainer}>
@@ -235,30 +238,45 @@ export default function CoachPlayer() {
         {eventCategories[gender].map((event) => (
           <div key={event} className={styles.partContainer}>
             <h3>{event} 순서</h3>
-            <ul>
-              {eventData[event]?.map((name, index) => (
-                <li
-                  key={index}
-                  draggable
-                  onDragStart={() => handleDragStart(index, event)}
-                  onDragOver={handleDragOver}
-                  onDrop={() =>
-                    handleDrop(index, event, eventData[event], (newList) =>
-                      setEventData((prev) => ({ ...prev, [event]: newList }))
-                    )
-                  }
-                >
-                  {name}
-                  <button>
-                    <img src="/icon/cancel.png" alt="삭제" />
-                  </button>
-                </li>
-              ))}
-            </ul>
+            {event === "도마" ? (
+              <button onClick={handleValutModal}>상세설정</button>
+            ) : (
+              <ul>
+                {eventData[event]?.map((name, index) => (
+                  <li
+                    key={index}
+                    draggable
+                    onDragStart={() => handleDragStart(index, event)}
+                    onDragOver={handleDragOver}
+                    onDrop={() =>
+                      handleDrop(index, event, eventData[event], (newList) =>
+                        setEventData((prev) => ({ ...prev, [event]: newList }))
+                      )
+                    }
+                  >
+                    {name}
+                    <button>
+                      <img src="/icon/cancel.png" alt="삭제" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         ))}
       </section>
-      <button className={styles.submit}>제출</button>
+      <button className={styles.submit} onClick={handleSubmit}>
+        제출
+      </button>
+
+      {isVault && (
+        <VaultModal
+          isOpen={isVault}
+          onClose={handleValutModal}
+          gender={gender}
+          coachId={coachId}
+        ></VaultModal>
+      )}
     </div>
   );
 }
