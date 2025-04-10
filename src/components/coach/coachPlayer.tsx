@@ -175,25 +175,56 @@ export default function CoachPlayer() {
   };
 
   async function handleSubmit() {
-    const response = await fetch("/api/database/event", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        coachId: coachId,
-        gender: gender,
-        eventData: eventData,
-      }),
-    });
+    try {
+      const playersToSave = [...players[gender]]; //선수 목록 가져오기
 
-    const data = await response.json();
-    if (response.ok) {
-      console.log("데이터가 성공적으로 저장되었습니다.");
-    } else {
-      console.error("에러:", data.error);
+      const playerData = playersToSave.map((player) => ({
+        name: player.name,
+        gender: gender,
+        coachId: coachId,
+      }));
+
+      // 선수 정보 저장
+      const playerResponse = await fetch("/api/database/player", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(playerData),
+      });
+
+      const playerResponseData = await playerResponse.json();
+      if (!playerResponse.ok) {
+        throw new Error(playerResponseData.error || "선수 저장 실패");
+      }
+
+      // 종목별 선수 순서 저장
+      const eventResponse = await fetch("/api/database/event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          coachId: coachId,
+          gender: gender,
+          eventData: eventData,
+        }),
+      });
+
+      const eventDataResponse = await eventResponse.json();
+      if (eventResponse.ok) {
+        console.log("종목별 선수 순서 저장 성공");
+      } else {
+        console.error("종목별 순서 저장 실패:", eventDataResponse.error);
+      }
+
+      // 성공적으로 저장이 완료되면 메시지 출력
+      console.log("선수 데이터가 성공적으로 저장되었습니다.");
+    } catch (error) {
+      console.error("에러:", error);
     }
   }
+
   return (
     <div className={styles.playerContainer}>
       <section className={styles.genderContainer}>
