@@ -63,15 +63,15 @@ export default function CoachPlayer() {
       [gender]: [...(prev[gender] || []), { name: newPlayer }],
     }));
 
-    setEventData((prev) => {
-      const updatedData = { ...prev };
+    // setEventData((prev) => {
+    //   const updatedData = { ...prev };
 
-      eventCategories[gender].forEach((event) => {
-        updatedData[event] = [...(updatedData[event] || []), newPlayer];
-      });
+    //   eventCategories[gender].forEach((event) => {
+    //     updatedData[event] = [...(updatedData[event] || []), newPlayer];
+    //   });
 
-      return updatedData;
-    });
+    //   return updatedData;
+    // });
 
     setNewPlayer("");
   };
@@ -273,8 +273,9 @@ export default function CoachPlayer() {
         <VaultModal
           isOpen={isVault}
           onClose={handleValutModal}
-          gender={gender}
           coachId={coachId}
+          players={players}
+          gender={gender}
         ></VaultModal>
       )}
     </div>

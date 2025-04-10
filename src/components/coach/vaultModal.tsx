@@ -2,7 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 
-export default function VaultModal({ isOpen, onClose, gender, coachId }) {
+export default function VaultModal({
+  isOpen,
+  onClose,
+  gender,
+  coachId,
+  players,
+}) {
   const [vaultData, setVaultData] = useState<{
     도마1: string[];
     도마2: string[];
@@ -10,7 +16,8 @@ export default function VaultModal({ isOpen, onClose, gender, coachId }) {
     도마1: [],
     도마2: [],
   });
-  const [newPlayer, setNewPlayer] = useState<{
+
+  const [newSkill, setNewSkill] = useState<{
     player_name: string;
     skill_number: string;
   }>({
@@ -19,46 +26,39 @@ export default function VaultModal({ isOpen, onClose, gender, coachId }) {
   });
 
   useEffect(() => {
-    if (!isOpen || !gender || !coachId) return;
+    setVaultData({
+      도마1: [],
+      도마2: [],
+    });
+  }, [gender]);
 
-    fetch(`/api/database/event?gender=${gender}&coach_id=${coachId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const vaultData1 = data.filter((item) => item.event_name === "도마1");
-        const vaultData2 = data.filter((item) => item.event_name === "도마2");
-
-        // 도마1, 도마2의 선수 이름과 기술 번호를 함께 설정
-        const 도마1Data = vaultData1.map((item) => ({
-          player_name: item.player_name,
-          skill_number: item.skill_number,
-        }));
-        const 도마2Data = vaultData2.map((item) => ({
-          player_name: item.player_name,
-          skill_number: item.skill_number,
-        }));
-
-        setVaultData({
-          도마1: 도마1Data,
-          도마2: 도마2Data,
-        });
-      })
-      .catch((err) => console.error("Error fetching vault data:", err));
-  }, [gender, coachId]);
-
-  const handleAddPlayer = (eventName: string) => {
-    if (!newPlayer.player_name || !newPlayer.skill_number) {
-      alert("선수 이름과 기술 번호를 입력해주세요.");
-      return;
-    }
-
-    // 새 선수 추가
+  const handleAddPlayer = (eventName: string, playerName: string) => {
     setVaultData((prevData) => {
       const updatedData = { ...prevData };
-      updatedData[eventName].push(newPlayer);
+
+      const alreadyAdded = updatedData[eventName].some(
+        (player) => player.player_name === playerName
+      );
+      if (!alreadyAdded) {
+        updatedData[eventName].push({
+          player_name: playerName,
+          skill_number: "",
+        });
+      }
       return updatedData;
     });
+  };
 
-    setNewPlayer({ player_name: "", skill_number: "" }); // 입력값 초기화
+  const handleSkillChange = (
+    eventName: string,
+    index: number,
+    skillNumber: string
+  ) => {
+    setVaultData((prevData) => {
+      const updatedData = { ...prevData };
+      updatedData[eventName][index].skill_number = skillNumber;
+      return updatedData;
+    });
   };
 
   return (
@@ -67,29 +67,62 @@ export default function VaultModal({ isOpen, onClose, gender, coachId }) {
       <div>
         <section>
           <h2>도마1 선수추가</h2>
-          <button onClick={() => handleAddPlayer("도마1")}>선수이름</button>
+          {players[gender]?.map((player, index) => (
+            <button
+              key={index}
+              onClick={() => handleAddPlayer("도마1", player.name)}
+            >
+              {player.name}
+            </button>
+          ))}
         </section>
         <h2>도마1</h2>
         <ul>
-          <li>
-            홍길동
-            <input type="text" />
-          </li>
+          {vaultData.도마1.map((player, index) => (
+            <li key={index}>
+              {player.player_name}
+              <input
+                type="text"
+                value={player.skill_number}
+                onChange={(e) =>
+                  handleSkillChange("도마1", index, e.target.value)
+                }
+                placeholder="기술 번호 입력"
+              />
+            </li>
+          ))}
         </ul>
+
         <section>
-          <h2>도마1 선수추가</h2>
-          <button>선수이름</button>
+          <h2>도마2 선수추가</h2>
+          {players[gender]?.map((player, index) => (
+            <button
+              key={index}
+              onClick={() => handleAddPlayer("도마2", player.name)}
+            >
+              {player.name}
+            </button>
+          ))}
         </section>
+
         <h2>도마2</h2>
         <ul>
           {vaultData.도마2.map((player, index) => (
             <li key={index}>
               {player.player_name}
-              <input type="text" defaultValue={player.skill_number} />
+              <input
+                type="text"
+                value={player.skill_number}
+                onChange={(e) =>
+                  handleSkillChange("도마2", index, e.target.value)
+                }
+                placeholder="기술 번호 입력"
+              />
             </li>
           ))}
         </ul>
       </div>
+      <button>저장</button>
     </div>
   );
 }
