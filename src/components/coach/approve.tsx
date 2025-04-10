@@ -68,7 +68,6 @@ export default function Approve() {
           </span>
           <button type="submit">로그인</button>
         </form>
-        <button className={styles.approveButton}>승인요청</button>
       </section>
     </div>
   );
