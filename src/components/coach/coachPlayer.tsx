@@ -58,6 +58,14 @@ export default function CoachPlayer() {
   const handleAddPlayer = () => {
     if (!newPlayer.trim()) return;
 
+    const isDuplicate = players[gender].some(
+      (player) => player.name === newPlayer.trim()
+    );
+
+    if (isDuplicate) {
+      alert("이미 존재하는 선수입니다.");
+      return;
+    }
     setPlayers((prev) => ({
       ...prev,
       [gender]: [...(prev[gender] || []), { name: newPlayer }],
