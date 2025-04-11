@@ -183,7 +183,6 @@ export default function CoachPlayer() {
         gender: gender,
         coachId: coachId,
       }));
-
       // 선수 정보 저장
       const playerResponse = await fetch("/api/database/player", {
         method: "POST",
@@ -212,14 +211,11 @@ export default function CoachPlayer() {
       });
 
       const eventDataResponse = await eventResponse.json();
-      if (eventResponse.ok) {
-        console.log("종목별 선수 순서 저장 성공");
-      } else {
-        console.error("종목별 순서 저장 실패:", eventDataResponse.error);
+      if (!eventResponse.ok) {
+        throw new Error("종목별 순서 저장 실패:", eventDataResponse.error);
       }
 
-      // 성공적으로 저장이 완료되면 메시지 출력
-      console.log("선수 데이터가 성공적으로 저장되었습니다.");
+      alert("제출 완료");
     } catch (error) {
       console.error("에러:", error);
     }

@@ -31,38 +31,50 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  const { name, gender, coachId } = await req.json();
+  const body = await req.json();
 
-  // 입력값이 비어있는지 확인
-  if (!name || !gender || !coachId) {
+  if (!Array.isArray(body) || body.length === 0) {
     return NextResponse.json(
-      { error: "Name, Gender, and Coach ID are required" },
+      { error: "Invalid data format. Expected an array of players." },
       { status: 400 }
     );
   }
 
+  // 성별별로 선수 삭제 후 추가
   try {
-    // 선수 추가 로직
-    const [existingPlayer] = await pool.query(
-      "SELECT * FROM player WHERE name = ? AND gender = ? AND coach_id = ?",
-      [name, gender, coachId]
-    );
+    const { gender } = body[0];
 
-    if (existingPlayer.length > 0) {
+    if (!gender) {
       return NextResponse.json(
-        { error: "Player already exists" },
+        { error: "Gender is required for deleting and adding players" },
         { status: 400 }
       );
     }
 
-    await pool.query(
-      "INSERT INTO player (name, gender, coach_id) VALUES (?, ?, ?)",
-      [name, gender, coachId]
-    );
+    // 해당 성별의 선수 데이터를 삭제
+    await pool.query("DELETE FROM player WHERE gender = ?", [gender]);
 
-    return NextResponse.json({ message: "Player added successfully" });
+    // 새로운 선수 데이터 추가
+    for (const player of body) {
+      const { name, coachId } = player;
+
+      if (!name || !coachId) {
+        return NextResponse.json(
+          { error: "Name and Coach ID are required" },
+          { status: 400 }
+        );
+      }
+
+      // 새로운 선수만 추가
+      await pool.query(
+        "INSERT INTO player (name, gender, coach_id) VALUES (?, ?, ?)",
+        [name, gender, coachId]
+      );
+    }
+
+    return NextResponse.json({ message: "Players updated successfully" });
   } catch (error) {
-    console.error(error);
+    console.error("Error processing request:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

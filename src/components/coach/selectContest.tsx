@@ -18,13 +18,30 @@ export default function SelectContest() {
       });
   }, []);
 
-  const handleSelect = (e) => {
-    setSelectedContest(e.target.value); // ✅ 선택한 competition_id 저장
-  };
+  const handleSubmit = async (contest) => {
+    localStorage.setItem("selectedCompetition", contest.title);
+    localStorage.setItem("competitionId", contest.id);
+    const coachId = localStorage.getItem("userId");
 
-  const handleSubmit = (contestTitle: string) => {
-    localStorage.setItem("selectedCompetition", contestTitle);
-    router.push("/coach_board");
+    const competitionData = {
+      coach_id: coachId,
+      competition_id: contest.id,
+    };
+
+    const competitionResponse = await fetch("/api/database/coach_competition", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(competitionData),
+    });
+
+    const result = await competitionResponse.json();
+    if (result.success) {
+      router.push("/coach_board");
+    } else {
+      alert(`실패 ${result.error}`);
+    }
   };
 
   return (
@@ -32,9 +49,7 @@ export default function SelectContest() {
       <ul>
         {competition.map((item, index) => (
           <li key={index}>
-            <button onClick={() => handleSubmit(item.title)}>
-              {item.title}
-            </button>
+            <button onClick={() => handleSubmit(item)}>{item.title}</button>
           </li>
         ))}
       </ul>
