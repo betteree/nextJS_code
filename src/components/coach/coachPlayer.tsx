@@ -118,6 +118,20 @@ export default function CoachPlayer() {
     });
   };
 
+  // 종목별 삭제
+  const handleRemoveFromEvent = (event: string, playerName: string) => {
+    setEventData((prevData) => {
+      const updatedData = { ...prevData };
+
+      // 해당 종목에서 선수를 삭제
+      updatedData[event] = updatedData[event].filter(
+        (name) => name !== playerName
+      );
+
+      return updatedData;
+    });
+  };
+
   // 성별 바꾸기
   const handleGender = (e) => {
     setGender(e.target.value);
@@ -279,7 +293,9 @@ export default function CoachPlayer() {
           <div key={event} className={styles.partContainer}>
             <h3>{event} 순서</h3>
             {event === "도마" ? (
-              <button onClick={handleValutModal}>상세설정</button>
+              <div className={styles.valutDetail}>
+                <button onClick={handleValutModal}>상세설정</button>
+              </div>
             ) : (
               <ul>
                 {eventData[event]?.map((name, index) => (
@@ -295,7 +311,7 @@ export default function CoachPlayer() {
                     }
                   >
                     {name}
-                    <button>
+                    <button onClick={() => handleRemoveFromEvent(event, name)}>
                       <img src="/icon/cancel.png" alt="삭제" />
                     </button>
                   </li>

@@ -149,6 +149,7 @@
     padding: 10px;
   }
 
+  /* 선수목록 컨테이너 */
   & .allPlayerContainer {
     border: 2px solid lightgray;
     border-radius: 5px;
@@ -182,6 +183,7 @@
     }
   }
 
+  /* 선수목록 */
   & .playerList {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -209,6 +211,7 @@
     }
   }
 
+  /* 각 종목별 순서 박스 */
   & .partContainer {
     background-color: snow;
     width: 100%;
@@ -223,8 +226,17 @@
       text-align: center;
       color: black;
     }
+
+    /* 상세 설정 버튼 */
+    & .valutDetail {
+      height: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
+  /* 제출 버튼 */
   & .submit {
     margin-top: 10px;
     font-size: 16px;
@@ -241,6 +253,7 @@
   }
 }
 
+/* 추가버튼 */
 & .addContainer {
   border: 2px solid lightgray;
   border-radius: 5px;
