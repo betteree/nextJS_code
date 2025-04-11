@@ -276,7 +276,10 @@ export default function CoachPlayer() {
           {players[gender]?.map((player, index) => (
             <li key={index}>
               {player.name}
-              <button onClick={() => handleRemove(player.name)}>
+              <button
+                className={styles.deleteButton}
+                onClick={() => handleRemove(player.name)}
+              >
                 <img src="/icon/cancel.png" alt="삭제" />
               </button>
             </li>
@@ -311,7 +314,10 @@ export default function CoachPlayer() {
                     }
                   >
                     {name}
-                    <button onClick={() => handleRemoveFromEvent(event, name)}>
+                    <button
+                      className={styles.deleteButton}
+                      onClick={() => handleRemoveFromEvent(event, name)}
+                    >
                       <img src="/icon/cancel.png" alt="삭제" />
                     </button>
                   </li>
@@ -321,9 +327,6 @@ export default function CoachPlayer() {
           </div>
         ))}
       </section>
-      <button className={styles.submit} onClick={handleSubmit}>
-        제출
-      </button>
 
       {isVault && (
         <VaultModal
@@ -334,6 +337,10 @@ export default function CoachPlayer() {
           gender={gender}
         ></VaultModal>
       )}
+
+      <button className={styles.submit} onClick={handleSubmit}>
+        제출
+      </button>
     </div>
   );
 }

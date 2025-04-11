@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/db"; // MySQL 연결을 위한 pool
 
+// 값 받아오기
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const coachId = searchParams.get("coach_id");
@@ -30,6 +31,7 @@ export async function GET(req) {
   }
 }
 
+// 수정 또는 제출
 export async function POST(req) {
   const body = await req.json();
 

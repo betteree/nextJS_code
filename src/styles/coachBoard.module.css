@@ -99,6 +99,7 @@
 /* 선수 순서 컴포넌트 */
 & .playerContainer {
   padding: 20px;
+  position: relative;
 
   & header {
     & h2 {
@@ -174,11 +175,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        & button {
-          padding: 0;
-          border: 0;
-          background-color: transparent;
-        }
       }
     }
   }
@@ -229,10 +225,16 @@
 
     /* 상세 설정 버튼 */
     & .valutDetail {
-      height: 80%;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin: 20px 10px;
+
+      & button {
+        border: 1px solid lightgray;
+        width: 100%;
+        border-radius: 5px;
+      }
     }
   }
 
@@ -290,4 +292,87 @@
       color: black;
     }
   }
+}
+
+/* 도마 모달 스타일 */
+& .vaultModalContainer {
+  width: 50%;
+  border: 2px solid dodgerblue;
+  border-radius: 10px;
+  margin-block: 10px;
+  padding: 10px;
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+
+  & p {
+    margin: 0;
+  }
+
+  /* 선수 추가 */
+  & .addPlayer {
+    & h2 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    & button {
+      font-size: 16px;
+      border: 2px solid lightgray;
+      background-color: transparent;
+      border-radius: 5px;
+      margin-right: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: dodgerblue;
+        color: white;
+      }
+    }
+  }
+
+  /* 기술 입력 및 리스트 */
+  & .vaultList {
+    display: flex;
+    flex-flow: column;
+    gap: 5px;
+
+    & li {
+      border: 2px solid dodgerblue;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px;
+      border-radius: 5px;
+      justify-content: space-between;
+
+      & input {
+        border: 0;
+        border-bottom: 1px solid black;
+        font-size: 15px;
+      }
+    }
+  }
+
+  & .bottomButton {
+    display: flex;
+    justify-content: space-between;
+    & button {
+      border: 0;
+      padding: 5px 10px;
+      border-radius: 5px;
+
+      &:last-child {
+        background-color: green;
+        color: white;
+      }
+    }
+  }
+}
+
+/* 삭제 버튼 스타일 */
+& .deleteButton {
+  border: 0;
+  background-color: transparent;
 }

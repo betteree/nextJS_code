@@ -3,6 +3,7 @@
 
 import React, { useEffect } from "react";
 import { useDragAndDrop } from "@/hooks/useDragAndDrop"; // 커스텀 훅 import
+import styles from "@/styles/coachBoard.module.css";
 
 export default function VaultModal({
   isOpen,
@@ -37,11 +38,20 @@ export default function VaultModal({
     }
   };
 
+  // 삭제 함수
+  const handleDelete = (category: "도마1" | "도마2", index: number) => {
+    if (category === "도마1") {
+      도마1.setItems((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      도마2.setItems((prev) => prev.filter((_, i) => i !== index));
+    }
+  };
+
   return (
-    <div>
-      <button onClick={onClose}>Close</button>
-      <section>
-        <h2>도마1 선수추가</h2>
+    <div className={styles.vaultModalContainer}>
+      <p>클릭 시 추가됩니다</p>
+      <section className={styles.addPlayer}>
+        <h2>1차 선수추가</h2>
         {players[gender]?.map((player, index) => (
           <button
             key={index}
@@ -52,8 +62,7 @@ export default function VaultModal({
         ))}
       </section>
 
-      <h2>도마1</h2>
-      <ul>
+      <ul className={styles.vaultList}>
         {도마1.items.map((player, index) => (
           <li
             key={index}
@@ -73,12 +82,18 @@ export default function VaultModal({
               }}
               placeholder="기술 번호 입력"
             />
+            <button
+              className={styles.deleteButton}
+              onClick={() => handleDelete("도마1", index)}
+            >
+              <img src="/icon/cancel.png" alt="삭제" />
+            </button>
           </li>
         ))}
       </ul>
 
-      <section>
-        <h2>도마2 선수추가</h2>
+      <section className={styles.addPlayer}>
+        <h2>2차 선수추가</h2>
         {players[gender]?.map((player, index) => (
           <button
             key={index}
@@ -89,8 +104,7 @@ export default function VaultModal({
         ))}
       </section>
 
-      <h2>도마2</h2>
-      <ul>
+      <ul className={styles.vaultList}>
         {도마2.items.map((player, index) => (
           <li
             key={index}
@@ -110,11 +124,20 @@ export default function VaultModal({
               }}
               placeholder="기술 번호 입력"
             />
+            <button
+              className={styles.deleteButton}
+              onClick={() => handleDelete("도마2", index)}
+            >
+              <img src="/icon/cancel.png" alt="삭제" />
+            </button>
           </li>
         ))}
       </ul>
 
-      <button>저장</button>
+      <section className={styles.bottomButton}>
+        <button onClick={onClose}>Close</button>
+        <button>저장</button>
+      </section>
     </div>
   );
 }
