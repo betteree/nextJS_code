@@ -42,11 +42,11 @@ export async function POST(req) {
 
   // 성별별로 선수 삭제 후 추가
   try {
-    const { gender } = body[0];
+    const { gender, competitionId } = body[0];
 
-    if (!gender) {
+    if (!gender || !competitionId) {
       return NextResponse.json(
-        { error: "Gender is required for deleting and adding players" },
+        { error: "Gender and Competition ID are required" },
         { status: 400 }
       );
     }
@@ -66,9 +66,16 @@ export async function POST(req) {
       }
 
       // 새로운 선수만 추가
-      await pool.query(
+      const [playerInsertResult] = await pool.query(
         "INSERT INTO player (name, gender, coach_id) VALUES (?, ?, ?)",
         [name, gender, coachId]
+      );
+
+      const playerId = playerInsertResult.insertId;
+
+      await pool.query(
+        "INSERT INTO player_competition (player_id, competition_id) VALUES (?, ?)",
+        [playerId, competitionId]
       );
     }
 
