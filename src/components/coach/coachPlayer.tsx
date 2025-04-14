@@ -24,6 +24,7 @@ export default function CoachPlayer() {
 
   // 도마 모달 상태관리 함수
   const [isVault, setIsVault] = useState(false);
+  const [detailVault, setDetailVault] = useState([]);
   // 코치아이디
   const [coachId, setCoachId] = useState("");
 
@@ -163,7 +164,7 @@ export default function CoachPlayer() {
       .then((res) => res.json())
       .then((data: PlayerEvent[]) => {
         const categorizedData: Record<string, string[]> = {};
-
+        const vaultData = [];
         // 종목별 초기화
         eventCategories[gender].forEach((event) => {
           categorizedData[event] = [];
@@ -174,9 +175,11 @@ export default function CoachPlayer() {
           if (categorizedData[item.event_name]) {
             categorizedData[item.event_name].push(item.player_name);
           }
+          if (item.event_name.includes("도마")) {
+            vaultData.push(item);
+          }
         });
-
-        // 도마 데이터 따로 가져오기
+        setDetailVault(vaultData);
         setEventData(categorizedData);
       })
       .catch((err) => {
@@ -216,6 +219,14 @@ export default function CoachPlayer() {
         throw new Error(playerResponseData.error || "선수 저장 실패");
       }
 
+      // eventData 수정
+      const formattedEventData = {
+        ...eventData,
+        도마1: detailVault.filter((item) => item.event_name === "도마1"),
+        도마2: detailVault.filter((item) => item.event_name === "도마2"),
+      };
+      delete formattedEventData["도마"]; //도마는 ui만 렌더링 되도록 함
+
       // 종목별 선수 순서 저장
       const eventResponse = await fetch("/api/database/event", {
         method: "POST",
@@ -225,7 +236,7 @@ export default function CoachPlayer() {
         body: JSON.stringify({
           coachId: coachId,
           gender: gender,
-          eventData: eventData,
+          eventData: formattedEventData,
         }),
       });
 
@@ -335,6 +346,10 @@ export default function CoachPlayer() {
           coachId={coachId}
           players={players}
           gender={gender}
+          vaultList={detailVault}
+          onSave={(newList) => {
+            setDetailVault(newList);
+          }}
         ></VaultModal>
       )}
 

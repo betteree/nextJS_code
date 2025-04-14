@@ -11,6 +11,8 @@ export default function VaultModal({
   gender,
   coachId,
   players,
+  vaultList,
+  onSave,
 }) {
   const 도마1 = useDragAndDrop<{ player_name: string; skill_number: string }>(
     []
@@ -22,6 +24,23 @@ export default function VaultModal({
   useEffect(() => {
     도마1.setItems([]);
     도마2.setItems([]);
+
+    const 도마1Data = vaultList
+      .filter((item) => item.event_name === "도마1")
+      .map((item) => ({
+        player_name: item.player_name,
+        skill_number: String(item.skill_number),
+      }));
+
+    const 도마2Data = vaultList
+      .filter((item) => item.event_name === "도마2")
+      .map((item) => ({
+        player_name: item.player_name,
+        skill_number: String(item.skill_number),
+      }));
+
+    도마1.setItems(도마1Data);
+    도마2.setItems(도마2Data);
   }, [gender]);
 
   const handleAddPlayer = (category: "도마1" | "도마2", playerName: string) => {
@@ -47,6 +66,26 @@ export default function VaultModal({
     }
   };
 
+  // 저장함수 (저장 후 부모에 넘겨줌)
+
+  const handleSave = () => {
+    const newVaultList = [
+      ...도마1.items.map((item, idx) => ({
+        event_name: "도마1",
+        player_name: item.player_name,
+        skill_number: item.skill_number,
+        sequence: idx + 1,
+      })),
+      ...도마2.items.map((item, idx) => ({
+        event_name: "도마2",
+        player_name: item.player_name,
+        skill_number: item.skill_number,
+        sequence: idx + 1,
+      })),
+    ];
+
+    onSave(newVaultList);
+  };
   return (
     <div className={styles.vaultModalContainer}>
       <p>클릭 시 추가됩니다</p>
@@ -136,7 +175,7 @@ export default function VaultModal({
 
       <section className={styles.bottomButton}>
         <button onClick={onClose}>Close</button>
-        <button>저장</button>
+        <button onClick={handleSave}>저장</button>
       </section>
     </div>
   );
