@@ -25,15 +25,24 @@ export default function VaultModal({
     도마1.setItems([]);
     도마2.setItems([]);
 
+    // 해당 gender 선수 목록
+    const validNames = new Set(players[gender]?.map((p) => p.name) || []);
+
     const 도마1Data = vaultList
-      .filter((item) => item.event_name === "도마1")
+      .filter(
+        (item) =>
+          item.event_name === "도마1" && validNames.has(item.player_name)
+      )
       .map((item) => ({
         player_name: item.player_name,
         skill_number: String(item.skill_number),
       }));
 
     const 도마2Data = vaultList
-      .filter((item) => item.event_name === "도마2")
+      .filter(
+        (item) =>
+          item.event_name === "도마2" && validNames.has(item.player_name)
+      )
       .map((item) => ({
         player_name: item.player_name,
         skill_number: String(item.skill_number),
@@ -41,7 +50,7 @@ export default function VaultModal({
 
     도마1.setItems(도마1Data);
     도마2.setItems(도마2Data);
-  }, [gender]);
+  }, [gender, vaultList, players]);
 
   const handleAddPlayer = (category: "도마1" | "도마2", playerName: string) => {
     if (category === "도마1") {
