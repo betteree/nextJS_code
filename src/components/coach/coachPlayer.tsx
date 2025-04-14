@@ -165,7 +165,6 @@ export default function CoachPlayer() {
       .then((data: PlayerEvent[]) => {
         const categorizedData: Record<string, string[]> = {};
         const vaultData = [];
-        console.log(data);
         // 종목별 초기화
         eventCategories[gender].forEach((event) => {
           categorizedData[event] = [];
