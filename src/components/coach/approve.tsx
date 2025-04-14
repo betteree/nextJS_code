@@ -48,11 +48,11 @@ export default function Approve() {
         <form onSubmit={handleLogin}>
           <span>
             <label htmlFor="name">이름</label>
-            <input type="text" name="name" />
+            <input type="text" name="name" id="name" />
           </span>
           <span>
             <label htmlFor="phone">연락처</label>
-            <input type="text" name="phone" />
+            <input type="text" name="phone" id="phone" />
           </span>
 
           <span>

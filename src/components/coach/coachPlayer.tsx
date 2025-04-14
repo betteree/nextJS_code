@@ -273,6 +273,7 @@ export default function CoachPlayer() {
             </label>
             <input
               type="text"
+              id="name"
               placeholder="ex) 홍길동"
               value={newPlayer}
               onChange={(e) => setNewPlayer(e.target.value)}

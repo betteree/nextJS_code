@@ -17,7 +17,7 @@ export default function HomePage() {
 
         <section className={styles.homeWrapper}>
           <span>
-            <label htmlFor="">언어</label>
+            <label htmlFor="lang">언어</label>
             <select name="lang" id="lang">
               <option value="Korea">한국어</option>
               <option value="English">영어</option>
