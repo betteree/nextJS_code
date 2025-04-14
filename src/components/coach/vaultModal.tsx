@@ -94,6 +94,7 @@ export default function VaultModal({
     ];
 
     onSave(newVaultList);
+    onClose();
   };
   return (
     <div className={styles.vaultModalContainer}>

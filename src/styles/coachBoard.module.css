@@ -377,3 +377,42 @@
   border: 0;
   background-color: transparent;
 }
+
+/* 코치 대회 선택 스타일 */
+& .selectContainer {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 100px 30%;
+
+  & h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 20px;
+  }
+
+  & ul {
+    border-radius: 5px;
+    border: 2px solid dodgerblue;
+    background-color: white;
+    padding: 20px;
+    width: 100%;
+
+    & li {
+      & button {
+        width: 100%;
+        border: 2px solid dodgerblue;
+        background-color: #f0f8ff;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        padding-block: 5px;
+        font-size: 16px;
+
+        &:hover {
+          background-color: dodgerblue;
+          color: white;
+        }
+      }
+    }
+  }
+}

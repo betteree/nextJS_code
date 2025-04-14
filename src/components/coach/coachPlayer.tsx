@@ -140,7 +140,7 @@ export default function CoachPlayer() {
 
   // 남녀 별 선수목록
   useEffect(() => {
-    const coachId = localStorage.getItem("userId");
+    const coachId = localStorage.getItem("coach");
     if (!gender || !coachId) return;
 
     const fetchPlayers = async () => {
@@ -156,7 +156,7 @@ export default function CoachPlayer() {
 
   // 종목 별로 순서 받아오기
   useEffect(() => {
-    const coachId = localStorage.getItem("userId");
+    const coachId = localStorage.getItem("coach");
     setCoachId(coachId);
     if (!gender || !coachId) return;
 
@@ -165,7 +165,7 @@ export default function CoachPlayer() {
       .then((data: PlayerEvent[]) => {
         const categorizedData: Record<string, string[]> = {};
         const vaultData = [];
-
+        console.log(data);
         // 종목별 초기화
         eventCategories[gender].forEach((event) => {
           categorizedData[event] = [];
@@ -226,7 +226,7 @@ export default function CoachPlayer() {
         도마1: detailVault.filter((item) => item.event_name === "도마1"),
         도마2: detailVault.filter((item) => item.event_name === "도마2"),
       };
-      console.log(formattedEventData);
+
       delete formattedEventData["도마"]; //도마는 ui만 렌더링 되도록 함
 
       // 종목별 선수 순서 저장
@@ -244,7 +244,7 @@ export default function CoachPlayer() {
 
       const eventDataResponse = await eventResponse.json();
       if (!eventResponse.ok) {
-        throw new Error("종목별 순서 저장 실패:", eventDataResponse.error);
+        throw new Error(`종목별 순서 저장 실패: ${eventDataResponse.error}`);
       }
 
       alert("제출 완료");

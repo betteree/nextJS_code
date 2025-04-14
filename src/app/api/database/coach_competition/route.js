@@ -1,30 +1,33 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db.js";
 
-// POST 함수
 export async function POST(req) {
   try {
     const { coach_id, competition_id } = await req.json();
 
-    const existingEntry = await db.query(
-      "SELECT * FROM coach_competition WHERE coach_id = ? AND competition_id = ?",
+    const [rows] = await db.query(
+      "SELECT id FROM coach_competition WHERE coach_id = ? AND competition_id = ?",
       [coach_id, competition_id]
     );
 
-    // 존재여부확인
-    if (existingEntry.length > 0) {
+    if (rows.length > 0) {
       return NextResponse.json({
         success: true,
         message: "이미 등록된 대회입니다.",
+        coachCompetitionId: rows[0].id,
       });
     }
 
-    await db.query(
+    const [insertResult] = await db.query(
       "INSERT INTO coach_competition (coach_id, competition_id) VALUES (?, ?)",
       [coach_id, competition_id]
     );
 
-    return NextResponse.json({ success: true, message: "등록 완료!" });
+    return NextResponse.json({
+      success: true,
+      message: "등록 완료!",
+      coachCompetitionId: insertResult.insertId,
+    });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: error.message },

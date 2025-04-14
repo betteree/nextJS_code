@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import styles from "@/styles/coachBoard.module.css";
 
 export default function SelectContest() {
   const [competition, setCompetition] = useState([]);
-  const [selectedContest, setSelectedContest] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -38,6 +38,7 @@ export default function SelectContest() {
 
     const result = await competitionResponse.json();
     if (result.success) {
+      localStorage.setItem("coach", result.coachCompetitionId);
       router.push("/coach_board");
     } else {
       alert(`실패 ${result.error}`);
@@ -45,7 +46,8 @@ export default function SelectContest() {
   };
 
   return (
-    <div>
+    <div className={styles.selectContainer}>
+      <h2>대회 선택</h2>
       <ul>
         {competition.map((item, index) => (
           <li key={index}>

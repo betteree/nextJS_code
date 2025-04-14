@@ -44,9 +44,9 @@ export async function POST(req) {
 
   // 성별별로 선수 삭제 후 추가
   try {
-    const { gender, competitionId } = body[0];
+    const { gender, competitionId, coachId } = body[0];
 
-    if (!gender || !competitionId) {
+    if (!gender || !competitionId || !coachId) {
       return NextResponse.json(
         { error: "Gender and Competition ID are required" },
         { status: 400 }
@@ -54,7 +54,10 @@ export async function POST(req) {
     }
 
     // 해당 성별의 선수 데이터를 삭제
-    await pool.query("DELETE FROM player WHERE gender = ?", [gender]);
+    await pool.query("DELETE FROM player WHERE gender = ? AND coach_id = ?", [
+      gender,
+      coachId,
+    ]);
 
     // 새로운 선수 데이터 추가
     for (const player of body) {
@@ -67,17 +70,9 @@ export async function POST(req) {
         );
       }
 
-      // 새로운 선수만 추가
-      const [playerInsertResult] = await pool.query(
+      await pool.query(
         "INSERT INTO player (name, gender, coach_id) VALUES (?, ?, ?)",
         [name, gender, coachId]
-      );
-
-      const playerId = playerInsertResult.insertId;
-
-      await pool.query(
-        "INSERT INTO player_competition (player_id, competition_id) VALUES (?, ?)",
-        [playerId, competitionId]
       );
     }
 
