@@ -90,10 +90,10 @@ export async function POST(req) {
             INSERT INTO player_event (player_id, sequence, event_list_id)
             SELECT p.id, ?, ?
             FROM player p
-            WHERE p.name = ? AND p.coach_id = ?
+            WHERE p.name = ? AND p.coach_id = ? AND p.gender = ?
             ON DUPLICATE KEY UPDATE sequence = VALUES(sequence);
-          `,
-            [sequence, eventListId, player_name, coachId]
+            `,
+            [sequence, eventListId, player_name, coachId, gender]
           );
 
           // player_event_id 조회
@@ -102,9 +102,9 @@ export async function POST(req) {
             SELECT pe.id
             FROM player_event pe
             JOIN player p ON pe.player_id = p.id
-            WHERE p.name = ? AND p.coach_id = ? AND pe.event_list_id = ?
-          `,
-            [player_name, coachId, eventListId]
+            WHERE p.name = ? AND p.coach_id = ? AND pe.event_list_id = ? AND p.gender = ?
+            `,
+            [player_name, coachId, eventListId, gender]
           );
 
           const playerEventId = playerEventIdResult[0]?.id;
@@ -129,10 +129,10 @@ export async function POST(req) {
               INSERT INTO player_event (player_id, sequence, event_list_id)
               SELECT p.id, ?, ?
               FROM player p
-              WHERE p.name = ? AND p.coach_id = ?
+              WHERE p.name = ? AND p.coach_id = ? AND p.gender = ?
               ON DUPLICATE KEY UPDATE sequence = VALUES(sequence);
-            `,
-              [i + 1, eventListId, player, coachId]
+              `,
+              [i + 1, eventListId, player, coachId, gender]
             )
           );
         }
