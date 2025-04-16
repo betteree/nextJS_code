@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import styles from "@/styles/coachBoard.module.css";
 import VaultModal from "./vaultModal";
+import { VaultItem, Player, PlayerEvent } from "@/types/player";
 
 export default function CoachPlayer() {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
@@ -13,7 +14,7 @@ export default function CoachPlayer() {
   const [newPlayer, setNewPlayer] = useState("");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [draggedCategory, setDraggedCategory] = useState<string | null>(null);
-  const [gender, setGender] = useState("남");
+  const [gender, setGender] = useState<"남" | "여">("남");
 
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["마루", "안마", "링", "도마", "평행봉", "철봉"],
@@ -24,7 +25,7 @@ export default function CoachPlayer() {
 
   // 도마 모달 상태관리 함수
   const [isVault, setIsVault] = useState(false);
-  const [detailVault, setDetailVault] = useState([]);
+  const [detailVault, setDetailVault] = useState<VaultItem[]>([]);
   // 코치아이디
   const [coachId, setCoachId] = useState("");
 
@@ -134,8 +135,9 @@ export default function CoachPlayer() {
   };
 
   // 성별 바꾸기
-  const handleGender = (e) => {
-    setGender(e.target.value);
+  const handleGender = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = e.currentTarget.value as "남" | "여";
+    setGender(value);
   };
 
   // 남녀 별 선수목록
@@ -165,7 +167,7 @@ export default function CoachPlayer() {
 
   // 종목 별로 순서 받아오기
   useEffect(() => {
-    const coachId = localStorage.getItem("coach");
+    const coachId = localStorage.getItem("coach") as string;
     setCoachId(coachId);
     if (!gender || !coachId) return;
 
@@ -173,7 +175,7 @@ export default function CoachPlayer() {
       .then((res) => res.json())
       .then((data: PlayerEvent[]) => {
         const categorizedData: Record<string, string[]> = {};
-        const vaultData = [];
+        const vaultData: VaultItem[] = [];
         // 종목별 초기화
         eventCategories[gender].forEach((event) => {
           categorizedData[event] = [];
@@ -229,7 +231,11 @@ export default function CoachPlayer() {
       }
 
       // eventData 수정
-      const formattedEventData = {
+      const formattedEventData: {
+        도마1: VaultItem[];
+        도마2: VaultItem[];
+        [key: string]: VaultItem[];
+      } = {
         ...eventData,
         도마1: detailVault.filter((item) => item.event_name === "도마1"),
         도마2: detailVault.filter((item) => item.event_name === "도마2"),
@@ -256,8 +262,13 @@ export default function CoachPlayer() {
       }
 
       alert("제출 완료");
-    } catch (error) {
-      console.error("에러:", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert("에러가 발생했습니다: " + error.message);
+        console.error("에러:", error);
+      } else {
+        console.error("알 수 없는 에러:", error);
+      }
     }
   }
 
@@ -352,9 +363,7 @@ export default function CoachPlayer() {
 
       {isVault && (
         <VaultModal
-          isOpen={isVault}
           onClose={handleValutModal}
-          coachId={coachId}
           players={players}
           gender={gender}
           vaultList={detailVault}

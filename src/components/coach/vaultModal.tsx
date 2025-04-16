@@ -4,16 +4,15 @@
 import React, { useEffect } from "react";
 import { useDragAndDrop } from "@/hooks/useDragAndDrop"; // 커스텀 훅 import
 import styles from "@/styles/coachBoard.module.css";
+import { VaultModalProps } from "@/types/player";
 
 export default function VaultModal({
-  isOpen,
   onClose,
   gender,
-  coachId,
   players,
   vaultList,
   onSave,
-}) {
+}: VaultModalProps) {
   const 도마1 = useDragAndDrop<{ player_name: string; skill_number: string }>(
     []
   );
@@ -54,11 +53,21 @@ export default function VaultModal({
 
   const handleAddPlayer = (category: "도마1" | "도마2", playerName: string) => {
     if (category === "도마1") {
+      const isAlreadyIn도마1 = 도마1.items.some(
+        (item) => item.player_name === playerName
+      );
+      if (isAlreadyIn도마1) return;
+
       도마1.setItems((prev) => [
         ...prev,
         { player_name: playerName, skill_number: "" },
       ]);
     } else {
+      const isAlreadyIn도마2 = 도마2.items.some(
+        (item) => item.player_name === playerName
+      );
+      if (isAlreadyIn도마2) return;
+
       도마2.setItems((prev) => [
         ...prev,
         { player_name: playerName, skill_number: "" },
@@ -80,13 +89,13 @@ export default function VaultModal({
   const handleSave = () => {
     const newVaultList = [
       ...도마1.items.map((item, idx) => ({
-        event_name: "도마1",
+        event_name: "도마1" as const,
         player_name: item.player_name,
         skill_number: item.skill_number,
         sequence: idx + 1,
       })),
       ...도마2.items.map((item, idx) => ({
-        event_name: "도마2",
+        event_name: "도마2" as const,
         player_name: item.player_name,
         skill_number: item.skill_number,
         sequence: idx + 1,
