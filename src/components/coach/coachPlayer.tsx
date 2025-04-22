@@ -376,12 +376,14 @@ export default function CoachPlayer() {
         ></VaultModal>
       )}
 
-      <button className={styles.submit} onClick={handleSubmit}>
-        제출
-      </button>
-      <Link href="/result_page" className={styles.result} onClick={handleNav}>
-        결과
-      </Link>
+      <section className={styles.footerButton}>
+        <button className={styles.submit} onClick={handleSubmit}>
+          제출
+        </button>
+        <button className={styles.result} onClick={handleNav}>
+          최종
+        </button>
+      </section>
     </div>
   );
 }

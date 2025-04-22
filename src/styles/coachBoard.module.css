@@ -237,10 +237,15 @@
       }
     }
   }
-
+}
+& .footerButton {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
   /* 제출 버튼 */
   & .submit {
-    margin-top: 10px;
+    margin-left: auto;
     font-size: 16px;
     padding: 5px 15px;
     background-color: dodgerblue;
@@ -253,8 +258,16 @@
       opacity: 0.5;
     }
   }
-}
 
+  & .result {
+    font-size: 16px;
+    border: 0;
+    padding: 5px 15px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+  }
+}
 /* 추가버튼 */
 & .addContainer {
   border: 2px solid lightgray;

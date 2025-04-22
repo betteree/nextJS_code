@@ -1,13 +1,25 @@
 .container {
   padding: 20px;
   & nav {
+    text-align: center;
+    margin-block: 30px;
+    padding-block: 20px;
+    border-top: 7px solid #ff6565;
+    border-bottom: 7px solid #001694;
+
     & h1 {
       font-weight: 600;
-      font-size: 30px;
+      font-size: 35px;
+      color: #333399;
+    }
+
+    & .genderStyle {
+      color: #e45b00;
     }
   }
 }
 
+/* 선수 순서 리스트 */
 .playerList {
   background-color: white;
   display: grid;
@@ -29,5 +41,26 @@
 
   th {
     background-color: #e0e0e0;
+  }
+}
+
+/* 결과 연기 순서표에 감독 정보 */
+.resultCoachConatainer {
+  .coachTable {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-weight: 600;
+
+    & th,
+    & td {
+      border: 3px solid black;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    & th {
+      width: 120px;
+    }
   }
 }

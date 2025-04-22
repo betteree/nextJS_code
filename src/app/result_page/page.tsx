@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import styles from "@/styles/result.module.css";
-import CoachInfo from "@/components/coach/coachInfo";
+import ResultCoach from "@/components/admin/resultCoach";
 import { VaultItem, VaultFormatted } from "@/types";
 
 export default function Result() {
@@ -119,9 +119,11 @@ export default function Result() {
   return (
     <div className={styles.container}>
       <nav>
-        <h1>선수 연기순서표[{gender}자]</h1>
+        <h1 className={gender === "여" ? styles.genderStyle : ""}>
+          선수 연기순서표[{gender}자]
+        </h1>
       </nav>
-      <CoachInfo></CoachInfo>
+      <ResultCoach></ResultCoach>
       <section className={styles.genderContainer}>
         <button value="남" onClick={handleGender}>
           남
@@ -157,9 +159,10 @@ export default function Result() {
               </thead>
               {event === "도마" ? (
                 <tbody>
-                  {/* 먼저 first와 second가 정의되었는지 확인하고, 빈 배열로 초기화 */}
                   {Array.isArray(detailVault.first) &&
-                  Array.isArray(detailVault.second) ? (
+                  Array.isArray(detailVault.second) &&
+                  (detailVault.first.length > 0 ||
+                    detailVault.second.length > 0) ? (
                     <>
                       {detailVault.first.map((firstItem, index) => {
                         const secondItem = detailVault.second.find(
@@ -172,7 +175,14 @@ export default function Result() {
                               <td
                                 rowSpan={
                                   detailVault.first.length +
-                                  detailVault.second.length
+                                  detailVault.second.filter(
+                                    (secondItem) =>
+                                      !detailVault.first.some(
+                                        (firstItem) =>
+                                          firstItem.player_name ===
+                                          secondItem.player_name
+                                      )
+                                  ).length
                                 }
                               >
                                 {event}
@@ -188,7 +198,7 @@ export default function Result() {
                         );
                       })}
 
-                      {/* 2차에서만 남은 선수를 별도로 처리 */}
+                      {/* 2차에서만 남은 선수 */}
                       {detailVault.second
                         .filter(
                           (secondItem) =>
@@ -208,19 +218,25 @@ export default function Result() {
                     </>
                   ) : (
                     <tr>
-                      <td colSpan={5}>데이터가 없습니다.</td>
+                      <td colSpan={5}>정보가 없습니다.</td>
                     </tr>
                   )}
                 </tbody>
               ) : (
                 <tbody>
-                  {data.map((name, index) => (
-                    <tr key={`${event}-${index}`}>
-                      {index === 0 && <td rowSpan={data.length}>{event}</td>}
-                      <td>{sequence[index]}</td>
-                      <td>{name}</td>
+                  {data.length === 0 ? (
+                    <tr>
+                      <td colSpan={3}>정보가 없습니다.</td>
                     </tr>
-                  ))}
+                  ) : (
+                    data.map((name, index) => (
+                      <tr key={`${event}-${index}`}>
+                        {index === 0 && <td rowSpan={data.length}>{event}</td>}
+                        <td>{sequence[index]}</td>
+                        <td>{name}</td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               )}
             </table>
