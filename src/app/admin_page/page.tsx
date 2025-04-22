@@ -4,6 +4,7 @@ import styles from "@/styles/adminBoard.module.css";
 import { useState } from "react";
 import ContestList from "@/components/admin/contestList";
 import Request from "@/components/admin/request";
+import Sequence from "@/components/admin/sequence";
 export default function AdminPage() {
   const [adminList, setAdminList] = useState("contest");
 
@@ -23,12 +24,20 @@ export default function AdminPage() {
               대회 LIST
             </button>
           </li>
-          <li>
+          {/* <li>
             <button
               onClick={() => handleNav("request")}
               className={adminList === "request" ? styles.active : ""}
             >
               요청 LIST
+            </button>
+          </li> */}
+          <li>
+            <button
+              onClick={() => handleNav("sequence")}
+              className={adminList === "sequence" ? styles.active : ""}
+            >
+              선수 순서
             </button>
           </li>
         </ul>
@@ -36,7 +45,7 @@ export default function AdminPage() {
       {adminList === "contest" ? (
         <ContestList></ContestList>
       ) : (
-        <Request></Request>
+        <Sequence></Sequence>
       )}
     </div>
   );
