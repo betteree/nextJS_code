@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "@/styles/coachBoard.module.css";
 import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
+import Link from "next/link";
 
 export default function CoachPlayer() {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
@@ -272,6 +273,8 @@ export default function CoachPlayer() {
     }
   }
 
+  function handleNav() {}
+
   return (
     <div className={styles.playerContainer}>
       <section className={styles.genderContainer}>
@@ -376,6 +379,9 @@ export default function CoachPlayer() {
       <button className={styles.submit} onClick={handleSubmit}>
         제출
       </button>
+      <Link href="/result_page" className={styles.result} onClick={handleNav}>
+        결과
+      </Link>
     </div>
   );
 }

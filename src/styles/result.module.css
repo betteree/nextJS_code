@@ -1,0 +1,33 @@
+.container {
+  padding: 20px;
+  & nav {
+    & h1 {
+      font-weight: 600;
+      font-size: 30px;
+    }
+  }
+}
+
+.playerList {
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    border: 3px solid black;
+    text-align: center;
+  }
+
+  th {
+    background-color: #e0e0e0;
+  }
+}

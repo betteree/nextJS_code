@@ -35,3 +35,13 @@ export interface PlayerEvent {
   event_id: number;
   player_id: number;
 }
+
+export interface VaultFormatted {
+  first: {
+    player_name: string;
+    skill_number: number | string;
+  } | null;
+  second: {
+    skill_number: number | string;
+  } | null;
+}
