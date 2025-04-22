@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import styles from "@/styles/coachBoard.module.css";
 import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CoachPlayer() {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
     남: [],
     여: [],
   });
-
+  const router = useRouter();
   const [newPlayer, setNewPlayer] = useState("");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [draggedCategory, setDraggedCategory] = useState<string | null>(null);
@@ -273,15 +273,25 @@ export default function CoachPlayer() {
     }
   }
 
-  function handleNav() {}
+  function handleNav() {
+    router.push("/result_page");
+  }
 
   return (
     <div className={styles.playerContainer}>
       <section className={styles.genderContainer}>
-        <button value="남" onClick={handleGender}>
+        <button
+          value="남"
+          onClick={handleGender}
+          className={gender === "남" ? styles.active : ""}
+        >
           남
         </button>
-        <button value="여" onClick={handleGender}>
+        <button
+          value="여"
+          onClick={handleGender}
+          className={gender === "여" ? styles.active : ""}
+        >
           여
         </button>
       </section>

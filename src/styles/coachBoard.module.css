@@ -127,6 +127,39 @@
     }
   }
 
+  /* 성별 버튼 */
+  & .genderContainer {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+
+    & button {
+      border: 0;
+      width: 10%;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: dodgerblue;
+      }
+
+      &:last-child {
+        &:hover {
+          background-color: hotpink;
+        }
+      }
+    }
+
+    /* 눌렀을 때 스타일 */
+    & .active {
+      background-color: dodgerblue;
+
+      &:last-child {
+        background-color: hotpink;
+      }
+    }
+  }
+
+  /* 랜덤 버튼 */
   & .randomButton {
     background-color: black;
     border: 0;
@@ -238,6 +271,7 @@
     }
   }
 }
+/* footer 버튼 */
 & .footerButton {
   display: flex;
   align-items: center;
@@ -259,6 +293,7 @@
     }
   }
 
+  /* 최종 결과 페이지 버튼 */
   & .result {
     font-size: 16px;
     border: 0;

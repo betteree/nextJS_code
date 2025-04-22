@@ -1,7 +1,6 @@
 "use client";
 
 import styles from "@/styles/adminBoard.module.css";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -29,7 +28,7 @@ export default function Sequence() {
   return (
     <div className={styles.container}>
       <section className={styles.contestDetail}>
-        <h3>요청 LIST</h3>
+        <h3>선수 순서 LIST</h3>
       </section>
 
       <table className={styles.contestTable}>
