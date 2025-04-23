@@ -84,8 +84,7 @@ export async function POST(req) {
         if (eventName === "도마1" || eventName === "도마2") {
           const { player_name, skill_number, sequence } = player;
 
-          // 먼저 player_event에 저장
-          const [playerEventResult] = await pool.query(
+          await pool.query(
             `
             INSERT INTO player_event (player_id, sequence, event_list_id)
             SELECT p.id, ?, ?

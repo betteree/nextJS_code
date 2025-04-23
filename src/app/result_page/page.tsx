@@ -3,58 +3,31 @@
 import { useState, useEffect } from "react";
 import styles from "@/styles/result.module.css";
 import ResultCoach from "@/components/admin/resultCoach";
-import { VaultItem, VaultFormatted } from "@/types";
+import { VaultItem, VaultFormatted, PlayerEvent } from "@/types/player";
 
 export default function Result() {
   const [gender, setGender] = useState<"남" | "여">("남");
-  const [coachId, setCoachId] = useState("");
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
-  const [players, setPlayers] = useState<Record<string, Player[]>>({
-    남: [],
-    여: [],
-  });
 
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["마루", "안마", "링", "도마", "평행봉", "철봉"],
     여: ["도마", "이단 평행봉", "평균대", "마루"],
   };
 
-  const [detailVault, setDetailVault] = useState<VaultItem[]>([]);
+  const [detailVault, setDetailVault] = useState<VaultFormatted>({
+    first: [],
+    second: [],
+  });
 
   const handleGender = (e: React.MouseEvent<HTMLButtonElement>) => {
     const value = e.currentTarget.value as "남" | "여";
     setGender(value);
   };
 
-  // 남녀 별 선수목록
-  useEffect(() => {
-    const coachId = localStorage.getItem("coach");
-    if (!gender || !coachId) return;
-
-    const fetchPlayers = async () => {
-      const res = await fetch(
-        `/api/database/player?coach_id=${coachId}&gender=${gender}`
-      );
-      const data = await res.json();
-
-      // 이미 로컬에서 추가한 선수가 있을 경우 중복 제거
-      setPlayers((prev) => {
-        const existingNames = new Set(prev[gender]?.map((p) => p.name));
-        const newPlayers = data.filter((p) => !existingNames.has(p.name));
-        return {
-          ...prev,
-          [gender]: [...prev[gender], ...newPlayers],
-        };
-      });
-    };
-
-    fetchPlayers();
-  }, [gender]);
-
   // 종목 별로 순서 받아오기
   useEffect(() => {
     const coachId = localStorage.getItem("coach") as string;
-    setCoachId(coachId);
+
     if (!gender || !coachId) return;
 
     fetch(`/api/database/event?gender=${gender}&coach_id=${coachId}`)
@@ -73,8 +46,8 @@ export default function Result() {
           if (categorizedData[item.event_name]) {
             categorizedData[item.event_name].push(item.player_name);
           }
-          if (item.event_name.includes("도마")) {
-            vaultData.push(item);
+          if (item.event_name === "도마1" || item.event_name === "도마2") {
+            vaultData.push(item as VaultItem);
           }
         });
 
@@ -98,7 +71,7 @@ export default function Result() {
       firstVaults.length > 0
         ? firstVaults.map((item) => ({
             player_name: item.player_name,
-            skill_number: item.skill_number || "-",
+            skill_number: item.skill_number?.toString() || "-",
           }))
         : [];
 
@@ -106,7 +79,7 @@ export default function Result() {
       secondVaults.length > 0
         ? secondVaults.map((item) => ({
             player_name: item.player_name,
-            skill_number: item.skill_number || "-",
+            skill_number: item.skill_number?.toString() || "-",
           }))
         : [];
 

@@ -1,8 +1,8 @@
 "use client";
 import styles from "@/styles/adminBoard.module.css";
-import { useState, useEffect } from "react";
+import { RegisterProps } from "@/types/player";
 
-export default function Register({ itemData, isClose }) {
+export default function Register({ itemData, isClose }: RegisterProps) {
   const organization = ["대한체조협회", "체조협회", "고등체조협회"];
   const checkedGender = itemData?.gender?.split(",") || []; //itemData가 있고 gender가 있다면 나누고 null이거나 undefined이면 [] 빈배열
   // 등록
@@ -45,7 +45,7 @@ export default function Register({ itemData, isClose }) {
   return (
     <div className={styles.Modal}>
       <section className={styles.registerContainer}>
-        <button onClick={isClose} className={styles.close}>
+        <button onClick={() => isClose(null)} className={styles.close}>
           닫기
         </button>
         <form
@@ -68,7 +68,9 @@ export default function Register({ itemData, isClose }) {
               name="startday"
               id="startdayInput"
               defaultValue={
-                itemData.start_date ? itemData.start_date.split("T")[0] : ""
+                itemData && itemData.start_date
+                  ? itemData.start_date.split("T")[0]
+                  : ""
               }
               onFocus={(e) => e.target.showPicker()}
             />
@@ -80,7 +82,9 @@ export default function Register({ itemData, isClose }) {
               name="endday"
               id="enddayInput"
               defaultValue={
-                itemData.end_date ? itemData.end_date.split("T")[0] : ""
+                itemData && itemData.end_date
+                  ? itemData.end_date.split("T")[0]
+                  : ""
               }
               onFocus={(e) => e.target.showPicker()}
             />
@@ -128,7 +132,7 @@ export default function Register({ itemData, isClose }) {
             />
           </div>
           <button type="submit">
-            {itemData.length === 0 ? "등록 " : "수정"}
+            {itemData && Object.keys(itemData).length === 0 ? "등록" : "수정"}
           </button>
         </form>
       </section>

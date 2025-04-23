@@ -187,8 +187,8 @@ export default function CoachPlayer() {
           if (categorizedData[item.event_name]) {
             categorizedData[item.event_name].push(item.player_name);
           }
-          if (item.event_name.includes("도마")) {
-            vaultData.push(item);
+          if (item.event_name === "도마1" || item.event_name === "도마2") {
+            vaultData.push(item as VaultItem);
           }
         });
         setDetailVault(vaultData);
@@ -355,7 +355,10 @@ export default function CoachPlayer() {
                     onDragOver={handleDragOver}
                     onDrop={() =>
                       handleDrop(index, event, eventData[event], (newList) =>
-                        setEventData((prev) => ({ ...prev, [event]: newList }))
+                        setEventData((prev) => ({
+                          ...prev,
+                          [event]: newList as string[],
+                        }))
                       )
                     }
                   >

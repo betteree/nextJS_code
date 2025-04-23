@@ -3,7 +3,6 @@
 import styles from "@/styles/adminBoard.module.css";
 import { useState } from "react";
 import ContestList from "@/components/admin/contestList";
-import Request from "@/components/admin/request";
 import Sequence from "@/components/admin/sequence";
 export default function AdminPage() {
   const [adminList, setAdminList] = useState("contest");

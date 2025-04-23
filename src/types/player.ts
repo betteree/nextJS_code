@@ -1,6 +1,8 @@
 export interface Player {
   id?: number;
   name: string;
+  coach_id?: number;
+  gender?: "남" | "여";
 }
 // 도마 타입
 export interface VaultItem {
@@ -39,9 +41,31 @@ export interface PlayerEvent {
 export interface VaultFormatted {
   first: {
     player_name: string;
-    skill_number: number | string;
-  } | null;
+    skill_number: string;
+  }[];
   second: {
-    skill_number: number | string;
-  } | null;
+    player_name: string;
+    skill_number: string;
+  }[];
+}
+
+export type Admin = {
+  id: number;
+  title: string;
+  start_date: string;
+  end_date: string;
+  location: string;
+  organizer: string;
+  gender: string;
+};
+
+export type Coach = {
+  affiliation: string;
+  name: string;
+  phone: string;
+};
+
+export interface RegisterProps {
+  itemData: Admin | null;
+  isClose: (item: Admin | null) => void;
 }

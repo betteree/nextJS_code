@@ -1,7 +1,6 @@
 "use client";
 
 import styles from "@/styles/coachBoard.module.css";
-import { useRouter } from "next/navigation";
 
 export default function Approve() {
   // 임시 학교 데이터
@@ -11,7 +10,6 @@ export default function Approve() {
     "서부초등학교",
     "남부초등학교",
   ];
-  const router = useRouter();
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

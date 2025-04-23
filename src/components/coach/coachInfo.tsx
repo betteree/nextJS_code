@@ -2,9 +2,10 @@
 
 import styles from "@/styles/coachBoard.module.css";
 import { useState, useEffect } from "react";
+import { Coach } from "@/types/player";
 
 export default function CoachInfo() {
-  const [coachData, setCoachData] = useState([]);
+  const [coachData, setCoachData] = useState<Coach | null>(null);
   const [contest, setContest] = useState<string | null>("");
 
   useEffect(() => {
@@ -27,22 +28,26 @@ export default function CoachInfo() {
     <div className={styles.coachInfoContainer}>
       <h2>지도자 정보</h2>
 
-      <dl>
-        <span>
-          <dt>이름 </dt>
-          <dd>{coachData.name}</dd>
-        </span>
+      {coachData ? (
+        <dl>
+          <span>
+            <dt>이름 </dt>
+            <dd>{coachData.name}</dd>
+          </span>
 
-        <span>
-          <dt>소속</dt>
-          <dd>{coachData.affiliation}</dd>
-        </span>
+          <span>
+            <dt>소속</dt>
+            <dd>{coachData.affiliation}</dd>
+          </span>
 
-        <span>
-          <dt>연락처</dt>
-          <dd>{coachData.phone}</dd>
-        </span>
-      </dl>
+          <span>
+            <dt>연락처</dt>
+            <dd>{coachData.phone}</dd>
+          </span>
+        </dl>
+      ) : (
+        <p>지도자 정보가 없습니다.</p>
+      )}
 
       <span>
         <dt>참여대회</dt>

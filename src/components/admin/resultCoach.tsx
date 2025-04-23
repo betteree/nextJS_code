@@ -2,9 +2,14 @@
 
 import styles from "@/styles/result.module.css";
 import { useState, useEffect } from "react";
+import { Coach } from "@/types/player";
 
 export default function ResultCoach() {
-  const [coachData, setCoachData] = useState([]);
+  const [coachData, setCoachData] = useState<Coach>({
+    affiliation: "",
+    name: "",
+    phone: "",
+  });
   const [contest, setContest] = useState<string | null>("");
 
   useEffect(() => {
@@ -29,7 +34,9 @@ export default function ResultCoach() {
         <tbody>
           <tr>
             <th>소속명</th>
-            <td>{coachData.affiliation}</td>
+            <td>
+              {coachData.affiliation}/{contest}
+            </td>
           </tr>
           <tr>
             <th>감독명</th>

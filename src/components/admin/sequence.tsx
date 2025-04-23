@@ -3,9 +3,10 @@
 import styles from "@/styles/adminBoard.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Coach, Contest } from "@/types/result";
 
 export default function Sequence() {
-  const [contestData, setContestData] = useState([]);
+  const [contestData, setContestData] = useState<Contest[]>([]); // Contest[]로 타입 지정
   const router = useRouter();
 
   useEffect(() => {
@@ -17,7 +18,13 @@ export default function Sequence() {
       });
   }, []);
 
-  const handleInfo = ({ contest, coach }) => {
+  const handleInfo = ({
+    contest,
+    coach,
+  }: {
+    contest: Contest;
+    coach: Coach;
+  }) => {
     localStorage.setItem("coach", coach.coach_competition_id);
     localStorage.setItem("competitionId", contest.id);
     localStorage.setItem("selectedCompetition", contest.title);
@@ -25,6 +32,7 @@ export default function Sequence() {
     // 페이지 이동
     router.push("/result_page");
   };
+
   return (
     <div className={styles.container}>
       <section className={styles.contestDetail}>
