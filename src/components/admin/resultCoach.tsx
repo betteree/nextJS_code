@@ -22,6 +22,7 @@ export default function ResultCoach() {
       .then((res) => res.json())
       .then((data) => {
         setCoachData(data.data);
+        localStorage.setItem("division", data.data.affiliation);
       })
       .catch((err) => {
         console.error("Error fetching coach:", err);

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "@/styles/result.module.css";
 import ResultCoach from "@/components/admin/resultCoach";
 import { VaultItem, VaultFormatted, PlayerEvent } from "@/types/player";
+import { getDataBase } from "@/components/data/data";
 
 export default function Result() {
   const [gender, setGender] = useState<"남" | "여">("남");
@@ -11,7 +12,7 @@ export default function Result() {
 
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["마루", "안마", "링", "도마", "평행봉", "철봉"],
-    여: ["도마", "이단 평행봉", "평균대", "마루"],
+    여: ["도마", "이단평행봉", "평균대", "마루"],
   };
 
   const [detailVault, setDetailVault] = useState<VaultFormatted>({
@@ -27,6 +28,8 @@ export default function Result() {
   // 종목 별로 순서 받아오기
   useEffect(() => {
     const coachId = localStorage.getItem("coach") as string;
+    const contestId = localStorage.getItem("competitionId") as string;
+    const division = localStorage.getItem("division") as string;
 
     if (!gender || !coachId) return;
 
@@ -52,6 +55,8 @@ export default function Result() {
         });
 
         const formattedVault = formatVaultDetail(vaultData);
+
+        getDataBase(data, contestId, gender, division);
         setDetailVault(formattedVault);
 
         setEventData(categorizedData);

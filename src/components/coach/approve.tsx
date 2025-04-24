@@ -5,10 +5,12 @@ import styles from "@/styles/coachBoard.module.css";
 export default function Approve() {
   // 임시 학교 데이터
   const schoolList = [
-    "서울초등학교",
     "북부초등학교",
-    "서부초등학교",
     "남부초등학교",
+    "대구체육고등학교",
+    "제주삼다수",
+    "한국체육대학교",
+    "공주대학교",
   ];
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {

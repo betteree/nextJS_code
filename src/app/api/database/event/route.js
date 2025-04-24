@@ -69,7 +69,7 @@ export async function POST(req) {
       } else if (gender === "여") {
         if (eventName === "도마1") eventListId = 8;
         else if (eventName === "도마2") eventListId = 9;
-        else if (eventName === "이단 평행봉") eventListId = 10;
+        else if (eventName === "이단평행봉") eventListId = 10;
         else if (eventName === "평균대") eventListId = 11;
         else if (eventName === "마루") eventListId = 12;
       }
