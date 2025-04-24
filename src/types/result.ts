@@ -19,4 +19,10 @@ export type PlayerEventData = {
   event_name: string;
   player_id: number;
   player_name: string;
+  skill_number: string;
+};
+
+export type ResultType = {
+  first: string | null;
+  second: string | null;
 };

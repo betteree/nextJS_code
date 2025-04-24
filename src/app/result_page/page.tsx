@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "@/styles/result.module.css";
 import ResultCoach from "@/components/admin/resultCoach";
 import { VaultItem, VaultFormatted, PlayerEvent } from "@/types/player";
-import { getDataBase } from "@/components/data/classData";
+import { getClassdata } from "@/components/data/classData";
 
 export default function Result() {
   const [gender, setGender] = useState<"남" | "여">("남");
@@ -56,9 +56,9 @@ export default function Result() {
 
         const formattedVault = formatVaultDetail(vaultData);
 
-        getDataBase(data, contestId, gender, division);
-        setDetailVault(formattedVault);
+        getClassdata(data, contestId, gender, division);
 
+        setDetailVault(formattedVault);
         setEventData(categorizedData);
       })
       .catch((err) => {

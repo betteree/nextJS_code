@@ -1,7 +1,7 @@
 import { PlayerEventData } from "@/types/result";
-
+import { getOrderData } from "./orderData";
 // 밖 노출 함수
-export async function getDataBase(
+export async function getClassdata(
   data: PlayerEventData[],
   contestId: string,
   gender: string,
@@ -13,30 +13,33 @@ export async function getDataBase(
   );
   const SEX_CD = getGender(gender);
 
-  const seenNames = new Set();
-  const result = data
-    .map((item) => {
-      const { name, BASE_CLASS_CD } = getBaseClassCd(item.event_name);
+  const result = data.map((item) => {
+    const { name, BASE_CLASS_CD } = getBaseClassCd(item.event_name);
+    const { first, second } = getOrderData(item);
 
-      if (seenNames.has(name)) {
-        return null; // 필터링: 이미 처리된 항목은 결과에 포함되지 않음
-      }
-
-      seenNames.add(name);
-
-      return {
-        CLASS_CD: "23",
-        CLASS_SUB_CD: "1",
-        BASE_CLASS_CD,
-        DETAIL_CLASS_NM: name,
-        TO_CD: contestId,
-        SEX_CD,
-        KIND_NM: divisionName,
-        KIND_CD: divisionCode,
-        DETAIL_CLASS_CD: "23" + divisionCode + BASE_CLASS_CD,
-      };
-    })
-    .filter((item) => item !== null);
+    return {
+      origin: data,
+      CLASS_CD: "23",
+      CLASS_SUB_CD: "1",
+      BASE_CLASS_CD,
+      DETAIL_CLASS_NM: name,
+      TO_CD: contestId,
+      SEX_CD,
+      KIND_NM: divisionName,
+      KIND_CD: divisionCode,
+      DETAIL_CLASS_CD: "23" + divisionCode + BASE_CLASS_CD,
+      // ORDER 테이블
+      ID_NO: item.player_id,
+      GROUP_CD: "AA",
+      ENTRANT_SEQ: "01",
+      R1_VAULT_ID: first ? first : "",
+      R1_VAULT_VAULE: "",
+      R2_VAULT_ID: second ? second : "",
+      R2_VAULT_VAULE: "",
+      R2_VAULT_YN: "Y",
+      ROTATION_SEQ: "",
+    };
+  });
 }
 
 // 종목 코드로 변환하기
