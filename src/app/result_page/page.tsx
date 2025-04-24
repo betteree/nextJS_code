@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "@/styles/result.module.css";
 import ResultCoach from "@/components/admin/resultCoach";
 import { VaultItem, VaultFormatted, PlayerEvent } from "@/types/player";
-import { getDataBase } from "@/components/data/data";
+import { getDataBase } from "@/components/data/classData";
 
 export default function Result() {
   const [gender, setGender] = useState<"남" | "여">("남");
