@@ -56,8 +56,6 @@ export default function Result() {
 
         const formattedVault = formatVaultDetail(vaultData);
 
-        getClassdata(data, contestId, gender, division);
-
         setDetailVault(formattedVault);
         setEventData(categorizedData);
       })

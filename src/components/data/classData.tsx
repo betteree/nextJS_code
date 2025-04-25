@@ -1,19 +1,18 @@
 import { PlayerEventData } from "@/types/result";
 import { getOrderData } from "./orderData";
-// 밖 노출 함수
-export async function getClassdata(
-  data: PlayerEventData[],
-  contestId: string,
-  gender: string,
-  division: string
-) {
-  const { divisionName, divisionCode } = await getDivisionInfo(
-    division,
-    gender
-  );
-  const SEX_CD = getGender(gender);
 
+export function getClassdata(data: PlayerEventData[], contestId: number) {
   const result = data.map((item) => {
+    const {
+      event_gender: gender,
+      event_name: division,
+      player_id: player_id,
+    } = item;
+
+    const { divisionName, divisionCode } = getDivisionInfo(division, gender);
+
+    const SEX_CD = getGender(gender);
+
     const { name, BASE_CLASS_CD } = getBaseClassCd(item.event_name);
     const { first, second } = getOrderData(item);
 
@@ -26,10 +25,9 @@ export async function getClassdata(
       TO_CD: contestId,
       SEX_CD,
       KIND_NM: divisionName,
-      KIND_CD: divisionCode,
-      DETAIL_CLASS_CD: "23" + divisionCode + BASE_CLASS_CD,
-      // ORDER 테이블
-      ID_NO: item.player_id,
+      KIND_CD: divisionCode || "",
+      DETAIL_CLASS_CD: "23" + (divisionCode || "") + BASE_CLASS_CD,
+      ID_NO: player_id,
       GROUP_CD: "AA",
       ENTRANT_SEQ: "01",
       R1_VAULT_ID: first ? first : "",
@@ -40,6 +38,8 @@ export async function getClassdata(
       ROTATION_SEQ: "",
     };
   });
+
+  console.log(result);
 }
 
 // 종목 코드로 변환하기
@@ -79,7 +79,7 @@ function getGender(gender: string) {
 }
 
 /////부 나누어 주는 함수//////
-async function getDivisionInfo(data: string, gender: string) {
+function getDivisionInfo(data: string, gender: string) {
   const isMale = gender === "남";
   let divisionName = "";
 
@@ -95,30 +95,33 @@ async function getDivisionInfo(data: string, gender: string) {
     divisionName = isMale ? "남자일반" : "여자일반";
   }
 
-  const divisionCode = await getDivisionCodeByName(divisionName);
+  const divisionCode = getDivisionCodeFromMap(divisionName); // DB 없이 맵에서 처리
   return {
     divisionName,
     divisionCode,
   };
 }
 
-async function getDivisionCodeByName(
-  divisionName: string
-): Promise<string | null> {
-  try {
-    const res = await fetch(
-      `/api/database/division?division_name=${divisionName}`
-    );
+// 하드코딩된 divisionCode 매핑
+function getDivisionCodeFromMap(divisionName: string): string | null {
+  const divisionMap: Record<string, string> = {
+    남자18세이하부: "1",
+    남자대학: "2",
+    남자일반: "3",
+    여자18세이하부: "4",
+    여자대학: "5",
+    여자일반: "6",
+    남자초등부1학년: "A",
+    남자초등부2학년: "B",
+    남자초등부3학년: "C",
+    남자12세이하부: "U",
+    남자15세이하부: "V",
+    여자초등부1학년: "F",
+    여자초등부2학년: "G",
+    여자초등부3학년: "H",
+    여자12세이하부: "W",
+    여자15세이하부: "X",
+  };
 
-    if (!res.ok) {
-      console.error(`서버 응답 오류: ${res.status}`);
-      return null;
-    }
-
-    const data = await res.json();
-    return data.division_code ?? null;
-  } catch (error) {
-    console.error("division code 조회 중 에러:", error);
-    return null;
-  }
+  return divisionMap[divisionName] ?? null;
 }

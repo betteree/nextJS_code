@@ -6,33 +6,37 @@ export async function GET(req) {
   const gender = searchParams.get("gender");
   const coachId = searchParams.get("coach_id");
 
-  if (!gender || !coachId) {
+  if (!coachId) {
     return NextResponse.json(
-      { error: "Gender and coach_id are required" },
+      { error: "coach_id is required" },
       { status: 400 }
     );
   }
 
   try {
+    // gender가 있을 경우 WHERE절에 추가
     const query = `
-        SELECT 
-         e.id AS event_id,
-         e.name AS event_name,
-         e.gender AS event_gender,
-         p.id AS player_id,
-         p.name AS player_name,
-         p.coach_id,
-         pe.sequence AS sequence,
-         vs.skill_number
-         FROM event_list e
-         JOIN player_event pe ON e.id = pe.event_list_id
-         JOIN player p ON pe.player_id = p.id
-         LEFT JOIN vault_skills vs ON pe.id = vs.player_event_id
-         WHERE e.gender = ? AND p.coach_id = ?
-         ORDER BY e.id, pe.sequence;
-      `;
+      SELECT 
+        e.id AS event_id,
+        e.name AS event_name,
+        e.gender AS event_gender,
+        p.id AS player_id,
+        p.name AS player_name,
+        p.coach_id,
+        pe.sequence AS sequence,
+        vs.skill_number
+      FROM event_list e
+      JOIN player_event pe ON e.id = pe.event_list_id
+      JOIN player p ON pe.player_id = p.id
+      LEFT JOIN vault_skills vs ON pe.id = vs.player_event_id
+      WHERE p.coach_id = ?
+      ${gender ? "AND e.gender = ?" : ""}
+      ORDER BY e.id, pe.sequence;
+    `;
 
-    const [rows] = await pool.query(query, [gender, coachId]);
+    // gender가 있으면 파라미터에 추가
+    const params = gender ? [coachId, gender] : [coachId];
+    const [rows] = await pool.query(query, params);
 
     return NextResponse.json(rows);
   } catch (error) {

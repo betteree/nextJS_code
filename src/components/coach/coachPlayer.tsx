@@ -21,6 +21,7 @@ export default function CoachPlayer() {
     남: ["마루", "안마", "링", "도마", "평행봉", "철봉"],
     여: ["도마", "이단평행봉", "평균대", "마루"],
   };
+
   // 각 종목의 순서 리스트데이터
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
 
