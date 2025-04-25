@@ -1,45 +1,112 @@
-import { PlayerEventData } from "@/types/result";
+import { PlayerEventData, ResultRow } from "@/types/result";
 import { getOrderData } from "./orderData";
 
-export function getClassdata(data: PlayerEventData[], contestId: number) {
-  const result = data.map((item) => {
-    const {
-      event_gender: gender,
-      event_name: division,
-      player_id: player_id,
-    } = item;
+async function handleSave(data) {
+  try {
+    const promises = data.map(async (row) => {
+      const response = await fetch("/api/database/sequence/result", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(row),
+      });
 
-    const { divisionName, divisionCode } = getDivisionInfo(division, gender);
+      const result = await response.json();
 
-    const SEX_CD = getGender(gender);
+      if (result.success) {
+        return result.message;
+      } else {
+        throw new Error(result.message);
+      }
+    });
 
-    const { name, BASE_CLASS_CD } = getBaseClassCd(item.event_name);
-    const { first, second } = getOrderData(item);
+    // 모든 요청이 완료될 때까지 대기하고, 모두 성공한 경우 출력
+    console.log("모든 항목이 성공적으로 저장되었습니다.");
+  } catch (error) {
+    console.error("연결 오류", error);
+  }
+}
 
-    return {
-      origin: data,
-      CLASS_CD: "23",
-      CLASS_SUB_CD: "1",
-      BASE_CLASS_CD,
-      DETAIL_CLASS_NM: name,
-      TO_CD: contestId,
-      SEX_CD,
-      KIND_NM: divisionName,
-      KIND_CD: divisionCode || "",
-      DETAIL_CLASS_CD: "23" + (divisionCode || "") + BASE_CLASS_CD,
-      ID_NO: player_id,
-      GROUP_CD: "AA",
-      ENTRANT_SEQ: "01",
-      R1_VAULT_ID: first ? first : "",
-      R1_VAULT_VAULE: "",
-      R2_VAULT_ID: second ? second : "",
-      R2_VAULT_VAULE: "",
-      R2_VAULT_YN: "Y",
-      ROTATION_SEQ: "",
-    };
+export async function getClassdata(data: PlayerEventData[], contestId: number) {
+  const resultMap = new Map<number, ResultRow>();
+
+  data.forEach((item) => {
+    const { event_gender, event_name, player_id, coach_affiliation, sequence } =
+      item;
+    const { divisionName, divisionCode } = getDivisionInfo(
+      coach_affiliation,
+      event_gender
+    );
+    const SEX_CD = getGender(event_gender); //성별 1,2로 변환
+    const { name, BASE_CLASS_CD } = getBaseClassCd(event_name); //종목 코드로 변환
+    const { first, second } = getOrderData(item); //도마 1차시,2차시로 나누기
+
+    // 도마 종목 처리
+    if (BASE_CLASS_CD === "07") {
+      const existing = resultMap.get(player_id);
+      if (existing) {
+        if (second) {
+          existing.R2_VAULT_ID = second;
+          existing.R2_VAULT_YN = "Y";
+        }
+      } else {
+        // 도마1일 때 처음 저장
+        resultMap.set(player_id, {
+          CLASS_CD: "23",
+          CLASS_SUB_CD: "1",
+          COMP_CD: 1,
+          BASE_CLASS_CD,
+          DETAIL_CLASS_NM: name,
+          TO_CD: contestId,
+          SEX_CD,
+          KIND_NM: divisionName,
+          KIND_CD: divisionCode || "",
+          DETAIL_CLASS_CD: "23" + (divisionCode || "") + BASE_CLASS_CD,
+          SEX_ORDER: null,
+          ID_NO: player_id,
+          GROUP_CD: "AA",
+          ENTRANT_SEQ: sequence,
+          R1_VAULT_ID: first || null,
+          R1_VAULT_VALUE: null,
+          R2_VAULT_ID: second || null,
+          R2_VAULT_VALUE: null,
+          R2_VAULT_YN: second ? "Y" : null,
+          ROTATION_SEQ: null,
+        });
+      }
+    } else {
+      // 도마가 아닌 경우는 그대로 추가
+      const { name, BASE_CLASS_CD } = getBaseClassCd(event_name);
+
+      resultMap.set(player_id + Math.random(), {
+        CLASS_CD: "23",
+        CLASS_SUB_CD: "1",
+        COMP_CD: 1,
+        BASE_CLASS_CD,
+        DETAIL_CLASS_NM: name,
+        TO_CD: contestId,
+        SEX_CD,
+        KIND_NM: divisionName,
+        KIND_CD: divisionCode || "",
+        DETAIL_CLASS_CD: "23" + (divisionCode || null) + BASE_CLASS_CD,
+        ID_NO: player_id,
+        SEX_ORDER: null,
+        GROUP_CD: "AA",
+        ENTRANT_SEQ: sequence,
+        R1_VAULT_ID: null,
+        R1_VAULT_VALUE: null,
+        R2_VAULT_ID: null,
+        R2_VAULT_VALUE: null,
+        R2_VAULT_YN: null,
+        ROTATION_SEQ: null,
+      });
+    }
   });
 
-  console.log(result);
+  const result = Array.from(resultMap.values());
+  await handleSave(result);
+  return result;
 }
 
 // 종목 코드로 변환하기

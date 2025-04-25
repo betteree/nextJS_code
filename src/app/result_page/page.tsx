@@ -28,8 +28,6 @@ export default function Result() {
   // 종목 별로 순서 받아오기
   useEffect(() => {
     const coachId = localStorage.getItem("coach") as string;
-    const contestId = localStorage.getItem("competitionId") as string;
-    const division = localStorage.getItem("division") as string;
 
     if (!gender || !coachId) return;
 
