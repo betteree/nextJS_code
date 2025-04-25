@@ -22,6 +22,7 @@ async function handleSave(data) {
     });
 
     // 모든 요청이 완료될 때까지 대기하고, 모두 성공한 경우 출력
+    const results = await Promise.all(promises);
     console.log("모든 항목이 성공적으로 저장되었습니다.");
   } catch (error) {
     console.error("연결 오류", error);
@@ -30,7 +31,7 @@ async function handleSave(data) {
 
 export async function getClassdata(data: PlayerEventData[], contestId: number) {
   const resultMap = new Map<number, ResultRow>();
-
+  console.log(data);
   data.forEach((item) => {
     const { event_gender, event_name, player_id, coach_affiliation, sequence } =
       item;
@@ -41,7 +42,7 @@ export async function getClassdata(data: PlayerEventData[], contestId: number) {
     const SEX_CD = getGender(event_gender); //성별 1,2로 변환
     const { name, BASE_CLASS_CD } = getBaseClassCd(event_name); //종목 코드로 변환
     const { first, second } = getOrderData(item); //도마 1차시,2차시로 나누기
-
+    const formattedSeq = String(sequence).padStart(2, "0"); //순서 01,02로 포멧
     // 도마 종목 처리
     if (BASE_CLASS_CD === "07") {
       const existing = resultMap.get(player_id);
@@ -66,7 +67,7 @@ export async function getClassdata(data: PlayerEventData[], contestId: number) {
           SEX_ORDER: null,
           ID_NO: player_id,
           GROUP_CD: "AA",
-          ENTRANT_SEQ: sequence,
+          ENTRANT_SEQ: formattedSeq,
           R1_VAULT_ID: first || null,
           R1_VAULT_VALUE: null,
           R2_VAULT_ID: second || null,
@@ -93,7 +94,7 @@ export async function getClassdata(data: PlayerEventData[], contestId: number) {
         ID_NO: player_id,
         SEX_ORDER: null,
         GROUP_CD: "AA",
-        ENTRANT_SEQ: sequence,
+        ENTRANT_SEQ: formattedSeq,
         R1_VAULT_ID: null,
         R1_VAULT_VALUE: null,
         R2_VAULT_ID: null,
