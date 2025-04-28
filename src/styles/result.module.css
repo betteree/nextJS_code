@@ -64,3 +64,35 @@
     }
   }
 }
+
+/* 성별 버튼 */
+& .genderContainer {
+  display: flex;
+  gap: 5px;
+
+  & button {
+    border: 0;
+    width: 10%;
+    border-radius: 5px;
+    font-size: 16px;
+
+    &:hover {
+      background-color: dodgerblue;
+    }
+
+    &:last-child {
+      &:hover {
+        background-color: hotpink;
+      }
+    }
+  }
+
+  /* 눌렀을 때 스타일 */
+  & .active {
+    background-color: dodgerblue;
+
+    &:last-child {
+      background-color: hotpink;
+    }
+  }
+}

@@ -98,10 +98,18 @@ export default function Result() {
       </nav>
       <ResultCoach></ResultCoach>
       <section className={styles.genderContainer}>
-        <button value="남" onClick={handleGender}>
+        <button
+          value="남"
+          onClick={handleGender}
+          className={gender === "남" ? styles.active : ""}
+        >
           남
         </button>
-        <button value="여" onClick={handleGender}>
+        <button
+          value="여"
+          onClick={handleGender}
+          className={gender === "여" ? styles.active : ""}
+        >
           여
         </button>
       </section>
