@@ -70,38 +70,96 @@ export async function POST(req) {
       R2_VAULT_VALUE,
       R2_VAULT_YN,
       ROTATION_SEQ,
+      TEAM_CD,
+      TEAM_NM,
+      GROUP_NM,
+      KOR_NM,
     } = await req.json();
 
     // lp_class 테이블에 데이터 삽입 (중복된 경우 건너뛰기)
-    const [existingClass] = await db.query(
-      "SELECT 1 FROM lp_class WHERE CLASS_CD = ? AND CLASS_SUB_CD = ? AND BASE_CLASS_CD = ? AND TO_CD = ? AND KIND_CD = ? AND DETAIL_CLASS_CD = ?",
-      [CLASS_CD, CLASS_SUB_CD, BASE_CLASS_CD, TO_CD, KIND_CD, DETAIL_CLASS_CD]
+    // const [existingClass] = await db.query(
+    //   "SELECT 1 FROM lp_class WHERE CLASS_CD = ? AND CLASS_SUB_CD = ? AND BASE_CLASS_CD = ? AND TO_CD = ? AND KIND_CD = ? AND DETAIL_CLASS_CD = ?",
+    //   [CLASS_CD, CLASS_SUB_CD, BASE_CLASS_CD, TO_CD, KIND_CD, DETAIL_CLASS_CD]
+    // );
+
+    // if (existingClass.length > 0) {
+    //   console.log(
+    //     `${DETAIL_CLASS_CD} 이미 존재하여 lp_class 삽입을 건너뜁니다.`
+    //   );
+    // } else {
+    //   // lp_class에 데이터 삽입
+    //   await db.query(
+    //     "INSERT INTO lp_class (CLASS_CD, CLASS_SUB_CD, BASE_CLASS_CD, TO_CD, KIND_CD, DETAIL_CLASS_CD, KIND_NM, DETAIL_CLASS_NM, SEX_CD, SEX_ORDER) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    //     [
+    //       CLASS_CD,
+    //       CLASS_SUB_CD,
+    //       BASE_CLASS_CD,
+    //       TO_CD,
+    //       KIND_CD,
+    //       DETAIL_CLASS_CD,
+    //       KIND_NM,
+    //       DETAIL_CLASS_NM,
+    //       SEX_CD,
+    //       SEX_ORDER,
+    //     ]
+    //   );
+    // }
+
+    // 겹치는게 있는지 체크하기 위함
+    const [teamExisting] = await db.query(
+      `SELECT 1 FROM lp_team 
+       WHERE CLASS_CD = ? AND CLASS_SUB_CD = ? AND TO_CD = ? AND KIND_CD = ? AND TEAM_CD = ?`,
+      [CLASS_CD, CLASS_SUB_CD, TO_CD, KIND_CD, TEAM_CD]
     );
 
-    if (existingClass.length > 0) {
-      console.log(
-        `${DETAIL_CLASS_CD} 이미 존재하여 lp_class 삽입을 건너뜁니다.`
-      );
-    } else {
-      // lp_class에 데이터 삽입
+    if (teamExisting.length === 0) {
+      //lp_team 테이블에 테이터 삽입
       await db.query(
-        "INSERT INTO lp_class (CLASS_CD, CLASS_SUB_CD, BASE_CLASS_CD, TO_CD, KIND_CD, DETAIL_CLASS_CD, KIND_NM, DETAIL_CLASS_NM, SEX_CD, SEX_ORDER) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO lp_team (CLASS_CD, CLASS_SUB_CD, TO_CD, KIND_CD, TEAM_CD, TEAM_NM, SIDO_CD, GROUP_CD, GROUP_NM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [
           CLASS_CD,
           CLASS_SUB_CD,
-          BASE_CLASS_CD,
           TO_CD,
           KIND_CD,
-          DETAIL_CLASS_CD,
-          KIND_NM,
-          DETAIL_CLASS_NM,
-          SEX_CD,
-          SEX_ORDER,
+          TEAM_CD,
+          TEAM_NM,
+          1,
+          GROUP_CD,
+          GROUP_NM,
         ]
       );
     }
 
-    // lp_order 테이블에 데이터 삽입 (lp_class와 관계없이 삽입)
+    const [playerExisting] = await db.query(
+      `SELECT 1 FROM lp_player
+       WHERE CLASS_CD = ? AND TO_CD = ? AND KIND_CD = ? AND ID_NO = ?`,
+      [CLASS_CD, TO_CD, KIND_CD, ID_NO]
+    );
+
+    //lp_player 테이블에 데이터 삽입
+    if (playerExisting.length === 0) {
+      await db.query(
+        "INSERT INTO lp_player (CLASS_CD, TO_CD, KIND_CD, ID_NO, BIB_NO, CO_CD, SIDO_CD, KOR_NM, CHN_NM, ENG_NM, E_MAIL,  SEX, GRADE, TEAM_CD, TEAM_NM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+          CLASS_CD,
+          TO_CD,
+          KIND_CD,
+          ID_NO,
+          ID_NO,
+          null,
+          null,
+          KOR_NM,
+          null,
+          null,
+          null,
+          SEX_CD,
+          1,
+          TEAM_CD,
+          TEAM_NM,
+        ]
+      );
+    }
+    // lp_order 테이블에 데이터 삽입
     await db.query(
       "INSERT INTO lp_order (CLASS_CD, CLASS_SUB_CD, TO_CD, DETAIL_CLASS_CD, COMP_CD, GROUP_CD, ID_NO, ENTRANT_SEQ, R1_VAULT_ID, R1_VAULT_VALUE, R2_VAULT_ID, R2_VAULT_VALUE, R2_VAULT_YN, ROTATION_SEQ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [

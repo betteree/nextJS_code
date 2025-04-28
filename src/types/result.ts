@@ -43,7 +43,7 @@ export type ResultRow = {
   DETAIL_CLASS_CD: string;
   SEX_ORDER: null;
   ID_NO: number;
-  GROUP_CD: string;
+  GROUP_CD: number;
   ENTRANT_SEQ: string;
   R1_VAULT_ID: string | null;
   R1_VAULT_VALUE: null;
@@ -51,4 +51,8 @@ export type ResultRow = {
   R2_VAULT_VALUE: null;
   R2_VAULT_YN: string | null;
   ROTATION_SEQ: null;
+  TEAM_CD: number;
+  TEAM_NM: string;
+  GROUP_NM: string;
+  KOR_NM: string;
 };

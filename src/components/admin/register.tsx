@@ -131,9 +131,7 @@ export default function Register({ itemData, isClose }: RegisterProps) {
               defaultChecked={checkedGender?.includes("여") ?? false}
             />
           </div>
-          <button type="submit">
-            {itemData && Object.keys(itemData).length === 0 ? "등록" : "수정"}
-          </button>
+          <button type="submit">{itemData === null ? "등록" : "수정"}</button>
         </form>
       </section>
     </div>
