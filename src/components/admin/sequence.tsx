@@ -36,7 +36,7 @@ export default function Sequence() {
   };
 
   // 대회에 해당하는 모든 것 가져오는 것
-  const handleSend = async (competitionId: number) => {
+  const handleSend = async (competitionId: string) => {
     try {
       const res = await fetch(
         `/api/database/sequence/result?competition_id=${competitionId}`,

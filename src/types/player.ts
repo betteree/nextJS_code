@@ -69,3 +69,8 @@ export interface RegisterProps {
   itemData: Admin | null;
   isClose: (item: Admin | null) => void;
 }
+
+export type Contest = {
+  title: string;
+  id: string;
+};

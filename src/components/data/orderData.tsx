@@ -1,6 +1,6 @@
-import { ResultType } from "@/types/result";
+import { ResultType, PlayerEventData } from "@/types/result";
 
-export function getOrderData(data) {
+export function getOrderData(data: PlayerEventData) {
   const result: ResultType = {
     first: null,
     second: null,

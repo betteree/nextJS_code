@@ -156,7 +156,9 @@ export default function CoachPlayer() {
       // 이미 로컬에서 추가한 선수가 있을 경우 중복 제거
       setPlayers((prev) => {
         const existingNames = new Set(prev[gender]?.map((p) => p.name));
-        const newPlayers = data.filter((p) => !existingNames.has(p.name));
+        const newPlayers = data.filter(
+          (p: Player) => !existingNames.has(p.name)
+        );
         return {
           ...prev,
           [gender]: [...prev[gender], ...newPlayers],

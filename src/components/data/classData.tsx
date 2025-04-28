@@ -1,7 +1,7 @@
 import { PlayerEventData, ResultRow } from "@/types/result";
 import { getOrderData } from "./orderData";
 
-async function handleSave(data: ResultRow) {
+async function handleSave(data: ResultRow[]) {
   try {
     const promises = data.map(async (row) => {
       const response = await fetch("/api/database/sequence/result", {
@@ -22,16 +22,16 @@ async function handleSave(data: ResultRow) {
     });
 
     // 모든 요청이 완료될 때까지 대기하고, 모두 성공한 경우 출력
-    const results = await Promise.all(promises);
+    await Promise.all(promises);
     console.log("모든 항목이 성공적으로 저장되었습니다.");
   } catch (error) {
     console.error("연결 오류", error);
   }
 }
 
-export async function getClassdata(data: PlayerEventData[], contestId: number) {
+export async function getClassdata(data: PlayerEventData[], contestId: string) {
   const resultMap = new Map<number, ResultRow>();
-  console.log(data);
+
   data.forEach((item) => {
     const {
       coach_affiliation,

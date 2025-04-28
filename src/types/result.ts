@@ -1,4 +1,3 @@
-import { Sequence } from "@/components/admin/sequence";
 export interface Coach {
   coach_competition_id: string;
   coach_id: string;
@@ -36,7 +35,7 @@ export type ResultRow = {
   BASE_CLASS_CD: string;
   COMP_CD: number;
   DETAIL_CLASS_NM: string;
-  TO_CD: number;
+  TO_CD: string;
   SEX_CD: number;
   KIND_NM: string;
   KIND_CD: string;

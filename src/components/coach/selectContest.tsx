@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Contest } from "@/types/player";
 import styles from "@/styles/coachBoard.module.css";
 
 export default function SelectContest() {
-  const [competition, setCompetition] = useState([]);
+  const [competition, setCompetition] = useState<Contest[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export default function SelectContest() {
       });
   }, []);
 
-  const handleSubmit = async (contest) => {
+  const handleSubmit = async (contest: Contest) => {
     localStorage.setItem("selectedCompetition", contest.title);
     localStorage.setItem("competitionId", contest.id);
     const coachId = localStorage.getItem("userId");
