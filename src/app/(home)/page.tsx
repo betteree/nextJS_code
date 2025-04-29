@@ -26,6 +26,7 @@ export default function HomePage() {
           <span>
             <label htmlFor="type">타입</label>
             <select name="type" id="type" onChange={handleType}>
+              <option value="/">선택</option>
               <option value="/admin_page">관리자</option>
               <option value="/coach_page">지도자</option>
             </select>

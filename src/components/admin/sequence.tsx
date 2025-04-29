@@ -85,7 +85,7 @@ export default function Sequence() {
                 {coachIndex === 0 && (
                   <td rowSpan={contest.coaches.length}>
                     {contest.title}
-                    <button onClick={() => handleSend(contest.id)}>전송</button>
+                    {/* <button onClick={() => handleSend(contest.id)}>전송</button> */}
                   </td>
                 )}
                 <td>{coachIndex + 1}</td>
