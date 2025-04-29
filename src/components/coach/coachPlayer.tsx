@@ -11,8 +11,8 @@ export default function CoachPlayer() {
     남: [],
     여: [],
   });
-  const router = useRouter();
-  const [newPlayer, setNewPlayer] = useState("");
+  const router = useRouter(); // 페이지 이동 변수 정의
+  const [newPlayer, setNewPlayer] = useState(""); // 새로운 선수 추가
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [draggedCategory, setDraggedCategory] = useState<string | null>(null);
   const [gender, setGender] = useState<"남" | "여">("남");

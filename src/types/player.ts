@@ -38,6 +38,7 @@ export interface PlayerEvent {
   player_id: number;
 }
 
+// 도마 1차시 , 2차시 타입
 export interface VaultFormatted {
   first: {
     player_name: string;
@@ -49,6 +50,7 @@ export interface VaultFormatted {
   }[];
 }
 
+// 대회 정보 타입
 export type Admin = {
   id: number;
   title: string;
@@ -59,17 +61,20 @@ export type Admin = {
   gender: string;
 };
 
+// 코치 타입
 export type Coach = {
   affiliation: string;
   name: string;
   phone: string;
 };
 
+// 등록 모달 타입 정의
 export interface RegisterProps {
   itemData: Admin | null;
   isClose: (item: Admin | null) => void;
 }
 
+// 대회 title,id 타입
 export type Contest = {
   title: string;
   id: string;

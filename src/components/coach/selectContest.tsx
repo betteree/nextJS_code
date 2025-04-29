@@ -19,6 +19,7 @@ export default function SelectContest() {
       });
   }, []);
 
+  // 원하는 대회의 버튼을 누르면 그 데이터가 전송되도록 함
   const handleSubmit = async (contest: Contest) => {
     localStorage.setItem("selectedCompetition", contest.title);
     localStorage.setItem("competitionId", contest.id);

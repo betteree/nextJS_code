@@ -13,6 +13,7 @@ export default function Approve() {
     "공주대학교",
   ];
 
+  //지도자 로그인 함수
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -41,6 +42,7 @@ export default function Approve() {
       alert(result.message);
     }
   }
+
   return (
     <div className={styles.Approvecontainer}>
       <h2>지도자</h2>

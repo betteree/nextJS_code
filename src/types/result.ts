@@ -1,3 +1,4 @@
+//코치 정보
 export interface Coach {
   coach_competition_id: string;
   coach_id: string;
@@ -6,12 +7,14 @@ export interface Coach {
   phone: string;
 }
 
+// 대회 정보
 export interface Contest {
   id: string;
   title: string;
   coaches: Coach[]; // Contest 객체는 coaches라는 배열을 가짐
 }
 
+// 관리자 페이지 이벤트 타입
 export type PlayerEventData = {
   coach_id: number;
   event_gender: string;
@@ -24,11 +27,13 @@ export type PlayerEventData = {
   sequence: string;
 };
 
+// 도마 1차시 ,2차시 타입
 export type ResultType = {
   first: string | null;
   second: string | null;
 };
 
+// 데이터 가공 타입
 export type ResultRow = {
   CLASS_CD: string;
   CLASS_SUB_CD: string;
