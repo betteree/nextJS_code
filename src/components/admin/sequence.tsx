@@ -4,7 +4,7 @@ import styles from "@/styles/adminBoard.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Coach, Contest } from "@/types/result";
-import { getClassdata } from "../data/classData";
+// import { getClassdata } from "../data/classData";
 
 export default function Sequence() {
   const [contestData, setContestData] = useState<Contest[]>([]); // Contest[]로 타입 지정
@@ -36,30 +36,30 @@ export default function Sequence() {
   };
 
   // 대회에 해당하는 모든 것 가져오는 것
-  const handleSend = async (competitionId: string) => {
-    try {
-      const res = await fetch(
-        `/api/database/sequence/result?competition_id=${competitionId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  // const handleSend = async (competitionId: string) => {
+  //   try {
+  //     const res = await fetch(
+  //       `/api/database/sequence/result?competition_id=${competitionId}`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || "전송 실패");
-      }
+  //     if (!res.ok) {
+  //       throw new Error(data.error || "전송 실패");
+  //     }
 
-      getClassdata(data, competitionId);
-    } catch (err) {
-      console.error(err);
-      alert("전송 중 오류가 발생했어요!");
-    }
-  };
+  //     getClassdata(data, competitionId);
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert("전송 중 오류가 발생했어요!");
+  //   }
+  // };
 
   return (
     <div className={styles.container}>
