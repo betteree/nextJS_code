@@ -18,11 +18,16 @@ export default function Sequence() {
   const filteredData = contestData
     .map((contest) => {
       // 해당 대회에서 검색어가 포함된 지도자만 추출
-      const filteredCoaches = contest.coaches.filter((coach) =>
-        coach.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      const filteredCoaches = contest.coaches.filter((coach) => {
+        const search = searchTerm.toLowerCase();
+        return (
+          coach.name.toLowerCase().includes(search) ||
+          coach.affiliation.toLowerCase().includes(search) ||
+          contest.title.toLowerCase().includes(search)
+        );
+      });
 
-      // 만약 필터된 지도자가 있다면 그 대회를 결과에 포함
+      // 만약 필터된 검색어가 있다면 그 대회를 결과에 포함
       if (filteredCoaches.length > 0) {
         return {
           ...contest,
