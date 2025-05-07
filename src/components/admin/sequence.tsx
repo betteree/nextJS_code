@@ -11,6 +11,27 @@ export default function Sequence() {
   const [contestData, setContestData] = useState<Contest[]>([]); // Contest[]로 타입 지정
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  // 검색 필터 변수
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // 검색 필터링
+  const filteredData = contestData
+    .map((contest) => {
+      // 해당 대회에서 검색어가 포함된 지도자만 추출
+      const filteredCoaches = contest.coaches.filter((coach) =>
+        coach.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      // 만약 필터된 지도자가 있다면 그 대회를 결과에 포함
+      if (filteredCoaches.length > 0) {
+        return {
+          ...contest,
+          coaches: filteredCoaches, // 필터된 지도자들만 남김
+        };
+      }
+      return null;
+    })
+    .filter((contest) => contest !== null);
 
   // 대회받아오는 역할
   useEffect(() => {
@@ -67,8 +88,14 @@ export default function Sequence() {
 
   return (
     <div className={styles.container}>
-      <section className={styles.contestDetail}>
+      <section className={styles.sequenceDetail}>
         <h3>선수 순서 LIST</h3>
+        <input
+          type="text"
+          placeholder="지도자,대회,학교 검색"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </section>
       {loading ? (
         <div
@@ -96,7 +123,7 @@ export default function Sequence() {
             </tr>
           </thead>
           <tbody>
-            {contestData.map((contest, contestIndex) =>
+            {filteredData.map((contest, contestIndex) =>
               contest.coaches.map((coach, coachIndex) => (
                 <tr key={`${contestIndex}-${coachIndex}`}>
                   {coachIndex === 0 && (
