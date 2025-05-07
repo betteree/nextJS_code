@@ -4,6 +4,7 @@ import styles from "@/styles/adminBoard.module.css";
 import { useState, useEffect } from "react";
 import Register from "@/components/admin/register";
 import { Admin } from "@/types/player";
+import { RotateLoader } from "react-spinners";
 
 export default function ContestList() {
   const [admins, setAdmins] = useState<Admin[]>([]);
@@ -37,7 +38,16 @@ export default function ContestList() {
         <button onClick={() => handleModal(null)}>대회 추가</button>
       </section>
       {loading ? (
-        <p>로딩 중...</p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <RotateLoader size={10} color="#1E90FF" />
+        </div>
       ) : admins.length === 0 ? (
         <p>등록된 대회가 없습니다.</p>
       ) : (

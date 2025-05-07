@@ -1,7 +1,9 @@
 import { PlayerEventData, ResultRow } from "@/types/result";
 import { getOrderData } from "./orderData";
+import { toast } from "react-hot-toast";
 
 async function handleSave(data: ResultRow[]) {
+  const toastId = toast.loading("전송 중...");
   try {
     const promises = data.map(async (row) => {
       const response = await fetch("/api/database/sequence/result", {
@@ -24,6 +26,7 @@ async function handleSave(data: ResultRow[]) {
     // 모든 요청이 완료될 때까지 대기하고, 모두 성공한 경우 출력
     await Promise.all(promises);
     console.log("모든 항목이 성공적으로 저장되었습니다.");
+    toast.success("전송 완료!", { id: toastId });
   } catch (error) {
     console.error("연결 오류", error);
   }

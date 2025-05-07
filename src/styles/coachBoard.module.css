@@ -9,9 +9,14 @@
     color: white;
     background-color: #476ff3;
 
-    & h2 {
-      font-size: 30px;
-      font-weight: 400;
+    & header {
+      display: flex;
+      justify-content: space-between;
+
+      & h2 {
+        font-size: 30px;
+        font-weight: 400;
+      }
     }
   }
 
