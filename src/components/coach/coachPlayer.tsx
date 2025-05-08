@@ -280,8 +280,6 @@ export default function CoachPlayer() {
     router.push("/result_page");
   }
 
-  function handleReg() {}
-
   return (
     <div className={styles.playerContainer}>
       <section className={styles.genderContainer}>
