@@ -1,10 +1,11 @@
 // src/components/VaultModal.tsx
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDragAndDrop } from "@/hooks/useDragAndDrop"; // 커스텀 훅 import
 import styles from "@/styles/coachBoard.module.css";
 import { VaultModalProps } from "@/types/player";
+import { isVaultCode } from "../data/vaultReg/vaultData";
 
 export default function VaultModal({
   onClose,
@@ -19,6 +20,8 @@ export default function VaultModal({
   const 도마2 = useDragAndDrop<{ player_name: string; skill_number: string }>(
     []
   );
+
+  const [hint, setHint] = useState(true);
 
   useEffect(() => {
     도마1.setItems([]);
@@ -105,6 +108,7 @@ export default function VaultModal({
     onSave(newVaultList);
     onClose();
   };
+
   return (
     <div className={styles.vaultModalContainer}>
       <p>클릭 시 추가됩니다</p>
@@ -129,25 +133,31 @@ export default function VaultModal({
             onDragOver={도마1.handleDragOver}
             onDrop={() => 도마1.handleDrop(index, "도마1")}
           >
-            {player.player_name}
-            <input
-              type="text"
-              value={player.skill_number}
-              onChange={(e) => {
-                const updatedList = [...도마1.items];
-                updatedList[index].skill_number = e.target.value;
-                도마1.setItems(updatedList);
-              }}
-              placeholder="기술 번호 입력"
-            />
-            <button
-              className={styles.deleteButton}
-              onClick={() => handleDelete("도마1", index)}
-            >
-              <img src="/icon/cancel.png" alt="삭제" />
-            </button>
+            <div>
+              {player.player_name}
+              <input
+                type="text"
+                value={player.skill_number}
+                onChange={(e) => {
+                  const updatedList = [...도마1.items];
+                  updatedList[index].skill_number = e.target.value;
+                  도마1.setItems(updatedList);
+                  setHint(isVaultCode(e.target.value, gender));
+                }}
+                placeholder="기술 번호 입력"
+              />
+              <button
+                className={styles.deleteButton}
+                onClick={() => handleDelete("도마1", index)}
+              >
+                <img src="/icon/cancel.png" alt="삭제" />
+              </button>
+            </div>
           </li>
         ))}
+        {!hint && (
+          <p className={styles.errorText}>유효한 기술번호를 입력하세요</p>
+        )}
       </ul>
 
       <section className={styles.addPlayer}>
@@ -171,23 +181,25 @@ export default function VaultModal({
             onDragOver={도마2.handleDragOver}
             onDrop={() => 도마2.handleDrop(index, "도마2")}
           >
-            {player.player_name}
-            <input
-              type="text"
-              value={player.skill_number}
-              onChange={(e) => {
-                const updatedList = [...도마2.items];
-                updatedList[index].skill_number = e.target.value;
-                도마2.setItems(updatedList);
-              }}
-              placeholder="기술 번호 입력"
-            />
-            <button
-              className={styles.deleteButton}
-              onClick={() => handleDelete("도마2", index)}
-            >
-              <img src="/icon/cancel.png" alt="삭제" />
-            </button>
+            <div>
+              {player.player_name}
+              <input
+                type="text"
+                value={player.skill_number}
+                onChange={(e) => {
+                  const updatedList = [...도마2.items];
+                  updatedList[index].skill_number = e.target.value;
+                  도마2.setItems(updatedList);
+                }}
+                placeholder="기술 번호 입력"
+              />
+              <button
+                className={styles.deleteButton}
+                onClick={() => handleDelete("도마2", index)}
+              >
+                <img src="/icon/cancel.png" alt="삭제" />
+              </button>
+            </div>
           </li>
         ))}
       </ul>
