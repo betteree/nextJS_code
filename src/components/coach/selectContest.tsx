@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Contest } from "@/types/player";
+import { motion } from "framer-motion";
 import styles from "@/styles/coachBoard.module.css";
 
 export default function SelectContest() {
@@ -47,16 +48,30 @@ export default function SelectContest() {
     }
   };
 
+  const listVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2, // 아이템 하나씩 0.2초 간격으로 등장
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0 },
+  };
+
   return (
     <div className={styles.selectContainer}>
       <h2>대회 선택</h2>
-      <ul>
+      <motion.ul initial="hidden" animate="visible" variants={listVariants}>
         {competition.map((item, index) => (
-          <li key={index}>
+          <motion.li key={index} variants={itemVariants}>
             <button onClick={() => handleSubmit(item)}>{item.title}</button>
-          </li>
+          </motion.li>
         ))}
-      </ul>
+      </motion.ul>
     </div>
   );
 }
