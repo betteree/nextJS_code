@@ -5,6 +5,7 @@ import styles from "@/styles/coachBoard.module.css";
 import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function CoachPlayer() {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
@@ -381,15 +382,21 @@ export default function CoachPlayer() {
       </section>
 
       {isVault && (
-        <VaultModal
-          onClose={handleValutModal}
-          players={players}
-          gender={gender}
-          vaultList={detailVault}
-          onSave={(newList) => {
-            setDetailVault(newList);
-          }}
-        ></VaultModal>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }} // 위에서 시작
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+          <VaultModal
+            onClose={handleValutModal}
+            players={players}
+            gender={gender}
+            vaultList={detailVault}
+            onSave={(newList) => {
+              setDetailVault(newList);
+            }}
+          ></VaultModal>
+        </motion.div>
       )}
 
       <section className={styles.footerButton}>
