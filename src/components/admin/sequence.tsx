@@ -108,6 +108,7 @@ export default function Sequence() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginTop: "50px",
             width: "100%",
           }}
         >
