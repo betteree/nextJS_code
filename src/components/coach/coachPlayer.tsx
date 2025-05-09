@@ -5,7 +5,7 @@ import styles from "@/styles/coachBoard.module.css";
 import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function CoachPlayer() {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
@@ -323,17 +323,25 @@ export default function CoachPlayer() {
       <section className={styles.allPlayerContainer}>
         <p>선수 목록</p>
         <ul>
-          {players[gender]?.map((player, index) => (
-            <li key={index}>
-              {player.name}
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleRemove(player.name)}
+          <AnimatePresence>
+            {players[gender]?.map((player) => (
+              <motion.li
+                key={player.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.2 }}
               >
-                <img src="/icon/cancel.png" alt="삭제" />
-              </button>
-            </li>
-          ))}
+                {player.name}
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => handleRemove(player.name)}
+                >
+                  <img src="/icon/cancel.png" alt="삭제" />
+                </button>
+              </motion.li>
+            ))}
+          </AnimatePresence>
         </ul>
       </section>
       <button onClick={handleShffle} className={styles.randomButton}>
