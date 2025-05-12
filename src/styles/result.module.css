@@ -83,7 +83,7 @@
   @media (max-width: 768px) {
     & .coachTable {
       & th,
-      td {
+      & td {
         font-size: 14px;
       }
 
