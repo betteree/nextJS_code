@@ -4,6 +4,7 @@ export interface Player {
   coach_id?: number;
   gender?: "남" | "여";
 }
+
 // 도마 타입
 export interface VaultItem {
   event_name: "도마1" | "도마2";
@@ -15,6 +16,7 @@ export interface VaultItem {
   event_id?: number;
   player_id?: number;
 }
+
 // 도마 함수 타입
 export interface VaultModalProps {
   onClose: () => void;
@@ -26,6 +28,7 @@ export interface VaultModalProps {
   vaultList: VaultItem[];
   onSave: (vaultData: VaultItem[]) => void;
 }
+
 // 도마 외 종목 타입
 export interface PlayerEvent {
   event_name: string;
@@ -79,3 +82,9 @@ export type Contest = {
   title: string;
   id: string;
 };
+
+// 드래그 인수 타입
+export interface DraggableProps {
+  id: string;
+  onDelete: () => void;
+}

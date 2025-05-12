@@ -35,9 +35,11 @@ export default function ResultCoach() {
         <tbody>
           <tr>
             <th>소속명</th>
-            <td>
-              {coachData.affiliation}/{contest}
-            </td>
+            <td>{coachData.affiliation}</td>
+          </tr>
+          <tr>
+            <th>대회명</th>
+            <td>{contest}</td>
           </tr>
           <tr>
             <th>감독명</th>

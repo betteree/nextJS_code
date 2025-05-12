@@ -301,7 +301,7 @@
         transition: transform 0.3s ease-in-out;
         border-radius: 5px;
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
 
         &:active,

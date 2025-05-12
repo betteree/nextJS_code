@@ -17,8 +17,15 @@
       color: #e45b00;
     }
   }
-}
 
+  @media (max-width: 768px) {
+    & nav {
+      & h1 {
+        font-size: 30px;
+      }
+    }
+  }
+}
 /* 선수 순서 리스트 */
 .playerList {
   background-color: white;
@@ -42,6 +49,15 @@
   & th {
     background-color: #e0e0e0;
   }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+
+    & th,
+    & td {
+      font-size: 15px;
+    }
+  }
 }
 
 /* 결과 연기 순서표에 감독 정보 */
@@ -61,6 +77,19 @@
 
     & th {
       width: 120px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & .coachTable {
+      & th,
+      td {
+        font-size: 14px;
+      }
+
+      & th {
+        width: 50px;
+      }
     }
   }
 }
