@@ -32,6 +32,8 @@
 
   /* 모바일용 */
   @media (max-width: 768px) {
+    height: 200vh;
+
     & nav {
       padding: 20px;
       padding-bottom: 200px;
@@ -275,8 +277,21 @@
     }
 
     @media (max-width: 768px) {
-      & li {
-        font-size: 15px;
+      & ul {
+        gap: 5px;
+        & li {
+          font-size: 15px;
+          padding: 2px 5px;
+
+          & button {
+            margin-left: 0;
+            height: 20px;
+          }
+
+          & img {
+            width: 20px;
+          }
+        }
       }
     }
   }
@@ -316,6 +331,10 @@
       & li {
         font-size: 15px;
       }
+    }
+
+    @media (max-width: 330px) {
+      grid-template-columns: repeat(1, 1fr);
     }
   }
 
