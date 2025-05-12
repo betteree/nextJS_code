@@ -354,7 +354,7 @@ export default function CoachPlayer() {
           <div key={event} className={styles.partContainer}>
             <h3>{event} 순서</h3>
             {event === "도마" ? (
-              <div className={styles.valutDetail}>
+              <div className={styles.vaultDetail}>
                 <button onClick={handleValutModal}>상세설정</button>
               </div>
             ) : (

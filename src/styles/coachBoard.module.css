@@ -159,6 +159,10 @@
     }
 
     @media (max-width: 768px) {
+      & h2 {
+        font-size: 16px;
+      }
+
       & input {
         width: 50%;
         font-size: 16px;
@@ -258,7 +262,21 @@
         border-radius: 5px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+
+        & button {
+          padding: 0 0 0 5px;
+          margin-left: 5px;
+          height: 25px;
+        }
+        & img {
+          width: 25px;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      & li {
+        font-size: 15px;
       }
     }
   }
@@ -282,11 +300,21 @@
         cursor: grab;
         transition: transform 0.3s ease-in-out;
         border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:active,
         &:hover {
           transform: scale(1.05);
         }
+      }
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      & li {
+        font-size: 15px;
       }
     }
   }
@@ -308,7 +336,7 @@
     }
 
     /* 상세 설정 버튼 */
-    & .valutDetail {
+    & .vaultDetail {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -318,6 +346,7 @@
         border: 1px solid lightgray;
         width: 100%;
         border-radius: 5px;
+        cursor: pointer;
       }
     }
   }
@@ -498,6 +527,7 @@
     display: flex;
     justify-content: space-between;
     & button {
+      cursor: pointer;
       border: 0;
       padding: 5px 10px;
       border-radius: 5px;
@@ -511,9 +541,25 @@
 
   /* 모바일 용 */
   @media (max-width: 768px) {
+    width: 90%;
     & .addPlayer {
       & h2 {
         font-size: 14px;
+      }
+
+      & button {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+    }
+
+    & .vaultList {
+      & div {
+        font-size: 14px;
+
+        & input {
+          font-size: 14px;
+        }
       }
     }
   }
@@ -523,6 +569,18 @@
 & .deleteButton {
   border: 0;
   background-color: transparent;
+  height: 25px;
+
+  & img {
+    width: 25px;
+  }
+
+  @media (max-width: 768px) {
+    height: 20px;
+    & img {
+      width: 20px;
+    }
+  }
 }
 
 /* 코치 대회 선택 스타일 */
