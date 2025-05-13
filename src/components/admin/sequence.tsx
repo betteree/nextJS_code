@@ -1,23 +1,33 @@
 "use client";
 
-import styles from "@/styles/adminBoard.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Coach, Contest } from "@/types/result";
 import { getClassdata } from "../data/classData";
 import { RotateLoader } from "react-spinners";
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+  Paper,
+} from "@mui/material";
 
 export default function Sequence() {
-  const [contestData, setContestData] = useState<Contest[]>([]); // Contest[]로 타입 지정
+  const [contestData, setContestData] = useState<Contest[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  // 검색 필터 변수
   const [searchTerm, setSearchTerm] = useState("");
 
   // 검색 필터링
   const filteredData = contestData
     .map((contest) => {
-      // 해당 대회에서 검색어가 포함된 지도자만 추출
       const filteredCoaches = contest.coaches.filter((coach) => {
         const search = searchTerm.toLowerCase();
         return (
@@ -27,18 +37,17 @@ export default function Sequence() {
         );
       });
 
-      // 만약 필터된 검색어가 있다면 그 대회를 결과에 포함
       if (filteredCoaches.length > 0) {
         return {
           ...contest,
-          coaches: filteredCoaches, // 필터된 지도자들만 남김
+          coaches: filteredCoaches,
         };
       }
       return null;
     })
     .filter((contest) => contest !== null);
 
-  // 대회받아오는 역할
+  // 대회 데이터 받아오기
   useEffect(() => {
     setLoading(true);
     fetch("/api/database/sequence")
@@ -49,7 +58,7 @@ export default function Sequence() {
       });
   }, []);
 
-  // 정보를 저장한 후 그에 해당하는 순서 결과 페이지로 이동
+  // 정보 저장 후 결과 페이지로 이동
   const handleInfo = ({
     contest,
     coach,
@@ -61,11 +70,10 @@ export default function Sequence() {
     localStorage.setItem("competitionId", contest.id);
     localStorage.setItem("selectedCompetition", contest.title);
     localStorage.setItem("userId", coach.coach_id);
-    // 페이지 이동
     router.push("/result_page");
   };
 
-  // 대회에 해당하는 모든 것 가져오는 것
+  // 대회 데이터 전송
   const handleSend = async (competitionId: string) => {
     try {
       const res = await fetch(
@@ -92,19 +100,21 @@ export default function Sequence() {
   };
 
   return (
-    <div className={styles.container}>
-      <section className={styles.sequenceDetail}>
-        <h3>선수 순서 LIST</h3>
-        <input
-          type="text"
-          placeholder="지도자,대회,학교 검색"
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <Box sx={{ padding: "20px", display: "flex", gap: "20px" }}>
+        <Typography variant="h5">선수 순서 LIST</Typography>
+        <TextField
+          variant="outlined"
+          label="지도자,대회,학교 검색"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          sx={{ flex: 1 }}
         />
-      </section>
+      </Box>
+
       {loading ? (
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -113,48 +123,59 @@ export default function Sequence() {
           }}
         >
           <RotateLoader size={10} color="#1E90FF" />
-        </div>
+        </Box>
       ) : contestData.length === 0 ? (
-        <p>등록된 대회가 없습니다.</p>
+        <Typography sx={{ textAlign: "center" }}>
+          등록된 대회가 없습니다.
+        </Typography>
       ) : (
-        <table className={styles.contestTable}>
-          <thead>
-            <tr>
-              <th>대회명</th>
-              <th>#</th>
-              <th>지도자</th>
-              <th>학교명</th>
-              <th>전화번호</th>
-              <th>순서</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((contest, contestIndex) =>
-              contest.coaches.map((coach, coachIndex) => (
-                <tr key={`${contestIndex}-${coachIndex}`}>
-                  {coachIndex === 0 && (
-                    <td rowSpan={contest.coaches.length}>
-                      {contest.title}
-                      <button onClick={() => handleSend(contest.id)}>
-                        전송
-                      </button>
-                    </td>
-                  )}
-                  <td>{coachIndex + 1}</td>
-                  <td>{coach.name}</td>
-                  <td>{coach.affiliation}</td>
-                  <td>{coach.phone}</td>
-                  <td>
-                    <button onClick={() => handleInfo({ contest, coach })}>
-                      보기
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+        <TableContainer component={Paper} sx={{ margin: "20px" }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>대회명</TableCell>
+                <TableCell>#</TableCell>
+                <TableCell>지도자</TableCell>
+                <TableCell>학교명</TableCell>
+                <TableCell>전화번호</TableCell>
+                <TableCell>순서</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredData.map((contest, contestIndex) =>
+                contest.coaches.map((coach, coachIndex) => (
+                  <TableRow key={`${contestIndex}-${coachIndex}`}>
+                    {coachIndex === 0 && (
+                      <TableCell rowSpan={contest.coaches.length}>
+                        {contest.title}
+                        <Button
+                          variant="contained"
+                          onClick={() => handleSend(contest.id)}
+                          sx={{ marginTop: "10px" }}
+                        >
+                          전송
+                        </Button>
+                      </TableCell>
+                    )}
+                    <TableCell>{coachIndex + 1}</TableCell>
+                    <TableCell>{coach.name}</TableCell>
+                    <TableCell>{coach.affiliation}</TableCell>
+                    <TableCell>{coach.phone}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        onClick={() => handleInfo({ contest, coach })}
+                      >
+                        보기
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
-    </div>
+    </Box>
   );
 }
