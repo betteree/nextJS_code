@@ -1,9 +1,23 @@
 "use client";
 
-import styles from "@/styles/coachBoard.module.css";
+import { useState } from "react";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 
 export default function Approve() {
-  // 임시 학교 데이터
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [affiliation, setAffiliation] = useState("");
+
   const schoolList = [
     "북부초등학교",
     "남부초등학교",
@@ -13,15 +27,13 @@ export default function Approve() {
     "공주대학교",
   ];
 
-  //지도자 로그인 함수
-  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
 
     const requestData = {
-      name: formData.get("name") as string,
-      phone: formData.get("phone") as string,
-      affiliation: formData.get("affiliation") as string,
+      name,
+      phone,
+      affiliation,
     };
 
     const response = await fetch("/api/database/coach", {
@@ -38,39 +50,71 @@ export default function Approve() {
       alert("로그인 되었습니다");
       window.location.reload();
     } else {
-      console.log(result);
+      console.error(result);
       alert(result.message);
     }
-  }
+  };
 
   return (
-    <div className={styles.Approvecontainer}>
-      <h2>지도자</h2>
-      <section>
-        <form onSubmit={handleLogin}>
-          <span>
-            <label htmlFor="name">이름</label>
-            <input type="text" name="name" id="name" />
-          </span>
-          <span>
-            <label htmlFor="phone">연락처</label>
-            <input type="text" name="phone" id="phone" />
-          </span>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ pt: 10 }}
+    >
+      <Typography variant="h4" fontWeight={600} gutterBottom>
+        지도자
+      </Typography>
 
-          <span>
-            <label htmlFor="affiliation">소속</label>
-            <select name="affiliation" id="affiliation" defaultValue="">
-              <option value="">학교선택</option>
-              {schoolList.map((item, index) => (
-                <option value={item} key={index}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </span>
-          <button type="submit">로그인</button>
+      <Paper elevation={3} sx={{ p: 4, width: "70%", maxWidth: 500 }}>
+        <form onSubmit={handleLogin}>
+          <Box display="flex" flexDirection="column" gap={3}>
+            <TextField
+              label="이름"
+              variant="standard"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+
+            <TextField
+              label="연락처"
+              variant="standard"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+
+            <FormControl variant="standard" required>
+              <InputLabel id="affiliation-label">소속</InputLabel>
+              <Select
+                labelId="affiliation-label"
+                value={affiliation}
+                onChange={(e) => setAffiliation(e.target.value)}
+              >
+                <MenuItem value="">
+                  <em>학교 선택</em>
+                </MenuItem>
+                {schoolList.map((item, index) => (
+                  <MenuItem key={index} value={item}>
+                    {item}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ mt: 2 }}
+              fullWidth
+            >
+              로그인
+            </Button>
+          </Box>
         </form>
-      </section>
-    </div>
+      </Paper>
+    </Box>
   );
 }

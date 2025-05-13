@@ -1,9 +1,9 @@
 "use client";
 
-import styles from "@/styles/coachBoard.module.css";
+import { useRouter } from "next/navigation";
+import { Box, Button, AppBar, Toolbar, Typography } from "@mui/material";
 import CoachInfo from "@/components/coach/coachInfo";
 import CoachPlayer from "@/components/coach/coachPlayer";
-import { useRouter } from "next/navigation";
 
 export default function Contest() {
   const router = useRouter();
@@ -15,18 +15,58 @@ export default function Contest() {
   };
 
   return (
-    <div className={styles.container}>
-      <nav>
-        <header>
-          <h2>지도자</h2>
-          <button onClick={handleLogout}>로그아웃</button>
-        </header>
+    <Box
+      sx={{
+        backgroundColor: "#f0f4f8",
+        height: "150vh",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+      }}
+    >
+      <AppBar position="static" sx={{ backgroundColor: "#476ff3" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6">지도자</Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleLogout}
+            sx={{ fontWeight: "bold" }}
+          >
+            로그아웃
+          </Button>
+        </Toolbar>
+      </AppBar>
 
-        <CoachInfo></CoachInfo>
-      </nav>
-      <main>
-        <CoachPlayer></CoachPlayer>
-      </main>
-    </div>
+      <Box
+        sx={{
+          backgroundColor: "white",
+          boxShadow: 2,
+          borderRadius: 2,
+          position: "absolute",
+          top: "100px",
+          width: "80%",
+         
+        }}
+      >
+        <CoachInfo />
+      </Box>
+
+      <Box
+        sx={{
+          backgroundColor: "white",
+          boxShadow: 2,
+          borderRadius: 2,
+          position: "absolute",
+          top: "500px",
+          width: "80%",
+          padding: 3,
+        }}
+      >
+        <CoachPlayer />
+      </Box>
+    </Box>
   );
 }

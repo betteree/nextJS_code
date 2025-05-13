@@ -1,16 +1,24 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Contest } from "@/types/player";
 import { motion } from "framer-motion";
-import styles from "@/styles/coachBoard.module.css";
+import {
+  Box,
+  Typography,
+  Button,
+  List,
+  ListItem,
+  Paper,
+} from "@mui/material";
 
 export default function SelectContest() {
   const [competition, setCompetition] = useState<Contest[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`/api/database/admin?table=${"competition"}`)
+    fetch(`/api/database/admin?table=competition`)
       .then((res) => res.json())
       .then((data) => {
         setCompetition(data);
@@ -20,7 +28,6 @@ export default function SelectContest() {
       });
   }, []);
 
-  // 원하는 대회의 버튼을 누르면 그 데이터가 전송되도록 함
   const handleSubmit = async (contest: Contest) => {
     localStorage.setItem("selectedCompetition", contest.title);
     localStorage.setItem("competitionId", contest.id);
@@ -52,7 +59,7 @@ export default function SelectContest() {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.2, // 아이템 하나씩 0.2초 간격으로 등장
+        staggerChildren: 0.2,
       },
     },
   };
@@ -63,15 +70,58 @@ export default function SelectContest() {
   };
 
   return (
-    <div className={styles.selectContainer}>
-      <h2>대회 선택</h2>
-      <motion.ul initial="hidden" animate="visible" variants={listVariants}>
-        {competition.map((item, index) => (
-          <motion.li key={index} variants={itemVariants}>
-            <button onClick={() => handleSubmit(item)}>{item.title}</button>
-          </motion.li>
-        ))}
-      </motion.ul>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "100px 10%",
+      }}
+    >
+      <Typography variant="h5" fontWeight={600} mb={2}>
+        대회 선택
+      </Typography>
+
+      <motion.div initial="hidden" animate="visible" variants={listVariants}>
+        <Paper
+          elevation={3}
+          sx={{
+            border: "2px solid dodgerblue",
+            borderRadius: "5px",
+            backgroundColor: "white",
+            padding: "20px",
+            width: "100%",
+          }}
+        >
+          <List disablePadding>
+            {competition.map((item, index) => (
+              <motion.div key={index} variants={itemVariants}>
+                <ListItem disableGutters sx={{ mb: 1 }}>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    onClick={() => handleSubmit(item)}
+                    sx={{
+                      borderColor: "dodgerblue",
+                      backgroundColor: "#f0f8ff",
+                      color: "black",
+                      ":hover": {
+                        backgroundColor: "dodgerblue",
+                        color: "white",
+                      },
+                      fontSize: "16px",
+                      borderRadius: "5px",
+                      paddingBlock: "5px",
+                    }}
+                  >
+                    {item.title}
+                  </Button>
+                </ListItem>
+              </motion.div>
+            ))}
+          </List>
+        </Paper>
+      </motion.div>
+    </Box>
   );
 }

@@ -1,11 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import styles from "@/styles/coachBoard.module.css";
 import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Box, Typography, TextField, Button,IconButton,
+  List,
+  ListItem,
+  Paper } from "@mui/material";
+
+import CancelIcon from "@mui/icons-material/Cancel";
+import Image from "next/image";
 
 export default function CoachPlayer() {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
@@ -282,139 +288,269 @@ export default function CoachPlayer() {
   }
 
   return (
-    <div className={styles.playerContainer}>
-      <section className={styles.genderContainer}>
-        <button
-          value="남"
-          onClick={handleGender}
-          className={gender === "남" ? styles.active : ""}
-        >
-          남
-        </button>
-        <button
-          value="여"
-          onClick={handleGender}
-          className={gender === "여" ? styles.active : ""}
-        >
-          여
-        </button>
-      </section>
+   <Box sx={{ p: { xs: 2, sm: 4 } }}>
+  {/* 성별 선택 */}
+  <Box display="flex" justifyContent="center" gap={2} mb={3}>
+    <Button
+      variant={gender === "남" ? "contained" : "outlined"}
+      value="남"
+      onClick={handleGender}
+    >
+      남
+    </Button>
+    <Button
+      variant={gender === "여" ? "contained" : "outlined"}
+      value="여"
+      onClick={handleGender}
+    >
+      여
+    </Button>
+  </Box>
 
-      <header>
-        <h2>선수 등록</h2>
-        <div className={styles.addContainer}>
-          <span>
-            <label htmlFor="name" className="sr-only">
-              name
-            </label>
-            <input
-              type="text"
-              id="name"
-              placeholder="ex) 홍길동"
-              value={newPlayer}
-              onChange={(e) => setNewPlayer(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleAddPlayer()}
-            />
-          </span>
-          <button onClick={handleAddPlayer}>추가</button>
-        </div>
-      </header>
+  {/* 선수 등록 헤더 */}
+  <Box component="header" mb={4}>
+    <Typography variant="h5" gutterBottom>
+      선수 등록
+    </Typography>
+    <Box display="flex" alignItems="center" gap={2}>
+      <TextField
+        id="name"
+        label="선수 이름"
+        placeholder="ex) 홍길동"
+        variant="outlined"
+        value={newPlayer}
+        onChange={(e) => setNewPlayer(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleAddPlayer()}
+        size="small"
+      />
+      <Button variant="contained" onClick={handleAddPlayer}>
+        추가
+      </Button>
+    </Box>
+  </Box>
 
-      <section className={styles.allPlayerContainer}>
-        <p>선수 목록</p>
-        <ul>
-          <AnimatePresence>
-            {players[gender]?.map((player) => (
-              <motion.li
-                key={player.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ duration: 0.2 }}
-              >
-                {player.name}
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => handleRemove(player.name)}
-                >
-                  <img src="/icon/cancel.png" alt="삭제" />
-                </button>
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </ul>
-      </section>
-      <button onClick={handleShffle} className={styles.randomButton}>
-        랜덤배치
-      </button>
-      <p>드래그로 순서변경이 가능합니다</p>
-
-      <section className={styles.playerList}>
-        {eventCategories[gender].map((event) => (
-          <div key={event} className={styles.partContainer}>
-            <h3>{event} 순서</h3>
-            {event === "도마" ? (
-              <div className={styles.vaultDetail}>
-                <button onClick={handleValutModal}>상세설정</button>
-              </div>
-            ) : (
-              <ul>
-                {eventData[event]?.map((name, index) => (
-                  <li
-                    key={index}
-                    draggable
-                    onDragStart={() => handleDragStart(index, event)}
-                    onDragOver={handleDragOver}
-                    onDrop={() =>
-                      handleDrop(index, event, eventData[event], (newList) =>
-                        setEventData((prev) => ({
-                          ...prev,
-                          [event]: newList as string[],
-                        }))
-                      )
-                    }
-                  >
-                    {name}
-                    <button
-                      className={styles.deleteButton}
-                      onClick={() => handleRemoveFromEvent(event, name)}
-                    >
-                      <img src="/icon/cancel.png" alt="삭제" />
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
-      </section>
-
-      {isVault && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }} // 위에서 시작
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-        >
-          <VaultModal
-            onClose={handleValutModal}
-            players={players}
-            gender={gender}
-            vaultList={detailVault}
-            onSave={(newList) => {
-              setDetailVault(newList);
+  {/* 선수 목록 */}
+  <Box
+    sx={{
+      border: "2px solid lightgray",
+      borderRadius: "5px",
+      p: 2,
+      my: 2,
+    }}
+  >
+    <Typography variant="subtitle1" sx={{ color: "black", mb: 2 }}>
+      선수 목록
+    </Typography>
+    <Box
+      component="ul"
+      sx={{
+        display: "flex",
+        gap: 1,
+        flexWrap: "wrap",
+        listStyle: "none",
+        p: 0,
+        m: 0,
+      }}
+    >
+      <AnimatePresence>
+        {players[gender]?.map((player) => (
+          <motion.li
+            key={player.name}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              border: "2px solid dodgerblue",
+              padding: "5px 10px",
+              borderRadius: "5px",
+              display: "flex",
+              alignItems: "center",
+              fontSize: "inherit",
             }}
-          ></VaultModal>
-        </motion.div>
-      )}
+          >
+            {player.name}
+            <IconButton
+              onClick={() => handleRemove(player.name)}
+              sx={{
+                pl: 1,
+                ml: 1,
+                height: 25,
+              }}
+            >
+              <CancelIcon sx={{ width: 25, height: 25 }} />
+            </IconButton>
+          </motion.li>
+        ))}
+      </AnimatePresence>
+    </Box>
+  </Box>
 
-      <section className={styles.footerButton}>
-        <button className={styles.submit} onClick={handleSubmit}>
-          제출
-        </button>
-        <button className={styles.result} onClick={handleNav}>
-          최종
-        </button>
-      </section>
-    </div>
+  {/* 랜덤배치 버튼 */}
+  <Button
+    variant="contained"
+    onClick={handleShffle}
+    sx={{
+      backgroundColor: "black",
+      color: "#fff",
+      fontWeight: "bold",
+      py: 1,
+      borderRadius: "4px",
+      width: "100%",
+      "&:hover": {
+        backgroundColor: "#1565c0",
+      },
+    }}
+  >
+    랜덤배치
+  </Button>
+
+  {/* 안내 메시지 */}
+  <Typography
+    sx={{
+      my: 2,
+      backgroundColor: "#f8f9fa",
+      color: "#333",
+      fontSize: "14px",
+      fontWeight: "bold",
+      p: 2,
+    }}
+  >
+    드래그로 순서변경이 가능합니다
+  </Typography>
+
+  {/* 종목 별 리스트 */}
+  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+      {eventCategories[gender].map((event) => {
+        const playersInEvent = eventData[event];
+        const isVaultEvent = event === "도마";
+        if (!isVaultEvent && (!playersInEvent || playersInEvent.length === 0)) {
+          return null;
+        }
+
+        return (
+          <Box key={event} sx={{ flex: "1 1 calc(33% - 16px)", boxSizing: "border-box" }}>
+            <Paper
+              elevation={3}
+              sx={{
+                borderRadius: 2,
+                border: "2px solid dodgerblue",
+                overflow: "hidden",
+                backgroundColor: "snow",
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  backgroundColor: "#edf1fd",
+                  textAlign: "center",
+                  py: 1,
+                  borderTopLeftRadius: 2,
+                  borderTopRightRadius: 2,
+                }}
+              >
+                {event} 순서
+              </Typography>
+
+              {isVaultEvent ? (
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", m: 2 }}>
+                  <Button variant="outlined" fullWidth onClick={handleValutModal}>
+                    상세설정
+                  </Button>
+                </Box>
+              ) : (
+                <List sx={{ p: 2 }}>
+                  {eventData[event]?.map((name, index) => (
+                    <ListItem
+                      key={`${event}-${index}-${name}`}
+                      component={motion.li}
+                      draggable
+                      onDragStart={() => handleDragStart(index, event)}
+                      onDragOver={handleDragOver}
+                      onDrop={() =>
+                        handleDrop(index, event, eventData[event], (newList) =>
+                          setEventData((prev) => ({
+                            ...prev,
+                            [event]: newList as string[],
+                          }))
+                        )
+                      }
+                      sx={{
+                        bgcolor: "#edf1fd",
+                        border: "1px solid dodgerblue",
+                        mb: 1,
+                        borderRadius: 1,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        px: 2,
+                        py: 1,
+                        cursor: "grab",
+                        transition: "transform 0.3s ease-in-out",
+                        "&:hover": { transform: "scale(1.05)" },
+                      }}
+                    >
+                      <Typography>{name}</Typography>
+                      <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small">
+                        <Image src="/icon/cancel.png" alt="삭제" width={25} height={25} />
+                      </IconButton>
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+            </Paper>
+          </Box>
+        );
+      })}
+    </Box>
+
+  {/* Vault Modal */}
+  {isVault && (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      <VaultModal
+        onClose={handleValutModal}
+        players={players}
+        gender={gender}
+        vaultList={detailVault}
+        onSave={(newList) => {
+          setDetailVault(newList);
+        }}
+      />
+    </motion.div>
+  )}
+
+  {/* 하단 제출/최종 버튼 */}
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      gap: 2,
+      mt: 4,
+      flexWrap: "wrap",
+    }}
+  >
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={handleSubmit}
+      sx={{ px: 4 }}
+    >
+      제출
+    </Button>
+    <Button
+      variant="outlined"
+      color="primary"
+      onClick={handleNav}
+      sx={{ px: 4 }}
+    >
+      최종
+    </Button>
+  </Box>
+</Box>
+
   );
 }

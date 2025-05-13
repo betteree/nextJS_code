@@ -1,8 +1,8 @@
 "use client";
 
-import styles from "@/styles/coachBoard.module.css";
-import Approve from "@/components/coach/approve";
 import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
+import Approve from "@/components/coach/approve";
 import SelectContest from "@/components/coach/selectContest";
 
 export default function CoachPage() {
@@ -16,8 +16,14 @@ export default function CoachPage() {
   }, []);
 
   return (
-    <div className={styles.container}>
-      {token ? <SelectContest></SelectContest> : <Approve></Approve>}
-    </div>
+    <Box
+      sx={{
+        backgroundColor: "#f0f4f8",
+        height: "150vh",
+        position: "relative",
+      }}
+    >
+      {token ? <SelectContest /> : <Approve />}
+    </Box>
   );
 }
