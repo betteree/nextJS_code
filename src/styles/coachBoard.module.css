@@ -224,12 +224,6 @@
     }
   }
 
-  /* 유효값 힌트 메세지 */
-  & .errorText {
-    color: red;
-    background-color: transparent;
-    padding: 5px;
-  }
 
   & p {
     margin-block: 10px;
@@ -640,3 +634,11 @@
     }
   }
 }
+
+  /* 유효값 힌트 메세지 */
+  & .errorText {
+    color: red;
+    font-size:14px;
+    background-color: transparent;
+    padding: 3px;
+  }
