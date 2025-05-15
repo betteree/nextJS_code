@@ -3,9 +3,18 @@
 
 import React, { useEffect, useState } from "react";
 import { useDragAndDrop } from "@/hooks/useDragAndDrop"; // 커스텀 훅 import
-import styles from "@/styles/coachBoard.module.css";
 import { VaultModalProps } from "@/types/player";
 import { isVaultCode } from "../data/vaultReg/vaultData";
+import {
+  Box,
+  Button,
+  Typography,
+  TextField,
+  List,
+  ListItem,
+  IconButton,
+} from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export default function VaultModal({
   onClose,
@@ -110,104 +119,154 @@ export default function VaultModal({
   };
 
   return (
-    <div className={styles.vaultModalContainer}>
-      <p>클릭 시 추가됩니다</p>
-      <section className={styles.addPlayer}>
-        <h2>1차 선수추가</h2>
+     <Box p={3} sx={{
+    border: "2px solid dodgerblue",
+    borderRadius: 2, 
+    boxShadow: 3,
+    marginTop: 2,
+  }}>
+      <Typography variant="body2" gutterBottom>
+        클릭 시 추가됩니다
+      </Typography>
+
+      {/* 1차 선수추가 */}
+      <Box mb={2}>
+        <Typography variant="h6" gutterBottom>
+          1차 선수추가
+        </Typography>
         {players[gender]?.map((player, index) => (
-          <button
+          <Button
             key={index}
+            variant="outlined"
+            size="small"
+            sx={{ m: 0.5 }}
             onClick={() => handleAddPlayer("도마1", player.name)}
           >
             {player.name}
-          </button>
+          </Button>
         ))}
-      </section>
+      </Box>
 
-      <ul className={styles.vaultList}>
+      <List sx={{
+      }}>
         {도마1.items.map((player, index) => (
-          <li
+          <ListItem
             key={index}
             draggable
             onDragStart={() => 도마1.handleDragStart(index, "도마1")}
             onDragOver={도마1.handleDragOver}
             onDrop={() => 도마1.handleDrop(index, "도마1")}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent:"space-between",
+              gap: 2,
+              border: "1px solid dodgerblue",
+              bgcolor: "#edf1fd",
+              borderRadius: 1,
+              marginBottom:"5px",
+            }}
           >
-            <div>
-              {player.player_name}
-              <input
-                type="text"
-                value={player.skill_number}
-                onChange={(e) => {
-                  const updatedList = [...도마1.items];
-                  updatedList[index].skill_number = e.target.value;
-                  도마1.setItems(updatedList);
-                  setHint(isVaultCode(e.target.value, gender));
-                }}
-                placeholder="기술 번호 입력"
-              />
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDelete("도마1", index)}
-              >
-                <img src="/icon/cancel.png" alt="삭제" />
-              </button>
-            </div>
-          </li>
+            <Typography>{player.player_name}</Typography>
+            <TextField
+              variant="outlined"
+              size="small"
+              value={player.skill_number}
+              onChange={(e) => {
+                const updatedList = [...도마1.items];
+                updatedList[index].skill_number = e.target.value;
+                도마1.setItems(updatedList);
+                setHint(isVaultCode(e.target.value, gender));
+              }}
+              placeholder="기술 번호 입력"
+               sx={{bgcolor: "#fff"}}
+            />
+            <IconButton
+              onClick={() => handleDelete("도마1", index)}
+              size="small"
+              color="error"
+            >
+              <CancelIcon />
+            </IconButton>
+          </ListItem>
         ))}
-        {!hint && (
-          <p className={styles.errorText}>유효한 기술번호를 입력하세요</p>
-        )}
-      </ul>
+      </List>
+      {!hint && (
+        <Typography color="error" variant="caption" sx={{ ml: 1 }}>
+          유효한 기술번호를 입력하세요
+        </Typography>
+      )}
 
-      <section className={styles.addPlayer}>
-        <h2>2차 선수추가</h2>
+      {/* 2차 선수추가 */}
+      <Box mt={3} mb={2}>
+        <Typography variant="h6" gutterBottom>
+          2차 선수추가
+        </Typography>
         {players[gender]?.map((player, index) => (
-          <button
+          <Button
             key={index}
+            variant="outlined"
+            size="small"
+            sx={{ m: 0.5 }}
             onClick={() => handleAddPlayer("도마2", player.name)}
           >
             {player.name}
-          </button>
+          </Button>
         ))}
-      </section>
+      </Box>
 
-      <ul className={styles.vaultList}>
+      <List>
         {도마2.items.map((player, index) => (
-          <li
+          <ListItem
             key={index}
             draggable
             onDragStart={() => 도마2.handleDragStart(index, "도마2")}
             onDragOver={도마2.handleDragOver}
             onDrop={() => 도마2.handleDrop(index, "도마2")}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent:"space-between",
+              gap: 2,
+              border: "1px solid dodgerblue",
+              bgcolor: "#edf1fd",
+              borderRadius: 1,
+              marginBottom:"5px",
+            }}
           >
-            <div>
-              {player.player_name}
-              <input
-                type="text"
-                value={player.skill_number}
-                onChange={(e) => {
-                  const updatedList = [...도마2.items];
-                  updatedList[index].skill_number = e.target.value;
-                  도마2.setItems(updatedList);
-                }}
-                placeholder="기술 번호 입력"
-              />
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDelete("도마2", index)}
-              >
-                <img src="/icon/cancel.png" alt="삭제" />
-              </button>
-            </div>
-          </li>
+            <Typography>{player.player_name}</Typography>
+            <TextField
+              variant="outlined"
+              size="small"
+              value={player.skill_number}
+              onChange={(e) => {
+                const updatedList = [...도마2.items];
+                updatedList[index].skill_number = e.target.value;
+                도마2.setItems(updatedList);
+              }}
+              placeholder="기술 번호 입력"
+               sx={{bgcolor: "#fff"}}
+            />
+            <IconButton
+              onClick={() => handleDelete("도마2", index)}
+              size="small"
+              color="error"
+            >
+              <CancelIcon />
+            </IconButton>
+          </ListItem>
         ))}
-      </ul>
+      </List>
 
-      <section className={styles.bottomButton}>
-        <button onClick={onClose}>Close</button>
-        <button onClick={handleSave}>저장</button>
-      </section>
-    </div>
+      {/* 하단 버튼 */}
+      <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
+        <Button variant="outlined" onClick={onClose}>
+          Close
+        </Button>
+        <Button variant="contained" color="primary" onClick={handleSave}>
+          저장
+        </Button>
+      </Box>
+    </Box>
   );
 }

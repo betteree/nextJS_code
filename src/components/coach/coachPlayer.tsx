@@ -11,7 +11,6 @@ import { Box, Typography, TextField, Button,IconButton,
   Paper } from "@mui/material";
 
 import CancelIcon from "@mui/icons-material/Cancel";
-import Image from "next/image";
 
 export default function CoachPlayer() {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
@@ -437,6 +436,7 @@ export default function CoachPlayer() {
                 border: "2px solid dodgerblue",
                 overflow: "hidden",
                 backgroundColor: "snow",
+                
               }}
             >
               <Typography
@@ -491,8 +491,8 @@ export default function CoachPlayer() {
                       }}
                     >
                       <Typography>{name}</Typography>
-                      <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small">
-                        <Image src="/icon/cancel.png" alt="삭제" width={25} height={25} />
+                      <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small" color="error">
+                           <CancelIcon />
                       </IconButton>
                     </ListItem>
                   ))}
