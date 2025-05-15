@@ -100,7 +100,7 @@ export default function Sequence() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%"}}>
       <Box sx={{ padding: "20px", display: "flex", gap: "20px" }}>
         <Typography variant="h5">선수 순서 LIST</Typography>
         <TextField
@@ -129,7 +129,7 @@ export default function Sequence() {
           등록된 대회가 없습니다.
         </Typography>
       ) : (
-        <TableContainer component={Paper} sx={{ margin: "20px" }}>
+        <TableContainer component={Paper} sx={{ margin: "20px" ,width: "auto",}}>
           <Table>
             <TableHead>
               <TableRow>

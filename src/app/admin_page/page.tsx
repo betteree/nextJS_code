@@ -20,7 +20,6 @@ export default function AdminPage() {
         height: "100%",
       }}
     >
-      {/* Navigation Bar */}
       <Box
         component="nav"
         sx={{

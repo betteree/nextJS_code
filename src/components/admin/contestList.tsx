@@ -3,25 +3,19 @@
 import { useState, useEffect } from "react";
 import { Admin } from "@/types/player";
 import { RotateLoader } from "react-spinners";
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Box } from "@mui/material";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Box,
+    Paper,
+} from "@mui/material";
 import Register from "@/components/admin/register";
-import { styled } from "@mui/system";
-
-const StyledTable = styled(Table)({
-  margin: "20px",
-  border: "3px solid rgb(234, 234, 234)",
-  "& thead": {
-    background: "rgb(241, 241, 241)",
-    color: "gray",
-  },
-  "& th, td": {
-    padding: "10px",
-    textAlign: "left",
-  },
-  "& tr": {
-    borderBottom: "2px solid rgb(234, 234, 234)",
-  },
-});
 
 export default function ContestList() {
   const [admins, setAdmins] = useState<Admin[]>([]);
@@ -63,8 +57,8 @@ export default function ContestList() {
       ) : admins.length === 0 ? (
         <Typography sx={{ textAlign: "center", marginTop: 4 }}>등록된 대회가 없습니다.</Typography>
       ) : (
-        <TableContainer>
-          <StyledTable>
+        <TableContainer component={Paper} sx={{ margin: "20px" ,width: "auto"}}>
+          <Table>
             <TableHead>
               <TableRow>
                 <TableCell>#</TableCell>
@@ -95,7 +89,7 @@ export default function ContestList() {
                 </TableRow>
               ))}
             </TableBody>
-          </StyledTable>
+          </Table>
         </TableContainer>
       )}
       {isOpen && <Register itemData={itemData} isClose={handleModal} />}
