@@ -1,7 +1,15 @@
 "use client";
 
-import styles from "@/styles/result.module.css";
 import { useState, useEffect } from "react";
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import { Coach } from "@/types/player";
 
 export default function ResultCoach() {
@@ -30,25 +38,58 @@ export default function ResultCoach() {
   }, []);
 
   return (
-    <div className={styles.resultCoachConatainer}>
-      <table className={styles.coachTable}>
-        <tbody>
-          <tr>
-            <th>소속명</th>
-            <td>{coachData.affiliation}</td>
-          </tr>
-          <tr>
-            <th>대회명</th>
-            <td>{contest}</td>
-          </tr>
-          <tr>
-            <th>감독명</th>
-            <td>
-              {coachData.name} / 전화 : {coachData.phone}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <Box sx={{ mb: 3 }}>
+      <TableContainer component={Paper}>
+        <Table sx={{ borderCollapse: "collapse" }}>
+          <TableBody>
+            <TableRow>
+              <TableCell
+                sx={{ border: "3px solid black", fontWeight: "bold", width: "120px" ,
+                  padding:"10px",
+                }}
+              >
+                소속명
+              </TableCell>
+              <TableCell sx={{ border: "3px solid black" ,
+                fontSize: "18px" ,
+                padding:"0",
+                textAlign:"center",
+              }}>{coachData.affiliation}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell
+                sx={{ border: "3px solid black", fontWeight: "bold", width: "120px" ,
+                  padding:"10px"
+                }}
+              >
+                대회명
+              </TableCell>
+              <TableCell sx={{ border: "3px solid black", 
+                 fontSize: "18px" ,
+                padding:"0",
+                textAlign:"center",
+                
+              }}>{contest}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell
+                sx={{ border: "3px solid black", fontWeight: "bold", width: "120px",
+                  padding:"10px"
+                 }}
+              >
+                감독명
+              </TableCell>
+              <TableCell sx={{ border: "3px solid black" ,
+                fontSize: "18px" ,
+                padding:"0",
+                textAlign:"center",
+              }}>
+                {coachData.name} / 전화 : {coachData.phone}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }
