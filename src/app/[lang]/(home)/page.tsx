@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import {  useState } from 'react';
 import Link from 'next/link';
 import {
   Box,
@@ -12,19 +12,36 @@ import {
   Button,
   SelectChangeEvent,
 } from '@mui/material';
+import { getDictionary } from '@/components/dictionaries/dictionaries';
 
 export default function HomePage() {
-  const [type, setType] = useState<string>('/admin_page');
-  const [lang, setLang] = useState<string>('Korea');
+  const [lang, setLang] = useState<'ko' | 'en'>('ko');
+  const locale = lang;
+  const dict = getDictionary(lang);
 
-  // SelectChangeEvent 타입을 사용하여 이벤트 핸들링
+  const [type, setType] = useState<string>(`/${locale}`);
+
+  // 타입(경로)만 변경
   const handleType = (e: SelectChangeEvent<string>) => {
-    setType(e.target.value);  // e.target.value는 string 타입
+    setType(e.target.value);
   };
 
+  // 언어 변경 시 lang과 경로(type) 둘 다 변경
   const handleLang = (e: SelectChangeEvent<string>) => {
-    setLang(e.target.value);  // e.target.value는 string 타입
+    const selectedLang = e.target.value;
+    setLang(selectedLang as 'ko' | 'en');
+
+    const newLocale = selectedLang === 'Korea' ? 'ko' : 'en';
+
+
+    if (type === '/' || !type.includes(`/${locale}`)) {
+      setType(`/${newLocale}`);
+    } else {
+      const newType = type.replace(`/${locale}`, `/${newLocale}`);
+      setType(newType);
+    }
   };
+
 
   return (
     <Box
@@ -39,7 +56,7 @@ export default function HomePage() {
       }}
     >
       <Typography variant="h4" sx={{ fontWeight: 600, mb: 2 }}>
-        메인
+        {dict.mainTitle}
       </Typography>
 
       <Box
@@ -52,19 +69,19 @@ export default function HomePage() {
         }}
       >
         <FormControl variant="standard">
-          <InputLabel htmlFor="lang">언어</InputLabel>
+          <InputLabel htmlFor="lang">{dict.language}</InputLabel>
           <Select id="lang" value={lang} onChange={handleLang}>
-            <MenuItem value="Korea">한국어</MenuItem>
-            <MenuItem value="English">영어</MenuItem>
+            <MenuItem value="ko">한국어</MenuItem>
+            <MenuItem value="en">English</MenuItem>
           </Select>
         </FormControl>
 
         <FormControl variant="standard">
-          <InputLabel htmlFor="type">타입</InputLabel>
+          <InputLabel htmlFor="type">{dict.type}</InputLabel>
           <Select id="type" value={type} onChange={handleType}>
-            <MenuItem value="/">선택</MenuItem>
-            <MenuItem value="/admin_page">관리자</MenuItem>
-            <MenuItem value="/coach_page">지도자</MenuItem>
+            <MenuItem value={`/${locale}`}>{dict.select}</MenuItem>
+            <MenuItem value={`/${locale}/admin_page`}>{dict.admin}</MenuItem>
+            <MenuItem value={`/${locale}/coach_page`}>{dict.coach}</MenuItem>
           </Select>
         </FormControl>
 
@@ -84,7 +101,7 @@ export default function HomePage() {
             }}
             component="a"
           >
-            적용
+            {dict.apply}
           </Button>
         </Link>
       </Box>
