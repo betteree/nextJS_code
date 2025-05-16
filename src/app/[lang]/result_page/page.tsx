@@ -23,10 +23,13 @@ import { getDictionary } from "@/components/dictionaries/dictionaries";
 export default function Result({ params }: { params: Promise<{ lang: string }> }) {
   const [gender, setGender] = useState<"남" | "여">("남");
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
-
-
+ 
+  
+  
   const { lang } = use(params);
-   const dict = getDictionary(lang as 'ko' | 'en');
+  const dict = getDictionary(lang as 'ko' | 'en');
+  
+  const titleGender = gender==="남" ? dict.m :dict.f
 
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["FE", "PH", "SR", "Vault", "PB", "HB"],
@@ -42,7 +45,9 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
     _event: React.MouseEvent<HTMLElement>,
     newGender: "남" | "여"
   ) => {
-    if (newGender !== null) setGender(newGender);
+    if (newGender !== null) {setGender(newGender)
+    };
+    
   };
 
   useEffect(() => {
@@ -104,7 +109,7 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
         fontSize: "35px",
         color: "#333399", 
       }}>
-        선수 연기순서표[{gender}자]
+        {dict.startList} [{titleGender}]
       </Typography>
 
       <ResultCoach dict={dict}/>
