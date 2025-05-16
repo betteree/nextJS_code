@@ -146,14 +146,14 @@ function getBaseClassCd(eventName: string): {
   const normalizedEventName = rawName.includes("도마") ? "도마" : rawName;
 
   const eventNameToBaseClassCdMap: Record<string, string> = {
-    마루: "02",
-    평균대: "03",
-    철봉: "04",
-    평행봉: "05",
-    이단평행봉: "06",
-    도마: "07",
-    안마: "08",
-    링: "09",
+    FE: "02",
+    BB: "03",
+    HB: "04",
+    PB: "05",
+    UB: "06",
+    Vault: "07",
+    PH: "08",
+    SR: "09",
   };
 
   const BASE_CLASS_CD = eventNameToBaseClassCdMap[normalizedEventName] || "00";

@@ -12,6 +12,7 @@
   "login":"로그인",
   "logout":"로그아웃",
   "contestSelect":"대회 선택",
+  "contest":"대회명",
   "coachInfo":"지도자 정보",
   "participationContest":"참여 대회",
   "noCoachInfo": "지도자 정보가 없습니다.",
@@ -30,5 +31,10 @@
   "addPlayer1":"1차 선수추가",
   "addPlayer2":"2차 선수추가",
   "vaultVaild":"유효한 기술번호를 입력하세요.",
-  "enterSkill":"기술번호 입력"
+  "enterSkill":"기술번호 입력",
+  "event":"세부 종목",
+  "sequence":"순서",
+  "Vault1":"1차",
+  "Vault2":"2차"
+  
 }

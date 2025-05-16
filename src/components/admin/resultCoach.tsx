@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { Coach } from "@/types/player";
 
-export default function ResultCoach() {
+export default function ResultCoach({dict}:{dict: Record<string,string>}) {
   const [coachData, setCoachData] = useState<Coach>({
     affiliation: "",
     name: "",
@@ -48,10 +48,10 @@ export default function ResultCoach() {
                   padding:"10px",
                 }}
               >
-                소속명
+                {dict.affiliation}
               </TableCell>
               <TableCell sx={{ border: "3px solid black" ,
-                fontSize: "18px" ,
+                fontSize: "15px" ,
                 padding:"0",
                 textAlign:"center",
               }}>{coachData.affiliation}</TableCell>
@@ -62,10 +62,10 @@ export default function ResultCoach() {
                   padding:"10px"
                 }}
               >
-                대회명
+                {dict.contest}
               </TableCell>
               <TableCell sx={{ border: "3px solid black", 
-                 fontSize: "18px" ,
+                 fontSize: "15px" ,
                 padding:"0",
                 textAlign:"center",
                 
@@ -77,14 +77,14 @@ export default function ResultCoach() {
                   padding:"10px"
                  }}
               >
-                감독명
+                {dict.coach}
               </TableCell>
               <TableCell sx={{ border: "3px solid black" ,
-                fontSize: "18px" ,
+                fontSize: "15px" ,
                 padding:"0",
                 textAlign:"center",
               }}>
-                {coachData.name} / 전화 : {coachData.phone}
+                {coachData.name} / {dict.contact} : {coachData.phone}
               </TableCell>
             </TableRow>
           </TableBody>

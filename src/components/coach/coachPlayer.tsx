@@ -24,8 +24,8 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   const [gender, setGender] = useState<"남" | "여">("남");
 
   const eventCategories: Record<"남" | "여", string[]> = {
-    남: ["마루", "안마", "링", "도마", "평행봉", "철봉"],
-    여: ["도마", "이단평행봉", "평균대", "마루"],
+    남: ["FE", "PH", "SR", "Vault", "PB", "HB"],
+    여: ["Vault", "UB", "BB", "FE"],
   };
 
   // 각 종목의 순서 리스트데이터
@@ -190,6 +190,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
         eventCategories[gender].forEach((event) => {
           categorizedData[event] = [];
         });
+        console.log(eventCategories[gender]);
 
         // 데이터 분류
         data.forEach((item) => {
@@ -251,7 +252,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
         도마2: detailVault.filter((item) => item.event_name === "도마2"),
       };
 
-      delete formattedEventData["도마"]; //도마는 ui만 렌더링 되도록 함
+      delete formattedEventData["Vault"]; //도마는 ui만 렌더링 되도록 함
 
       // 종목별 선수 순서 저장
       const eventResponse = await fetch("/api/database/event", {
@@ -421,7 +422,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
       {eventCategories[gender].map((event) => {
         const playersInEvent = eventData[event];
-        const isVaultEvent = event === "도마";
+        const isVaultEvent = event === "Vault";
         if (!isVaultEvent && (!playersInEvent || playersInEvent.length === 0)) {
           return null;
         }

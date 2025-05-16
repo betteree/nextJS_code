@@ -8,10 +8,11 @@
   "select": "Select",
   "name":"name",
   "contact":"contact",
-  "affiliation":"affiliation",
+  "affiliation":"Affiliation",
   "login":"LogIn",
   "logout":"LogOut",
   "contestSelect":"Contest Select",
+  "contest":"Contest",
   "coachInfo":"Coach Info",
   "participationContest":"Participation Contest",
   "noCoachInfo": "Coach information not found.",
@@ -30,5 +31,10 @@
   "addPlayer1":"Add Players (Round 1)",
   "addPlayer2":"Add Players (Round 2)",
   "vaultVaild":"Please enter a valid skill number.",
-  "enterSkill":"Enter skill number"
+  "enterSkill":"Enter skill number",
+  "event":"Event",
+  "sequence":"Sequence",
+  "Vault1":"1st",
+  "Vault2":"2nd"
+  
 }

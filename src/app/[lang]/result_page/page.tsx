@@ -17,14 +17,20 @@ import {
 } from "@mui/material";
 import ResultCoach from "@/components/admin/resultCoach";
 import { VaultItem, VaultFormatted, PlayerEvent } from "@/types/player";
+import { use } from 'react';
+import { getDictionary } from "@/components/dictionaries/dictionaries";
 
-export default function Result() {
+export default function Result({ params }: { params: Promise<{ lang: string }> }) {
   const [gender, setGender] = useState<"남" | "여">("남");
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
 
+
+  const { lang } = use(params);
+   const dict = getDictionary(lang as 'ko' | 'en');
+
   const eventCategories: Record<"남" | "여", string[]> = {
-    남: ["마루", "안마", "링", "도마", "평행봉", "철봉"],
-    여: ["도마", "이단평행봉", "평균대", "마루"],
+    남: ["FE", "PH", "SR", "Vault", "PB", "HB"],
+    여: ["Vault", "UB", "BB", "FE"],
   };
 
   const [detailVault, setDetailVault] = useState<VaultFormatted>({
@@ -101,7 +107,7 @@ export default function Result() {
         선수 연기순서표[{gender}자]
       </Typography>
 
-      <ResultCoach />
+      <ResultCoach dict={dict}/>
 
       <Box my={2}>
         <ToggleButtonGroup
@@ -110,8 +116,8 @@ export default function Result() {
           onChange={handleGender}
           aria-label="gender toggle"
         >
-          <ToggleButton value="남">남</ToggleButton>
-          <ToggleButton value="여">여</ToggleButton>
+          <ToggleButton value="남" sx={{width:"30px", padding:"5px"}}>{dict.m}</ToggleButton>
+          <ToggleButton value="여" sx={{width:"30px", padding:"5px"}}>{dict.f}</ToggleButton>
         </ToggleButtonGroup>
       </Box>
 
@@ -120,7 +126,7 @@ export default function Result() {
     display: "grid",
     gridTemplateColumns: {
       xs: "1fr",
-      sm: "1fr",
+      sm: "repeat(2, 1fr)",
       md: "repeat(2, 1fr)", 
     },
     gap: 2,
@@ -130,21 +136,21 @@ export default function Result() {
           const sequence = Array.from({ length: data.length }, (_, i) => i + 1);
 
           return (
-            <TableContainer component={Paper} key={event} sx={{ my: 3 }}>
-              <Table sx={{
-                border : "3px solid black"
-              }}>
+            <TableContainer component={Paper} key={event} sx={{ my: 3 ,border : "3px solid black" , margin:"0"}}>
+              <Table>
                 <TableHead sx={{
                 borderBottom : "3px solid black",
+                "& th": {
+                    padding: "10px",},
               }}>
                   <TableRow>
-                    <TableCell>세부 종목</TableCell>
-                    <TableCell>시기순</TableCell>
-                    <TableCell>선수성명</TableCell>
-                    {event === "도마" && (
+                    <TableCell >{dict.event}</TableCell>
+                    <TableCell>{dict.sequence}</TableCell>
+                    <TableCell>{dict.name}</TableCell>
+                    {event === "Vault" && (
                       <>
-                        <TableCell>1차</TableCell>
-                        <TableCell>2차</TableCell>
+                        <TableCell>{dict.Vault1}</TableCell>
+                        <TableCell>{dict.Vault2}</TableCell>
                       </>
                     )}
                   </TableRow>
@@ -152,13 +158,13 @@ export default function Result() {
                 <TableBody
            sx={{
               "& td": {
-              fontSize: "16px",
-              fontWeight:"600",
-              padding:"10px"
+              fontSize: "14px",
+              fontWeight:"500",
+              padding:"5px",
                },
                 }}
                 >
-                  {event === "도마" ? (
+                  {event === "Vault" ? (
                     detailVault.first.length > 0 || detailVault.second.length > 0 ? (
                       <>
                         {detailVault.first.map((firstItem, index) => {
@@ -187,7 +193,7 @@ export default function Result() {
                                 </TableCell>
                               )}
                               <TableCell>{index + 1}</TableCell>
-                              <TableCell >{firstItem.player_name}</TableCell>
+                              <TableCell>{firstItem.player_name}</TableCell>
                               <TableCell>{firstItem.skill_number}</TableCell>
                               <TableCell >{secondItem?.skill_number || "-"}</TableCell>
                             </TableRow>
