@@ -27,6 +27,7 @@ export interface VaultModalProps {
   };
   vaultList: VaultItem[];
   onSave: (vaultData: VaultItem[]) => void;
+  dict:Record<string, string>;
 }
 
 // 도마 외 종목 타입

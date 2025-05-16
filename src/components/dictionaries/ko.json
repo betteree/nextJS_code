@@ -17,5 +17,18 @@
   "noCoachInfo": "지도자 정보가 없습니다.",
   "m":"남",
   "f":"여",
-  "선수등록":"선수 등록"
+  "submit":"제출",
+  "result":"결과",
+  "detailedSettings":"상세 설정",
+  "playerRegistration":"선수 등록",
+  "playerName":"선수 이름",
+  "playerList":"선수 목록",
+  "add":"추가",
+  "random":"랜덤배치",
+  "dragInfo":"드래그로 순서변경이 가능합니다",
+  "clickInfo":"클릭 시 추가됩니다.",
+  "addPlayer1":"1차 선수추가",
+  "addPlayer2":"2차 선수추가",
+  "vaultVaild":"유효한 기술번호를 입력하세요.",
+  "enterSkill":"기술번호 입력"
 }

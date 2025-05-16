@@ -71,7 +71,7 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
           padding: 3,
         }}
       >
-        <CoachPlayer dict={dict}/>
+        <CoachPlayer lang={lang} dict={dict}/>
       </Box>
     </Box>
   );

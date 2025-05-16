@@ -12,7 +12,7 @@ import { Box, Typography, TextField, Button,IconButton,
 
 import CancelIcon from "@mui/icons-material/Cancel";
 
-export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
+export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string, string>}) {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
     남: [],
     여: [],
@@ -283,7 +283,7 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
   }
 
   function handleNav() {
-    router.push("/result_page");
+    router.push(`/${lang}/result_page`);
   }
 
   return (
@@ -309,13 +309,12 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
   {/* 선수 등록 헤더 */}
   <Box component="header" mb={4}>
     <Typography variant="h5" gutterBottom>
-      선수 등록
+      {dict.playerRegistration}
     </Typography>
     <Box display="flex" alignItems="center" gap={2}>
       <TextField
         id="name"
-        label="선수 이름"
-        placeholder="ex) 홍길동"
+        label={dict.playerName}
         variant="outlined"
         value={newPlayer}
         onChange={(e) => setNewPlayer(e.target.value)}
@@ -323,7 +322,7 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
         size="small"
       />
       <Button variant="contained" onClick={handleAddPlayer}>
-        추가
+        {dict.add}
       </Button>
     </Box>
   </Box>
@@ -338,7 +337,7 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
     }}
   >
     <Typography variant="subtitle1" sx={{ color: "black", mb: 2 }}>
-      선수 목록
+      {dict.playerList}
     </Typography>
     <Box
       component="ul"
@@ -401,7 +400,7 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
       },
     }}
   >
-    랜덤배치
+    {dict.random}
   </Button>
 
   {/* 안내 메시지 */}
@@ -415,7 +414,7 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
       p: 2,
     }}
   >
-    드래그로 순서변경이 가능합니다
+    {dict.dragInfo}
   </Typography>
 
   {/* 종목 별 리스트 */}
@@ -449,13 +448,13 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
                   borderTopRightRadius: 2,
                 }}
               >
-                {event} 순서
+                {event}
               </Typography>
 
               {isVaultEvent ? (
                 <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", m: 2 }}>
                   <Button variant="outlined" fullWidth onClick={handleValutModal}>
-                    상세설정
+                    {dict.detailedSettings}
                   </Button>
                 </Box>
               ) : (
@@ -519,6 +518,7 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
         onSave={(newList) => {
           setDetailVault(newList);
         }}
+        dict={dict}
       />
     </motion.div>
   )}
@@ -539,7 +539,7 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
       onClick={handleSubmit}
       sx={{ px: 4 }}
     >
-      제출
+     {dict.submit}
     </Button>
     <Button
       variant="outlined"
@@ -547,7 +547,7 @@ export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
       onClick={handleNav}
       sx={{ px: 4 }}
     >
-      최종
+      {dict.result}
     </Button>
   </Box>
 </Box>

@@ -22,6 +22,7 @@ export default function VaultModal({
   players,
   vaultList,
   onSave,
+  dict
 }: VaultModalProps) {
   const 도마1 = useDragAndDrop<{ player_name: string; skill_number: string }>(
     []
@@ -126,13 +127,13 @@ export default function VaultModal({
     marginTop: 2,
   }}>
       <Typography variant="body2" gutterBottom>
-        클릭 시 추가됩니다
+        {dict.clickInfo}
       </Typography>
 
       {/* 1차 선수추가 */}
       <Box mb={2}>
         <Typography variant="h6" gutterBottom>
-          1차 선수추가
+          {dict.addPlayer1}
         </Typography>
         {players[gender]?.map((player, index) => (
           <Button
@@ -178,7 +179,7 @@ export default function VaultModal({
                 도마1.setItems(updatedList);
                 setHint(isVaultCode(e.target.value, gender));
               }}
-              placeholder="기술 번호 입력"
+                placeholder={dict.enterSkill}
                sx={{bgcolor: "#fff"}}
             />
             <IconButton
@@ -193,14 +194,14 @@ export default function VaultModal({
       </List>
       {!hint && (
         <Typography color="error" variant="caption" sx={{ ml: 1 }}>
-          유효한 기술번호를 입력하세요
+         {dict.vaultVaild}
         </Typography>
       )}
 
       {/* 2차 선수추가 */}
       <Box mt={3} mb={2}>
         <Typography variant="h6" gutterBottom>
-          2차 선수추가
+          {dict.addPlayer2}
         </Typography>
         {players[gender]?.map((player, index) => (
           <Button
@@ -244,7 +245,7 @@ export default function VaultModal({
                 updatedList[index].skill_number = e.target.value;
                 도마2.setItems(updatedList);
               }}
-              placeholder="기술 번호 입력"
+              placeholder={dict.enterSkill}
                sx={{bgcolor: "#fff"}}
             />
             <IconButton
@@ -264,7 +265,7 @@ export default function VaultModal({
           Close
         </Button>
         <Button variant="contained" color="primary" onClick={handleSave}>
-          저장
+          Save
         </Button>
       </Box>
     </Box>
