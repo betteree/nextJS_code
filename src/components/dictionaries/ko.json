@@ -5,5 +5,17 @@
   "apply": "적용",
   "admin": "관리자",
   "coach": "지도자",
-  "select": "선택"
+  "select": "선택",
+  "name":"이름",
+  "contact":"연락처",
+  "affiliation":"소속",
+  "login":"로그인",
+  "logout":"로그아웃",
+  "contestSelect":"대회 선택",
+  "coachInfo":"지도자 정보",
+  "participationContest":"참여 대회",
+  "noCoachInfo": "지도자 정보가 없습니다.",
+  "m":"남",
+  "f":"여",
+  "선수등록":"선수 등록"
 }

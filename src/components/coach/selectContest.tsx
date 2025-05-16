@@ -13,7 +13,7 @@ import {
   Paper,
 } from "@mui/material";
 
-export default function SelectContest() {
+export default function SelectContest({lang,dict}:{lang:string,dict: Record<string, string>}) {
   const [competition, setCompetition] = useState<Contest[]>([]);
   const router = useRouter();
 
@@ -49,7 +49,7 @@ export default function SelectContest() {
     const result = await competitionResponse.json();
     if (result.success) {
       localStorage.setItem("coach", result.coachCompetitionId);
-      router.push("/coach_board");
+      router.push(`/${lang}/coach_board`);
     } else {
       alert(`실패 ${result.error}`);
     }
@@ -79,7 +79,7 @@ export default function SelectContest() {
       }}
     >
       <Typography variant="h5" fontWeight={600} mb={2}>
-        대회 선택
+        {dict.contestSelect}
       </Typography>
 
       <motion.div initial="hidden" animate="visible" variants={listVariants}>

@@ -5,9 +5,15 @@ import ContestList from "@/components/admin/contestList";
 import Sequence from "@/components/admin/sequence";
 import { Box, Typography, Button } from "@mui/material";
 
-export default function AdminPage() {
-  const [adminList, setAdminList] = useState("contest");
 
+
+import React from 'react';
+export default function AdminPage() {
+
+
+
+
+  const [adminList, setAdminList] = useState("contest");
   const handleNav = (list: string) => {
     setAdminList(list);
   };

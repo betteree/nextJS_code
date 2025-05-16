@@ -4,9 +4,15 @@ import { useRouter } from "next/navigation";
 import { Box, Button, AppBar, Toolbar, Typography } from "@mui/material";
 import CoachInfo from "@/components/coach/coachInfo";
 import CoachPlayer from "@/components/coach/coachPlayer";
+import { use } from 'react';
+import { getDictionary } from "@/components/dictionaries/dictionaries";
 
-export default function Contest() {
+export default function Contest({ params }: { params: Promise<{ lang: string }> }) {
   const router = useRouter();
+
+  const { lang } = use(params);
+  const dict = getDictionary(lang as 'ko' | 'en');
+
 
   const handleLogout = () => {
     localStorage.clear();
@@ -28,14 +34,14 @@ export default function Contest() {
     >
       <AppBar position="static" sx={{ backgroundColor: "#476ff3" }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6">지도자</Typography>
+          <Typography variant="h6">{dict.coach}</Typography>
           <Button
             variant="contained"
             color="secondary"
             onClick={handleLogout}
             sx={{ fontWeight: "bold" }}
           >
-            로그아웃
+            {dict.logout}
           </Button>
         </Toolbar>
       </AppBar>
@@ -51,7 +57,7 @@ export default function Contest() {
          
         }}
       >
-        <CoachInfo />
+        <CoachInfo dict={dict}/>
       </Box>
 
       <Box
@@ -65,7 +71,7 @@ export default function Contest() {
           padding: 3,
         }}
       >
-        <CoachPlayer />
+        <CoachPlayer dict={dict}/>
       </Box>
     </Box>
   );

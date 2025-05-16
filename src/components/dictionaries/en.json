@@ -5,5 +5,16 @@
   "apply": "Apply",
   "admin": "Admin",
   "coach": "Coach",
-  "select": "Select"
+  "select": "Select",
+   "name":"name",
+  "contact":"contact",
+  "affiliation":"affiliation",
+  "login":"LogIn",
+  "logout":"LogOut",
+  "contestSelect":"Contest Select",
+  "coachInfo":"Coach Info",
+  "participationContest":"Participation Contest",
+  "noCoachInfo": "Coach information not found.",
+  "m":"M",
+  "f":"F"
 }

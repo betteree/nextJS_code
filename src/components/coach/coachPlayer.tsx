@@ -12,7 +12,7 @@ import { Box, Typography, TextField, Button,IconButton,
 
 import CancelIcon from "@mui/icons-material/Cancel";
 
-export default function CoachPlayer() {
+export default function CoachPlayer({dict}:{dict:Record<string, string>}) {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
     남: [],
     여: [],
@@ -295,14 +295,14 @@ export default function CoachPlayer() {
       value="남"
       onClick={handleGender}
     >
-      남
+      {dict.m}
     </Button>
     <Button
       variant={gender === "여" ? "contained" : "outlined"}
       value="여"
       onClick={handleGender}
     >
-      여
+       {dict.f}
     </Button>
   </Box>
 

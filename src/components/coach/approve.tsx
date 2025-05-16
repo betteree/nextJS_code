@@ -13,7 +13,8 @@ import {
   FormControl,
 } from "@mui/material";
 
-export default function Approve() {
+export default function Approve({dict}:{dict: Record<string, string>}) {
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [affiliation, setAffiliation] = useState("");
@@ -64,14 +65,14 @@ export default function Approve() {
       sx={{ pt: 10 }}
     >
       <Typography variant="h4" fontWeight={600} gutterBottom>
-        지도자
+        {dict.coach}
       </Typography>
 
       <Paper elevation={3} sx={{ p: 4, width: "70%", maxWidth: 500 }}>
         <form onSubmit={handleLogin}>
           <Box display="flex" flexDirection="column" gap={3}>
             <TextField
-              label="이름"
+              label={dict.name}
               variant="standard"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -79,7 +80,7 @@ export default function Approve() {
             />
 
             <TextField
-              label="연락처"
+              label={dict.contact}
               variant="standard"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -87,14 +88,14 @@ export default function Approve() {
             />
 
             <FormControl variant="standard" required>
-              <InputLabel id="affiliation-label">소속</InputLabel>
+              <InputLabel id="affiliation-label">{dict.affiliation}</InputLabel>
               <Select
                 labelId="affiliation-label"
                 value={affiliation}
                 onChange={(e) => setAffiliation(e.target.value)}
               >
                 <MenuItem value="">
-                  <em>학교 선택</em>
+                  <em>{dict.select}</em>
                 </MenuItem>
                 {schoolList.map((item, index) => (
                   <MenuItem key={index} value={item}>
@@ -110,7 +111,7 @@ export default function Approve() {
               sx={{ mt: 2 }}
               fullWidth
             >
-              로그인
+              {dict.login}
             </Button>
           </Box>
         </form>
