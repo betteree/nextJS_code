@@ -155,7 +155,15 @@ export async function POST(req) {
         ]
       );
     }
-    // lp_order 테이블에 데이터 삽입
+
+
+    const [orderExisting] = await db.query(
+    "SELECT 1 FROM lp_order WHERE CLASS_CD = ? AND CLASS_SUB_CD = ? AND TO_CD = ? AND DETAIL_CLASS_CD = ? AND COMP_CD = ? AND GROUP_CD = ? AND ID_NO = ?",
+    [CLASS_CD, CLASS_SUB_CD, TO_CD, DETAIL_CLASS_CD, COMP_CD, GROUP_CD, ID_NO]
+  );
+
+  if (orderExisting.length === 0) {
+  // lp_order 테이블에 데이터 삽입
     await db.query(
       "INSERT INTO lp_order (CLASS_CD, CLASS_SUB_CD, TO_CD, DETAIL_CLASS_CD, COMP_CD, GROUP_CD, ID_NO, ENTRANT_SEQ, R1_VAULT_ID, R1_VAULT_VALUE, R2_VAULT_ID, R2_VAULT_VALUE, R2_VAULT_YN, ROTATION_SEQ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
@@ -176,6 +184,10 @@ export async function POST(req) {
       ]
     );
 
+}
+
+
+   
     // 성공적으로 삽입된 경우
     return NextResponse.json({
       success: true,
