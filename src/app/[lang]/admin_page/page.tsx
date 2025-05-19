@@ -4,14 +4,14 @@ import { useState } from "react";
 import ContestList from "@/components/admin/contestList";
 import Sequence from "@/components/admin/sequence";
 import { Box, Typography, Button } from "@mui/material";
+import React ,{ use }from 'react';
 
 
 
-import React from 'react';
-export default function AdminPage() {
+export default function AdminPage({ params }: { params: Promise<{ lang: string }> }) {
 
 
-
+ const { lang } = use(params);
 
   const [adminList, setAdminList] = useState("contest");
   const handleNav = (list: string) => {
@@ -90,7 +90,7 @@ export default function AdminPage() {
       </Box>
 
       {/* Content Section */}
-      {adminList === "contest" ? <ContestList /> : <Sequence />}
+      {adminList === "contest" ? <ContestList /> : <Sequence lang={lang}/>}
     </Box>
   );
 }

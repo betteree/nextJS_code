@@ -19,7 +19,7 @@ import {
   Paper,
 } from "@mui/material";
 
-export default function Sequence() {
+export default function Sequence({lang}:{lang:string}) {
   const [contestData, setContestData] = useState<Contest[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -70,7 +70,7 @@ export default function Sequence() {
     localStorage.setItem("competitionId", contest.id);
     localStorage.setItem("selectedCompetition", contest.title);
     localStorage.setItem("userId", coach.coach_id);
-    router.push("/result_page");
+    router.push(`/${lang}/result_page`);
   };
 
   // 대회 데이터 전송
