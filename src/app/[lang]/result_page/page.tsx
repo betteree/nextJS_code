@@ -14,11 +14,14 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button
 } from "@mui/material";
 import ResultCoach from "@/components/admin/resultCoach";
 import { VaultItem, VaultFormatted, PlayerEvent } from "@/types/player";
 import { use } from 'react';
 import { getDictionary } from "@/components/dictionaries/dictionaries";
+import PrintIcon from '@mui/icons-material/Print';
+import '@/app/globals.css'
 
 export default function Result({ params }: { params: Promise<{ lang: string }> }) {
   const [gender, setGender] = useState<"남" | "여">("남");
@@ -36,11 +39,14 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
     여: ["Vault", "UB", "BB", "FE"],
   };
 
+  // 도마 1차시, 2차시
   const [detailVault, setDetailVault] = useState<VaultFormatted>({
     first: [],
     second: [],
   });
 
+
+  // 성별 전환
   const handleGender = (
     _event: React.MouseEvent<HTMLElement>,
     newGender: "남" | "여"
@@ -50,6 +56,8 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
     
   };
 
+
+  // 데이터 받아오기
   useEffect(() => {
     const coachId = localStorage.getItem("coach") as string;
     if (!gender || !coachId) return;
@@ -76,6 +84,7 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
       .catch((err) => console.error("Error fetching event list:", err));
   }, [gender]);
 
+  // 도마 1차시, 도마 2차시 상세
   const formatVaultDetail = (data: VaultItem[]): VaultFormatted => {
     const first = data
       .filter((d) => d.event_name === "도마1")
@@ -94,6 +103,12 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
     return { first, second };
   };
 
+
+
+  // 프린트 함수
+   const handlePrint = () => {
+    window.print(); 
+  };
   return (
     <Box p={3}>
       <Typography 
@@ -114,7 +129,7 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
 
       <ResultCoach dict={dict}/>
 
-      <Box my={2}>
+      <Box my={2} className="no-print">
         <ToggleButtonGroup
           value={gender}
           exclusive
@@ -247,6 +262,9 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
           );
         })}
       </Box>
+
+      <Button variant="outlined"  startIcon={<PrintIcon />}  onClick={handlePrint}
+      sx={{ mt: 2}} className="no-print">Print</Button>
     </Box>
   );
 }

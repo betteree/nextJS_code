@@ -31,7 +31,8 @@ export default function VaultModal({
     []
   );
 
-  const [hint, setHint] = useState(true);
+  const [hint1, sethint1] = useState(true);
+  const [hint2, sethint2] = useState(true);
 
   useEffect(() => {
     도마1.setItems([]);
@@ -177,7 +178,7 @@ export default function VaultModal({
                 const updatedList = [...도마1.items];
                 updatedList[index].skill_number = e.target.value;
                 도마1.setItems(updatedList);
-                setHint(isVaultCode(e.target.value, gender));
+                sethint1(isVaultCode(e.target.value, gender));
               }}
                 placeholder={dict.enterSkill}
                sx={{bgcolor: "#fff"}}
@@ -192,7 +193,7 @@ export default function VaultModal({
           </ListItem>
         ))}
       </List>
-      {!hint && (
+      {!hint1 && (
         <Typography color="error" variant="caption" sx={{ ml: 1 }}>
          {dict.vaultVaild}
         </Typography>
@@ -244,6 +245,7 @@ export default function VaultModal({
                 const updatedList = [...도마2.items];
                 updatedList[index].skill_number = e.target.value;
                 도마2.setItems(updatedList);
+                sethint2(isVaultCode(e.target.value, gender));
               }}
               placeholder={dict.enterSkill}
                sx={{bgcolor: "#fff"}}
@@ -258,7 +260,11 @@ export default function VaultModal({
           </ListItem>
         ))}
       </List>
-
+     {!hint2 && (
+        <Typography color="error" variant="caption" sx={{ ml: 1 }}>
+         {dict.vaultVaild}
+        </Typography>
+      )}
       {/* 하단 버튼 */}
       <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
         <Button variant="outlined" onClick={onClose}>
