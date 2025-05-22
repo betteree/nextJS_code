@@ -135,7 +135,7 @@ export default function VaultModal({
 
       {/* 1차 선수추가 */}
       <Box mb={2}>
-       <Box sx={{ display: 'flex', alignItems: 'center' }}>
+       <Box sx={{ display: 'flex', alignItems: 'center' ,flexWrap:"wrap"}}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'info.light', mr: 1 }}>
         {dict.R1}
       </Typography>
@@ -224,7 +224,7 @@ export default function VaultModal({
 
       {/* 2차 선수추가 */}
       <Box mt={3} mb={2}>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center',flexWrap:"wrap" }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main', mr: 1 }}>
         {dict.R2}
       </Typography>

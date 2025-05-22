@@ -48,7 +48,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
     if (result.success) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("userId", result.id);
-      alert("로그인 되었습니다");
+      alert("Login successful");
       window.location.reload();
     } else {
       console.error(result);
@@ -73,7 +73,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
             gymnast event orders.
     </Typography>
 
-      <Paper elevation={3} sx={{ p: 4, width: "70%", maxWidth: 500 , bgcolor: 'transparent',boxShadow:0}}>
+      <Paper elevation={3} sx={{ p: 4, width: "80%", maxWidth: 500 , bgcolor: 'transparent',boxShadow:0}}>
         <form onSubmit={handleLogin}>
           <Box display="flex" flexDirection="column" gap={3}>
             <TextField
@@ -115,7 +115,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
             <Button
               variant="contained"
               type="submit"
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, background: "linear-gradient(90deg, #0200BA 0%, #6103B0 100%)"}}
               fullWidth
             >
               {dict.login}

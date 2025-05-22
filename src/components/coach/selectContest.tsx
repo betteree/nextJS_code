@@ -12,6 +12,7 @@ import {
   ListItem,
   Paper,
 } from "@mui/material";
+import Image from 'next/image';
 
 export default function SelectContest({lang,dict}:{lang:string,dict: Record<string, string>}) {
   const [competition, setCompetition] = useState<Contest[]>([]);
@@ -82,6 +83,10 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
         {dict.contestSelect}
       </Typography>
 
+      <Typography textAlign={"center"} mb={7}>Please select a contest to manage player orders <br/>
+      and match details.</Typography>
+
+
       <motion.div initial="hidden" animate="visible" variants={listVariants}>
         <Paper
           elevation={3}
@@ -95,23 +100,24 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
           <List disablePadding>
             {competition.map((item, index) => (
               <motion.div key={index} variants={itemVariants}>
-                <ListItem disableGutters sx={{ mb: 1 }}>
+                <ListItem disableGutters  onClick={() => handleSubmit(item)} sx={{ mb: 1, 
+                border:"1px solid",
+                borderColor:"primary.main",
+                backgroundColor:"white" , 
+                padding: "20px",
+                borderRadius:"3px",
+                ":hover": {
+                        backgroundColor: "primary.main",
+                        color: "white",
+                      },}}>
+                  <Image src="/icon/trophy.png" alt="info" width={25} height={35} />
                   <Button
                     fullWidth
                     variant="outlined"
-                    onClick={() => handleSubmit(item)}
                     sx={{
-                    
-                      borderColor: "dodgerblue",
-                      backgroundColor: "white",
                       color: "black",
-                      ":hover": {
-                        backgroundColor: "dodgerblue",
-                        color: "white",
-                      },
                       fontSize: "16px",
-                      borderRadius: "5px",
-                      paddingBlock: "20px",
+                      border:0,
                     }}
                   >
                     {item.title}

@@ -274,7 +274,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
         throw new Error(`종목별 순서 저장 실패: ${eventDataResponse.error}`);
       }
 
-      alert("제출 완료");
+      alert("Submission complete");
     } catch (error: unknown) {
       if (error instanceof Error) {
         alert("에러가 발생했습니다: " + error.message);

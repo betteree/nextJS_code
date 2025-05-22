@@ -39,5 +39,6 @@
   "sequence":"순서",
   "Vault1":"1차",
   "Vault2":"2차",
-  "startList":"선수 연기순서표"
+  "startList":"선수 연기순서표",
+  "mainDes":"시스템을 사용하려면 언어와 사용자 유형을 선택하세요."
 }

@@ -29,7 +29,8 @@ export default function CoachPage({ params }: { params: Promise<{ lang: string }
         position: "relative",
       }}
     >
-      {token ? <SelectContest lang={lang} dict={dict}/> : <Approve dict={dict} />}
+      {token ? 
+      <SelectContest lang={lang} dict={dict}/> : <Approve dict={dict} />}
     </Box>
   );
 }

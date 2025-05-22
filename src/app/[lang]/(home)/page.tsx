@@ -58,17 +58,19 @@ export default function HomePage() {
       <Typography variant="h4" sx={{ fontWeight: 600, mb: 2 }}>
         {dict.mainTitle}
       </Typography>
-
+      <Typography textAlign="center" mb={5} sx={{ whiteSpace: 'pre-line' }}>
+        {dict.mainDes}
+      </Typography>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          width: '50%',
-          gap: 2,
+          width: '70%',
+          gap: 5,
         }}
       >
-        <FormControl variant="standard">
+        <FormControl variant="outlined">
           <InputLabel htmlFor="lang">{dict.language}</InputLabel>
           <Select id="lang" value={lang} onChange={handleLang}>
             <MenuItem value="ko">한국어</MenuItem>
@@ -76,7 +78,7 @@ export default function HomePage() {
           </Select>
         </FormControl>
 
-        <FormControl variant="standard">
+        <FormControl variant="outlined">
           <InputLabel htmlFor="type">{dict.type}</InputLabel>
           <Select id="type" value={type} onChange={handleType}>
             <MenuItem value={`/${locale}`}>{dict.select}</MenuItem>
@@ -89,11 +91,11 @@ export default function HomePage() {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: 'black',
+              background: 'linear-gradient(90deg, #0200BA 0%, #6103B0 100%)',
               color: 'white',
-              fontSize: 15,
+              fontSize: 18,
               borderRadius: 1,
-              padding: '5px',
+              padding: '10px',
               textAlign: 'center',
               '&:hover': {
                 opacity: 0.8,
