@@ -24,7 +24,6 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
     <Box
       sx={{
         backgroundColor: "#f0f4f8",
-        height: "200vh",
         position: "relative",
         display: "flex",
         flexDirection: "column",
@@ -54,6 +53,7 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
         gap: 4, 
         width: "100%",
         mt: 5, 
+        mb:5,
       }}
   >
   <Box
