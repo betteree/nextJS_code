@@ -11,6 +11,8 @@ import { Box, Typography, TextField, Button,IconButton,
   Paper } from "@mui/material";
 
 import CancelIcon from "@mui/icons-material/Cancel";
+import Image from 'next/image';
+
 
 export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string, string>}) {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
@@ -295,6 +297,10 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
       variant={gender === "남" ? "contained" : "outlined"}
       value="남"
       onClick={handleGender}
+      sx={{
+      boxShadow: gender === "남" ? 'none' : 1,
+      border:"0"
+    }}
     >
       {dict.m}
     </Button>
@@ -302,6 +308,10 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
       variant={gender === "여" ? "contained" : "outlined"}
       value="여"
       onClick={handleGender}
+      sx={{
+      boxShadow: gender === "여" ? 'none' : 1,
+      border:"0"
+    }}
     >
        {dict.f}
     </Button>
@@ -309,8 +319,8 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
 
   {/* 선수 등록 헤더 */}
   <Box component="header" mb={4}>
-    <Typography variant="h5" gutterBottom>
-      {dict.playerRegistration}
+    <Typography variant="h5" fontWeight={500} gutterBottom>
+      💡{dict.playerRegistration}
     </Typography>
     <Box display="flex" alignItems="center" gap={2}>
       <TextField
@@ -321,6 +331,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
         onChange={(e) => setNewPlayer(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleAddPlayer()}
         size="small"
+        sx={{width:"60%"}}
       />
       <Button variant="contained" onClick={handleAddPlayer}>
         {dict.add}
@@ -360,12 +371,12 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.2 }}
             style={{
-              border: "2px solid dodgerblue",
               padding: "5px 10px",
               borderRadius: "5px",
               display: "flex",
               alignItems: "center",
               fontSize: "inherit",
+              backgroundColor:"#F7F7F7"
             }}
           >
             {player.name}
@@ -377,7 +388,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
                 height: 25,
               }}
             >
-              <CancelIcon sx={{ width: 25, height: 25 }} />
+              <CancelIcon color="secondary" sx={{ width: 25, height: 25 }} />
             </IconButton>
           </motion.li>
         ))}
@@ -390,12 +401,14 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
     variant="contained"
     onClick={handleShffle}
     sx={{
-      backgroundColor: "black",
+      background: 'linear-gradient(90deg, #0200BA 0%, #6103B0 100%)',
       color: "#fff",
       fontWeight: "bold",
-      py: 1,
+      py: 0.5,
       borderRadius: "4px",
       width: "100%",
+      fontSize:"18px",
+      boxShadow:"0",
       "&:hover": {
         backgroundColor: "#1565c0",
       },
@@ -405,18 +418,21 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   </Button>
 
   {/* 안내 메시지 */}
-  <Typography
-    sx={{
-      my: 2,
-      backgroundColor: "#f8f9fa",
-      color: "#333",
-      fontSize: "14px",
-      fontWeight: "bold",
-      p: 2,
-    }}
-  >
-    {dict.dragInfo}
-  </Typography>
+  <Box  sx={{
+        my: 2,
+        backgroundColor: "#f8f9fa",
+        p: 2,
+      }}>
+    <Typography
+     sx={{fontSize: "18px",
+      fontWeight: "bold",}}
+      >
+      🎯
+      {dict.dragInfo} <br/>
+     
+    </Typography>
+    <Typography sx={{ whiteSpace: 'pre-line', fontSize:"12px", ml:"25px"}}>{dict.detaildarg}</Typography>
+  </Box>
 
   {/* 종목 별 리스트 */}
   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
@@ -433,28 +449,28 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
               elevation={3}
               sx={{
                 borderRadius: 2,
-                border: "2px solid dodgerblue",
                 overflow: "hidden",
-                backgroundColor: "snow",
-                
+                backgroundColor: "white",
+                boxShadow:0,
+                border:"2px solid #F7F7F7"
               }}
             >
-              <Typography
-                variant="h6"
+
+              <Box
                 sx={{
-                  backgroundColor: "#edf1fd",
+                  backgroundColor: "#5417D6",
                   textAlign: "center",
-                  py: 1,
+                  py: 0.5,
                   borderTopLeftRadius: 2,
                   borderTopRightRadius: 2,
                 }}
               >
-                {event}
-              </Typography>
+              <Image src={`/icon/event/${event}.png`} alt="info" width={45} height={45} />   
+              </Box>
 
               {isVaultEvent ? (
                 <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", m: 2 }}>
-                  <Button variant="outlined" fullWidth onClick={handleValutModal}>
+                  <Button variant="outlined"  fullWidth onClick={handleValutModal} color="info">
                     {dict.detailedSettings}
                   </Button>
                 </Box>
@@ -476,8 +492,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
                         )
                       }
                       sx={{
-                        bgcolor: "#edf1fd",
-                        border: "1px solid dodgerblue",
+                        bgcolor: "#FAFAFA",
                         mb: 1,
                         borderRadius: 1,
                         display: "flex",
@@ -490,9 +505,11 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
                         "&:hover": { transform: "scale(1.05)" },
                       }}
                     >
-                      <Typography>{name}</Typography>
+                      <Typography sx={{display:"flex", alignItems:"center",gap:1}} >
+                      <Image src="/icon/sequence.png" alt="info" width={12} height={12} />                  
+                        {name}</Typography>
                       <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small" color="error">
-                           <CancelIcon />
+                           <CancelIcon color="info" />
                       </IconButton>
                     </ListItem>
                   ))}
@@ -535,20 +552,20 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
     }}
   >
     <Button
-      variant="contained"
-      color="primary"
-      onClick={handleSubmit}
-      sx={{ px: 4 }}
-    >
-     {dict.submit}
-    </Button>
-    <Button
       variant="outlined"
       color="primary"
       onClick={handleNav}
-      sx={{ px: 4 }}
+      sx={{ fontWeight:"bold",px: 4 ,color:"black", width:"25%",borderColor:"linear-gradient(90deg, #0200BA 0%, #6103B0 100%);"}}
     >
       {dict.result}
+    </Button>
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={handleSubmit}
+      sx={{ fontWeight:"bold",px: 4, width:"25%", background:"linear-gradient(90deg, #0200BA 0%, #6103B0 100%);"}}
+    >
+     {dict.submit}
     </Button>
   </Box>
 </Box>

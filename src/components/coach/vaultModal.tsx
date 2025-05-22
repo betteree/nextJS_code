@@ -15,6 +15,8 @@ import {
   IconButton,
 } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
+import Image from 'next/image';
+import InputAdornment from '@mui/material/InputAdornment';
 
 export default function VaultModal({
   onClose,
@@ -122,9 +124,9 @@ export default function VaultModal({
 
   return (
      <Box p={3} sx={{
-    border: "2px solid dodgerblue",
+    border: "2px solid #F7F7F7",
     borderRadius: 2, 
-    boxShadow: 3,
+    boxShadow: 0,
     marginTop: 2,
   }}>
       <Typography variant="body2" gutterBottom>
@@ -133,15 +135,20 @@ export default function VaultModal({
 
       {/* 1차 선수추가 */}
       <Box mb={2}>
-        <Typography variant="h6" gutterBottom>
-          {dict.addPlayer1}
-        </Typography>
+       <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'info.light', mr: 1 }}>
+        {dict.R1}
+      </Typography>
+      <Typography variant="h6">
+        {dict.addPlayer1}
+      </Typography>
+      </Box>
         {players[gender]?.map((player, index) => (
           <Button
             key={index}
             variant="outlined"
             size="small"
-            sx={{ m: 0.5 }}
+            sx={{ m: 0.5, bgcolor:"secondary.light" ,border:0, color:"#425065"}}
             onClick={() => handleAddPlayer("도마1", player.name)}
           >
             {player.name}
@@ -161,15 +168,17 @@ export default function VaultModal({
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent:"space-between",
               gap: 2,
-              border: "1px solid dodgerblue",
-              bgcolor: "#edf1fd",
+              bgcolor: "info.dark",
               borderRadius: 1,
               marginBottom:"5px",
             }}
           >
-            <Typography>{player.player_name}</Typography>
+
+            <Typography sx={{display:"flex", alignItems:"center", gap:1 ,width:"20%"}}>
+              <Image src={`/icon/sequence.png`} alt="info" width={12} height={12} />   
+              
+              {player.player_name}</Typography>
             <TextField
               variant="outlined"
               size="small"
@@ -182,11 +191,25 @@ export default function VaultModal({
               }}
                 placeholder={dict.enterSkill}
                sx={{bgcolor: "#fff"}}
+               InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+        <Image
+          src="/icon/write.png"
+          alt="info"
+          width={20}
+          height={20}
+          style={{ marginLeft: 4 }}
+        />
+      </InputAdornment>
+    ),
+  }}
             />
             <IconButton
               onClick={() => handleDelete("도마1", index)}
               size="small"
-              color="error"
+              color="info"
+              sx={{ml:"auto"}}
             >
               <CancelIcon />
             </IconButton>
@@ -201,15 +224,20 @@ export default function VaultModal({
 
       {/* 2차 선수추가 */}
       <Box mt={3} mb={2}>
-        <Typography variant="h6" gutterBottom>
-          {dict.addPlayer2}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main', mr: 1 }}>
+        {dict.R2}
+      </Typography>
+      <Typography variant="h6">
+        {dict.addPlayer2}
+      </Typography>
+      </Box>
         {players[gender]?.map((player, index) => (
           <Button
             key={index}
             variant="outlined"
             size="small"
-            sx={{ m: 0.5 }}
+            sx={{ m: 0.5, bgcolor:"secondary.light" ,border:0, color:"#425065"}}
             onClick={() => handleAddPlayer("도마2", player.name)}
           >
             {player.name}
@@ -228,15 +256,16 @@ export default function VaultModal({
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent:"space-between",
               gap: 2,
-              border: "1px solid dodgerblue",
-              bgcolor: "#edf1fd",
+              bgcolor: "info.dark",
               borderRadius: 1,
               marginBottom:"5px",
             }}
           >
-            <Typography>{player.player_name}</Typography>
+            <Typography sx={{display:"flex", alignItems:"center", gap:1 ,width:"20%"}}>
+              <Image src={`/icon/sequence.png`} alt="info" width={12} height={12} />   
+              {player.player_name}
+              </Typography>
             <TextField
               variant="outlined"
               size="small"
@@ -249,12 +278,27 @@ export default function VaultModal({
               }}
               placeholder={dict.enterSkill}
                sx={{bgcolor: "#fff"}}
+                 InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+        <Image
+          src="/icon/write.png"
+          alt="info"
+          width={20}
+          height={20}
+          style={{ marginLeft: 4 }}
+        />
+      </InputAdornment>
+    ),
+  }}
+                
             />
             <IconButton
               onClick={() => handleDelete("도마2", index)}
               size="small"
-              color="error"
-            >
+              color="info"
+              sx={{ml:"auto"}}
+>
               <CancelIcon />
             </IconButton>
           </ListItem>
@@ -267,7 +311,7 @@ export default function VaultModal({
       )}
       {/* 하단 버튼 */}
       <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
-        <Button variant="outlined" onClick={onClose}>
+        <Button variant="outlined" onClick={onClose} sx={{color:"black"}}>
           Close
         </Button>
         <Button variant="contained" color="primary" onClick={handleSave}>

@@ -24,7 +24,7 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
     <Box
       sx={{
         backgroundColor: "#f0f4f8",
-        height: "150vh",
+        height: "200vh",
         position: "relative",
         display: "flex",
         flexDirection: "column",
@@ -32,47 +32,54 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
         justifyContent: "flex-start",
       }}
     >
-      <AppBar position="static" sx={{ backgroundColor: "#476ff3" }}>
+      <AppBar position="static"  sx={{
+    background: 'linear-gradient(90deg, #0200BA 0%, #6103B0 100%)'}}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6">{dict.coach}</Typography>
+          <Typography variant="h4" fontWeight={500}>{dict.coach}</Typography>
           <Button
             variant="contained"
-            color="secondary"
             onClick={handleLogout}
-            sx={{ fontWeight: "bold" }}
+            sx={{ fontWeight: "bold" ,bgcolor:"#fff", color:"#6003B0", borderRadius:"0"}}
           >
             {dict.logout}
           </Button>
         </Toolbar>
       </AppBar>
 
-      <Box
-        sx={{
-          backgroundColor: "white",
-          boxShadow: 2,
-          borderRadius: 2,
-          position: "absolute",
-          top: "100px",
-          width: "80%",
-         
-        }}
-      >
-        <CoachInfo dict={dict}/>
-      </Box>
+     <Box
+       sx={{
+        display: "flex",
+        flexDirection: "column",
+       alignItems: "center",
+        gap: 4, 
+        width: "100%",
+        mt: 5, 
+      }}
+  >
+  <Box
+    sx={{
+      backgroundColor: "white",
+      boxShadow: 1,
+      borderRadius: 1,
+      width: "80%",
+      p: 3,
+    }}
+  >
+    <CoachInfo dict={dict} />
+  </Box>
 
-      <Box
-        sx={{
-          backgroundColor: "white",
-          boxShadow: 2,
-          borderRadius: 2,
-          position: "absolute",
-          top: "500px",
-          width: "80%",
-          padding: 3,
-        }}
-      >
-        <CoachPlayer lang={lang} dict={dict}/>
-      </Box>
+  <Box
+    sx={{
+      backgroundColor: "white",
+      boxShadow: 2,
+      borderRadius: 2,
+      width: "80%",
+      p: 3,
+    }}
+  >
+    <CoachPlayer lang={lang} dict={dict} />
+  </Box>
+</Box>
     </Box>
   );
 }

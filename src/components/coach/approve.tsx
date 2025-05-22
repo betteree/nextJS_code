@@ -65,29 +65,36 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
       sx={{ pt: 10 }}
     >
       <Typography variant="h4" fontWeight={600} gutterBottom>
-        {dict.coach}
+        Welcome, {dict.coach}!
       </Typography>
 
-      <Paper elevation={3} sx={{ p: 4, width: "70%", maxWidth: 500 }}>
+     <Typography variant="body1" align="center" sx={{ fontSize: '15px' ,marginBottom:'40px'}}>
+         please enter your information to register <br />
+            gymnast event orders.
+    </Typography>
+
+      <Paper elevation={3} sx={{ p: 4, width: "70%", maxWidth: 500 , bgcolor: 'transparent',boxShadow:0}}>
         <form onSubmit={handleLogin}>
           <Box display="flex" flexDirection="column" gap={3}>
             <TextField
               label={dict.name}
-              variant="standard"
+              variant="outlined"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              sx={{bgcolor:'white'}}
             />
 
             <TextField
               label={dict.contact}
-              variant="standard"
+              variant="outlined"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
+              sx={{bgcolor:'white'}}
             />
 
-            <FormControl variant="standard" required>
+            <FormControl variant="outlined" required sx={{bgcolor:'white'}}>
               <InputLabel id="affiliation-label">{dict.affiliation}</InputLabel>
               <Select
                 labelId="affiliation-label"

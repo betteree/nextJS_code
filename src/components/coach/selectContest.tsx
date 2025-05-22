@@ -78,7 +78,7 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
         padding: "100px 10%",
       }}
     >
-      <Typography variant="h5" fontWeight={600} mb={2}>
+      <Typography variant="h4" fontWeight={600} mb={2}>
         {dict.contestSelect}
       </Typography>
 
@@ -86,11 +86,10 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
         <Paper
           elevation={3}
           sx={{
-            border: "2px solid dodgerblue",
             borderRadius: "5px",
-            backgroundColor: "white",
-            padding: "20px",
+            bgcolor:"transparent",
             width: "100%",
+            boxShadow:"0"
           }}
         >
           <List disablePadding>
@@ -102,8 +101,9 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
                     variant="outlined"
                     onClick={() => handleSubmit(item)}
                     sx={{
+                    
                       borderColor: "dodgerblue",
-                      backgroundColor: "#f0f8ff",
+                      backgroundColor: "white",
                       color: "black",
                       ":hover": {
                         backgroundColor: "dodgerblue",
@@ -111,7 +111,7 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
                       },
                       fontSize: "16px",
                       borderRadius: "5px",
-                      paddingBlock: "5px",
+                      paddingBlock: "20px",
                     }}
                   >
                     {item.title}
