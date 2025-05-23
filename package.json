@@ -32,6 +32,7 @@
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
     "react-spinners": "^0.17.0",
+    "react-world-flags": "^1.6.0",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {

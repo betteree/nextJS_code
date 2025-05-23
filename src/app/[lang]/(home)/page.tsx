@@ -17,6 +17,8 @@ import { getDictionary } from '@/components/dictionaries/dictionaries';
 export default function HomePage() {
   const [lang, setLang] = useState<'ko' | 'en'>('en');
   const locale = lang;
+
+
   const dict = getDictionary(lang);
 
   const [type, setType] = useState<string>(`/${locale}`);

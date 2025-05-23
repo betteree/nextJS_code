@@ -12,6 +12,7 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
+import Flag from "react-world-flags";
 
 export default function Approve({dict}:{dict: Record<string, string>}) {
 
@@ -19,13 +20,31 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
   const [affiliation, setAffiliation] = useState("");
 
   const countryList = [
-    "북부초등학교",
-    "남부초등학교",
-    "대구체육고등학교",
-    "제주삼다수",
-    "한국체육대학교",
-    "공주대학교",
-  ];
+  { code: "AU", name: "Australia" },
+  { code: "BE", name: "Belgium" },
+  { code: "BR", name: "Brazil" },
+  { code: "CA", name: "Canada" },
+  { code: "CH", name: "Switzerland" },
+  { code: "CN", name: "China" },
+  { code: "DE", name: "Germany" },
+  { code: "ES", name: "Spain" },
+  { code: "FR", name: "France" },
+  { code: "GB", name: "United Kingdom" },
+  { code: "IN", name: "India" },
+  { code: "IT", name: "Italy" },
+  { code: "JP", name: "Japan" },
+  { code: "KR", name: "South Korea" },
+  { code: "MX", name: "Mexico" },
+  { code: "NL", name: "Netherlands" },
+  { code: "PL", name: "Poland" },
+  { code: "RU", name: "Russia" },
+  { code: "SE", name: "Sweden" },
+  { code: "TR", name: "Turkey" },
+  { code: "US", name: "USA" },
+  { code: "ZA", name: "South Africa" },
+];
+
+
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,14 +93,6 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
       <Paper elevation={3} sx={{ p: 4, width: "80%", maxWidth: 500 , bgcolor: 'transparent',boxShadow:0}}>
         <form onSubmit={handleLogin}>
           <Box display="flex" flexDirection="column" gap={3}>
-            <TextField
-              label={dict.email}
-              variant="outlined"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              sx={{bgcolor:'white'}}
-            />
 
             <FormControl variant="outlined" required sx={{bgcolor:'white'}}>
               <InputLabel id="affiliation-label">{dict.country}</InputLabel>
@@ -89,17 +100,35 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
                 labelId="affiliation-label"
                 value={affiliation}
                 onChange={(e) => setAffiliation(e.target.value)}
-              >
-                <MenuItem value="">
-                  <em>{dict.select}</em>
-                </MenuItem>
-                {countryList.map((item, index) => (
-                  <MenuItem key={index} value={item}>
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
+                 MenuProps={{
+                PaperProps: {
+              sx: {
+               maxHeight: 200,  overflowY: "auto"
+            }
+         }
+          }}
+        >
+    <MenuItem value="">
+      <em>{dict.select}</em>
+    </MenuItem>
+    {countryList.map(({ code, name }) => (
+      <MenuItem key={code} value={name} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Flag code={code} style={{ width: 24, height: 16 }} />
+        {name}
+         </MenuItem>
+        ))}
+      </Select>
             </FormControl>
+            
+            <TextField
+                  label={dict.email}
+                  variant="outlined"
+                  value={email}
+                   type="email"  
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  sx={{bgcolor:'white'}}
+                />
 
             <Button
               variant="contained"

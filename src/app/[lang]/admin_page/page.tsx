@@ -6,6 +6,7 @@ import Sequence from "@/components/admin/sequence";
 import { Box, Typography, Button } from "@mui/material";
 import React ,{ use }from 'react';
 import { useRouter } from "next/navigation";
+import { ClipLoader } from "react-spinners";
 
 
 
@@ -30,7 +31,11 @@ const [loading, setLoading] = useState(true);
   };
 
     if (loading) {
-    return <div>Loading...</div>;
+    return <div
+      style={{ display: "flex", justifyContent: "center", marginTop: "100px" }}
+    >
+      <ClipLoader size={50} color="#36d7b7" />
+    </div>;
   }
 
 
