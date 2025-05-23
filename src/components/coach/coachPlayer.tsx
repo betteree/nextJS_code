@@ -28,7 +28,6 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
     남: ["FE", "PH", "SR", "Vault", "PB", "HB"],
     여: ["Vault", "UB", "BB", "FE"],
   };
-
   // 각 종목의 순서 리스트데이터
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
 
@@ -38,18 +37,20 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   // 코치아이디
   const [coachId, setCoachId] = useState("");
 
-  // 터치 시작 시 draggedIndex 세팅
 const handleTouchStart = (index: number) => {
   setDraggedIndex(index);
+  // 터치 시작하면 스크롤 잠금
+  document.body.style.overflow = "hidden";
 };
 
-// 터치 이동 시 dragOverIndex 갱신
 const handleTouchMove = (e: React.TouchEvent<HTMLLIElement>) => {
+
+
+
   const touch = e.touches[0];
   const element = document.elementFromPoint(touch.clientX, touch.clientY);
   if (!element) return;
 
-  // 가장 가까운 li 찾기 (li에 data-index가 있어야 함)
   const li = element.closest("li");
   if (!li) return;
 
@@ -62,14 +63,20 @@ const handleTouchMove = (e: React.TouchEvent<HTMLLIElement>) => {
   }
 };
 
-// 터치 종료 시 아이템 순서 변경 처리
 const handleTouchEnd = (
   items: string[],
   setItems: React.Dispatch<React.SetStateAction<string[]>>
 ) => {
-  if (draggedIndex === null || dragOverIndex === null || draggedIndex === dragOverIndex) {
+  if (
+    draggedIndex === null ||
+    dragOverIndex === null ||
+    draggedIndex === dragOverIndex
+  ) {
     setDraggedIndex(null);
     setDragOverIndex(null);
+
+    // 터치 종료하면 스크롤 잠금 해제
+    document.body.style.overflow = "";
     return;
   }
 
@@ -80,6 +87,9 @@ const handleTouchEnd = (
   setItems(newItems);
   setDraggedIndex(null);
   setDragOverIndex(null);
+
+  // 터치 종료하면 스크롤 잠금 해제
+  document.body.style.overflow = "";
 };
 
   // 선수 추가
