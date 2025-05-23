@@ -24,6 +24,7 @@ export type PlayerEventData = {
   skill_number: string;
   coach_affiliation: string;
   sequence: string;
+  country_code:string;
 };
 
 // 도마 1차시 ,2차시 타입
@@ -46,7 +47,7 @@ export type ResultRow = {
   DETAIL_CLASS_CD: string;
   SEX_ORDER: null;
   ID_NO: number;
-  GROUP_CD: number;
+  GROUP_CD: string;
   ENTRANT_SEQ: string;
   R1_VAULT_ID: string | null;
   R1_VAULT_VALUE: null;

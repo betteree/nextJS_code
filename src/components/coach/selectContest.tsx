@@ -108,7 +108,6 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
                 borderRadius:"3px",
                 ":hover": {
                         backgroundColor: "primary.main",
-                        color: "white",
                       },}}>
                   <Image src="/icon/trophy.png" alt="info" width={25} height={35} />
                   <Button
@@ -118,6 +117,9 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
                       color: "black",
                       fontSize: "16px",
                       border:0,
+                      ":hover": {
+                        color: "white",
+                      }
                     }}
                   >
                     {item.title}

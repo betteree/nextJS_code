@@ -24,7 +24,7 @@ export default function CoachPage({ params }: { params: Promise<{ lang: string }
   return (
     <Box
       sx={{
-        backgroundColor: "#f0f4f8",
+        backgroundColor: "#F8F9FD",
         height: "150vh",
         position: "relative",
       }}

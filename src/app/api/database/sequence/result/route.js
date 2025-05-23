@@ -24,7 +24,8 @@ export async function GET(req) {
          p.coach_id,
          pe.sequence AS sequence,
          vs.skill_number,
-         c.affiliation AS coach_affiliation 
+         c.affiliation AS coach_affiliation, 
+         c.code AS country_code
         FROM event_list e
         JOIN player_event pe ON e.id = pe.event_list_id
         JOIN player p ON pe.player_id = p.id
@@ -36,7 +37,7 @@ export async function GET(req) {
     `;
 
     const [rows] = await db.query(query, [competitionId]);
-
+    
     return NextResponse.json(rows);
   } catch (error) {
     console.error("쿼리 실행 오류:", error);

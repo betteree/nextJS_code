@@ -40,6 +40,7 @@ export async function getClassdata(data: PlayerEventData[], contestId: string) {
   data.forEach((item) => {
     const {
       coach_affiliation,
+      country_code,
       coach_id,
       event_gender,
       event_name,
@@ -52,7 +53,6 @@ export async function getClassdata(data: PlayerEventData[], contestId: string) {
       coach_affiliation,
       event_gender
     );
-
     const SEX_CD = getGender(event_gender); //성별 1,2로 변환
 
     const { name, BASE_CLASS_CD } = getBaseClassCd(event_name); //종목 코드로 변환
@@ -83,7 +83,7 @@ export async function getClassdata(data: PlayerEventData[], contestId: string) {
           SEX_ORDER: null,
           // order테이블
           ID_NO: player_id,
-          GROUP_CD: coach_id,
+          GROUP_CD: country_code + BASE_CLASS_CD,
           ENTRANT_SEQ: formattedSeq,
           R1_VAULT_ID: first || null,
           R1_VAULT_VALUE: null,
@@ -117,7 +117,7 @@ export async function getClassdata(data: PlayerEventData[], contestId: string) {
         // order테이블
         ID_NO: player_id,
         SEX_ORDER: null,
-        GROUP_CD: coach_id,
+        GROUP_CD: country_code + BASE_CLASS_CD,
         ENTRANT_SEQ: formattedSeq,
         R1_VAULT_ID: null,
         R1_VAULT_VALUE: null,

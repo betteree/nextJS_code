@@ -15,7 +15,7 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
   return (
     <Box
       sx={{
-        backgroundColor: "#f0f4f8",
+        backgroundColor: "#F8F9FD",
         position: "relative",
         display: "flex",
         flexDirection: "column",

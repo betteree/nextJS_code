@@ -149,6 +149,8 @@ export default function VaultModal({
       marginTop: 2,
       bgcolor:"white",
       width: { xs: "90vw" },
+      maxHeight:{xs:"90vh"},
+      overflowY:"auto",
       p:{xs:2},
     }}>
         <Typography variant="body2" gutterBottom>

@@ -92,6 +92,8 @@ export default function Sequence({lang}:{lang:string}) {
       }
 
       getClassdata(data, competitionId);
+
+
     } catch (err) {
       console.error(err);
       alert("전송 중 오류가 발생했어요!");
