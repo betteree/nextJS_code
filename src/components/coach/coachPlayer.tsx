@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect,useRef } from "react";
+import  React,{ useState, useEffect } from "react";
 import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
 import { useRouter } from "next/navigation";
@@ -21,10 +21,9 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   });
   const router = useRouter(); // 페이지 이동 변수 정의
   const [newPlayer, setNewPlayer] = useState(""); // 새로운 선수 추가
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [draggedCategory, setDraggedCategory] = useState<string | null>(null);
   const [gender, setGender] = useState<"남" | "여">("남");
-
+  const [draggedIndex, setDraggedIndex] = React.useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = React.useState<number | null>(null);
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["FE", "PH", "SR", "Vault", "PB", "HB"],
     여: ["Vault", "UB", "BB", "FE"],
@@ -38,94 +37,50 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   const [detailVault, setDetailVault] = useState<VaultItem[]>([]);
   // 코치아이디
   const [coachId, setCoachId] = useState("");
-  
-    const handleTouchStart = (index: number, category: string) => {
-      setDraggedIndex(index);
-      setDraggedCategory(category);
-    };
-const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
+  // 터치 시작 시 draggedIndex 세팅
+const handleTouchStart = (index: number) => {
+  setDraggedIndex(index);
+};
 
+// 터치 이동 시 dragOverIndex 갱신
+const handleTouchMove = (e: React.TouchEvent<HTMLLIElement>) => {
+  const touch = e.touches[0];
+  const element = document.elementFromPoint(touch.clientX, touch.clientY);
+  if (!element) return;
 
+  // 가장 가까운 li 찾기 (li에 data-index가 있어야 함)
+  const li = element.closest("li");
+  if (!li) return;
+
+  const overIndexStr = li.getAttribute("data-index");
+  if (!overIndexStr) return;
+
+  const overIndex = Number(overIndexStr);
+  if (overIndex !== dragOverIndex) {
+    setDragOverIndex(overIndex);
+  }
+};
+
+// 터치 종료 시 아이템 순서 변경 처리
 const handleTouchEnd = (
-    e: React.TouchEvent,
-    category: string,
-    items: string[],
-    setItems: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
-    if (draggedIndex === null || draggedCategory !== category) return;
-
-    const touchY = e.changedTouches[0].clientY;
-
-    let targetIndex = draggedIndex;
-    for (let i = 0; i < itemRefs.current.length; i++) {
-      const el = itemRefs.current[i];
-      if (!el) continue;
-      const rect = el.getBoundingClientRect();
-      if (touchY >= rect.top && touchY <= rect.bottom) {
-        targetIndex = i;
-        break;
-      }
-    }
-
-    if (targetIndex !== draggedIndex) {
-      const newList = [...items];
-      const [movedItem] = newList.splice(draggedIndex, 1);
-      newList.splice(targetIndex, 0, movedItem);
-      setItems(newList);
-    }
-
+  items: string[],
+  setItems: React.Dispatch<React.SetStateAction<string[]>>
+) => {
+  if (draggedIndex === null || dragOverIndex === null || draggedIndex === dragOverIndex) {
     setDraggedIndex(null);
-    setDraggedCategory(null);
-  };
-
-
-useEffect(() => {
-  const handleTouchMove = (e: TouchEvent) => {
-    e.preventDefault();
-  };
-
-  const container = document.getElementById("drag-container"); // 원하는 영역의 id
-
-  if (container) {
-    container.addEventListener("touchmove", handleTouchMove, { passive: false });
+    setDragOverIndex(null);
+    return;
   }
 
-  return () => {
-    if (container) {
-      container.removeEventListener("touchmove", handleTouchMove);
-    }
-  };
-}, []);
+  const newItems = [...items];
+  const [movedItem] = newItems.splice(draggedIndex, 1);
+  newItems.splice(dragOverIndex, 0, movedItem);
 
-
-
-    const handleDragStart = (index: number, category: string) => {
-    setDraggedIndex(index);
-    setDraggedCategory(category);
-  };
-  const handleDragOver = (e: React.DragEvent<HTMLLIElement>) => {
-    e.preventDefault();
-    // 기존동작 방지해서 드롭이 가능하도록 한다
-  };
-
-  // index 드롭 시에
-  const handleDrop = (
-    index: number,
-    category: string,
-    items: string[],
-    setItems: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
-    if (draggedIndex === null || draggedCategory !== category) return;
-
-    const newItems = [...items];
-    const [removed] = newItems.splice(draggedIndex, 1);
-    newItems.splice(index, 0, removed);
-
-    setItems(newItems);
-    setDraggedIndex(null);
-    setDraggedCategory(null);
-  };
+  setItems(newItems);
+  setDraggedIndex(null);
+  setDragOverIndex(null);
+};
 
   // 선수 추가
   const handleAddPlayer = () => {
@@ -535,59 +490,48 @@ useEffect(() => {
                   </Button>
                 </Box>
               ) : (
-                <List id="drag-container" sx={{ p: 2 }}>
-      {eventData[event]?.map((name, index) => (
-        <ListItem
-          ref={(el) => {
-  itemRefs.current[index] = el;
-}}
-          key={`${event}-${index}-${name}`}
-          component={motion.li}
-          draggable
-          onDragStart={() => handleDragStart(index, event)}
-          onDragOver={handleDragOver}
-          onDrop={() =>
-            handleDrop(index, event, eventData[event], (newList) =>
-              setEventData((prev) => ({
-                ...prev,
-                [event]: newList as string[],
-              }))
-            )
-          }
-          onTouchStart={() => handleTouchStart(index, event)}
-          onTouchEnd={(e) =>
-            handleTouchEnd(e, event, eventData[event], (newItems) =>
-              setEventData((prev) => ({
-                ...prev,
-                [event]: newItems as string[],
-              }))
-            )
-          }
-          sx={{
-            bgcolor: "#FAFAFA",
-            mb: 1,
-            borderRadius: 1,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            px: 2,
-            py: 1,
-            cursor: "grab",
-            transition: "transform 0.3s ease-in-out",
-            "&:hover": { transform: "scale(1.05)" },
-          }}
-        >
-          <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Image src="/icon/sequence.png" alt="info" width={12} height={12} />
-            {name}
-          </Typography>
-          <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small" color="error">
-            <CancelIcon color="info" />
-          </IconButton>
-        </ListItem>
-      ))}
-    </List>
-
+                <List sx={{ p: 2 }}>
+                  {eventData[event]?.map((name, index) => (
+                    <ListItem
+    key={`${event}-${index}-${name}`}
+    component={motion.li}
+    data-index={index}
+    onTouchStart={() => handleTouchStart(index)}
+    onTouchMove={handleTouchMove}
+    onTouchEnd={() => handleTouchEnd(eventData[event], (newList) =>
+      setEventData((prev) => ({
+        ...prev,
+        [event]: newList as string[],
+      }))
+    )}
+    sx={{
+      bgcolor:
+        dragOverIndex === index
+          ? "#DDEEFF" // 드래그 오버된 아이템 배경색 강조
+          : "#FAFAFA",
+      mb: 1,
+      borderRadius: 1,
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      px: 2,
+      py: 1,
+      cursor: "grab",
+      transition: "transform 0.3s ease-in-out",
+      "&:hover": { transform: "scale(1.05)" },
+      userSelect: "none", // 드래그 시 텍스트 선택 방지
+    }}
+  >
+    <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Image src="/icon/sequence.png" alt="info" width={12} height={12} />
+      {name}
+    </Typography>
+    <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small" color="error">
+      <CancelIcon color="info" />
+    </IconButton>
+  </ListItem>
+                  ))}
+                </List>
               )}
             </Paper>
           </Box>
