@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
 import { useRouter } from "next/navigation";
@@ -38,12 +38,72 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   const [detailVault, setDetailVault] = useState<VaultItem[]>([]);
   // 코치아이디
   const [coachId, setCoachId] = useState("");
+  
+    const handleTouchStart = (index: number, category: string) => {
+      setDraggedIndex(index);
+      setDraggedCategory(category);
+    };
+const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
-  const handleDragStart = (index: number, category: string) => {
+
+
+const handleTouchEnd = (
+    e: React.TouchEvent,
+    category: string,
+    items: string[],
+    setItems: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    if (draggedIndex === null || draggedCategory !== category) return;
+
+    const touchY = e.changedTouches[0].clientY;
+
+    let targetIndex = draggedIndex;
+    for (let i = 0; i < itemRefs.current.length; i++) {
+      const el = itemRefs.current[i];
+      if (!el) continue;
+      const rect = el.getBoundingClientRect();
+      if (touchY >= rect.top && touchY <= rect.bottom) {
+        targetIndex = i;
+        break;
+      }
+    }
+
+    if (targetIndex !== draggedIndex) {
+      const newList = [...items];
+      const [movedItem] = newList.splice(draggedIndex, 1);
+      newList.splice(targetIndex, 0, movedItem);
+      setItems(newList);
+    }
+
+    setDraggedIndex(null);
+    setDraggedCategory(null);
+  };
+
+
+useEffect(() => {
+  const handleTouchMove = (e: TouchEvent) => {
+    e.preventDefault();
+  };
+
+  const container = document.getElementById("drag-container"); // 원하는 영역의 id
+
+  if (container) {
+    container.addEventListener("touchmove", handleTouchMove, { passive: false });
+  }
+
+  return () => {
+    if (container) {
+      container.removeEventListener("touchmove", handleTouchMove);
+    }
+  };
+}, []);
+
+
+
+    const handleDragStart = (index: number, category: string) => {
     setDraggedIndex(index);
     setDraggedCategory(category);
   };
-
   const handleDragOver = (e: React.DragEvent<HTMLLIElement>) => {
     e.preventDefault();
     // 기존동작 방지해서 드롭이 가능하도록 한다
@@ -475,45 +535,59 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
                   </Button>
                 </Box>
               ) : (
-                <List sx={{ p: 2 }}>
-                  {eventData[event]?.map((name, index) => (
-                    <ListItem
-                      key={`${event}-${index}-${name}`}
-                      component={motion.li}
-                      draggable
-                      onDragStart={() => handleDragStart(index, event)}
-                      onDragOver={handleDragOver}
-                      onDrop={() =>
-                        handleDrop(index, event, eventData[event], (newList) =>
-                          setEventData((prev) => ({
-                            ...prev,
-                            [event]: newList as string[],
-                          }))
-                        )
-                      }
-                      sx={{
-                        bgcolor: "#FAFAFA",
-                        mb: 1,
-                        borderRadius: 1,
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        px: 2,
-                        py: 1,
-                        cursor: "grab",
-                        transition: "transform 0.3s ease-in-out",
-                        "&:hover": { transform: "scale(1.05)" },
-                      }}
-                    >
-                      <Typography sx={{display:"flex", alignItems:"center",gap:1}} >
-                      <Image src="/icon/sequence.png" alt="info" width={12} height={12} />                  
-                        {name}</Typography>
-                      <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small" color="error">
-                           <CancelIcon color="info" />
-                      </IconButton>
-                    </ListItem>
-                  ))}
-                </List>
+                <List id="drag-container" sx={{ p: 2 }}>
+      {eventData[event]?.map((name, index) => (
+        <ListItem
+          ref={(el) => {
+  itemRefs.current[index] = el;
+}}
+          key={`${event}-${index}-${name}`}
+          component={motion.li}
+          draggable
+          onDragStart={() => handleDragStart(index, event)}
+          onDragOver={handleDragOver}
+          onDrop={() =>
+            handleDrop(index, event, eventData[event], (newList) =>
+              setEventData((prev) => ({
+                ...prev,
+                [event]: newList as string[],
+              }))
+            )
+          }
+          onTouchStart={() => handleTouchStart(index, event)}
+          onTouchEnd={(e) =>
+            handleTouchEnd(e, event, eventData[event], (newItems) =>
+              setEventData((prev) => ({
+                ...prev,
+                [event]: newItems as string[],
+              }))
+            )
+          }
+          sx={{
+            bgcolor: "#FAFAFA",
+            mb: 1,
+            borderRadius: 1,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: 2,
+            py: 1,
+            cursor: "grab",
+            transition: "transform 0.3s ease-in-out",
+            "&:hover": { transform: "scale(1.05)" },
+          }}
+        >
+          <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Image src="/icon/sequence.png" alt="info" width={12} height={12} />
+            {name}
+          </Typography>
+          <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small" color="error">
+            <CancelIcon color="info" />
+          </IconButton>
+        </ListItem>
+      ))}
+    </List>
+
               )}
             </Paper>
           </Box>
