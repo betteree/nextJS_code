@@ -1,6 +1,6 @@
 "use client";
 
-import  React,{ useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
 import { useRouter } from "next/navigation";
@@ -22,19 +22,12 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   const router = useRouter(); // 페이지 이동 변수 정의
   const [newPlayer, setNewPlayer] = useState(""); // 새로운 선수 추가
   const [gender, setGender] = useState<"남" | "여">("남");
-  const [dragState, setDragState] = useState<{
-  category: string | null;
-  draggedIndex: number | null;
-  dragOverIndex: number | null;
-}>({
-  category: null,
-  draggedIndex: null,
-  dragOverIndex: null,
-});
+
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["FE", "PH", "SR", "Vault", "PB", "HB"],
     여: ["Vault", "UB", "BB", "FE"],
   };
+
   // 각 종목의 순서 리스트데이터
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
 
@@ -44,61 +37,46 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   // 코치아이디
   const [coachId, setCoachId] = useState("");
 
-const handleTouchStart = (category: string, index: number) => {
-  setDragState({
-    category,
-    draggedIndex: index,
-    dragOverIndex: null,
-  });
-  document.body.style.overflow = "hidden";
-};
+   const dragItem = useRef<number | null>(null);
+  const dragOverItem = useRef<number | null>(null);
+const [currentCategory, setCurrentCategory] = useState<string | null>(null);
 
-const handleTouchMove = (e: React.TouchEvent<HTMLLIElement>) => {
-  if (!dragState.category) return;
-  
-  const touch = e.touches[0];
-  const element = document.elementFromPoint(touch.clientX, touch.clientY);
-  if (!element) return;
+  // 드래그 시작: 드래그하는 아이템 index 저장
+  const dragStart = (e: React.DragEvent<HTMLLIElement>, index: number, category: string) => {
+    dragItem.current = index;
+    setCurrentCategory(category);
+  };
 
-  const li = element.closest("li");
-  if (!li) return;
+  // 드래그 엔터: 드래그 오버 중인 아이템 index 저장
+  const dragEnter = (e: React.DragEvent<HTMLLIElement>, index: number) => {
+    dragOverItem.current = index;
+  };
 
-  const overIndexStr = li.getAttribute("data-index");
-  if (!overIndexStr) return;
+  // 드래그 오버: 기본 이벤트 막아 드롭 가능하게 함
+  const dragOver = (e: React.DragEvent<HTMLLIElement>) => {
+    e.preventDefault();
+  };
 
-  const overIndex = Number(overIndexStr);
-  if (overIndex !== dragState.dragOverIndex) {
-    setDragState(prev => ({ ...prev, dragOverIndex: overIndex }));
-  }
-};
+ const drop = (e: React.DragEvent<HTMLLIElement>, category: string) => {
+    e.preventDefault();
+    if (dragItem.current === null || dragOverItem.current === null) return;
 
-const handleTouchEnd = () => {
-  const { category, draggedIndex, dragOverIndex } = dragState;
-  if (
-    !category ||
-    draggedIndex === null ||
-    dragOverIndex === null ||
-    draggedIndex === dragOverIndex
-  ) {
-    setDragState({ category: null, draggedIndex: null, dragOverIndex: null });
-    document.body.style.overflow = "";
-    return;
-  }
+    if (category !== currentCategory) return;
 
-  const items = eventData[category];
-  const newItems = [...items];
-  const [movedItem] = newItems.splice(draggedIndex, 1);
-  newItems.splice(dragOverIndex, 0, movedItem);
+    const newList = [...eventData[category]];
+    const draggedItem = newList[dragItem.current];
 
-  setEventData(prev => ({
-    ...prev,
-    [category]: newItems,
-  }));
+    newList.splice(dragItem.current, 1);
+    newList.splice(dragOverItem.current, 0, draggedItem);
 
-  setDragState({ category: null, draggedIndex: null, dragOverIndex: null });
-  document.body.style.overflow = "";
-};
+    setEventData((prev) => ({
+      ...prev,
+      [category]: newList,
+    }));
 
+    dragItem.current = null;
+    dragOverItem.current = null;
+  };
 
   // 선수 추가
   const handleAddPlayer = () => {
@@ -509,43 +487,42 @@ const handleTouchEnd = () => {
                 </Box>
               ) : (
                 <List sx={{ p: 2 }}>
-  {eventData[event]?.map((name, index) => (
-    <ListItem
-      key={`${event}-${index}-${name}`}
-      component={motion.li}
-      data-index={index}
-      onTouchStart={() => handleTouchStart(event, index)}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      sx={{
-        bgcolor:
-          dragState.category === event && dragState.dragOverIndex === index
-            ? "#DDEEFF"
-            : "#FAFAFA",
-        mb: 1,
-        borderRadius: 1,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        px: 2,
-        py: 1,
-        cursor: "grab",
-        transition: "transform 0.3s ease-in-out",
-        "&:hover": { transform: "scale(1.05)" },
-        userSelect: "none",
-      }}
-    >
-      <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Image src="/icon/sequence.png" alt="info" width={12} height={12} />
-        {name}
-      </Typography>
-      <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small" color="error">
-        <CancelIcon color="info" />
-      </IconButton>
-    </ListItem>
-  ))}
-</List>
-
+      {eventData[event]?.map((name, index) => (
+        <ListItem
+          key={`${event}-${index}-${name}`}
+          component="li"
+          draggable
+          onDragStart={(e) => dragStart(e, index,event)}
+          onDragEnter={(e) => dragEnter(e, index)}
+          onDragOver={dragOver}
+          onDrop={(e) => drop(e, event)}
+          sx={{
+            bgcolor: "#FAFAFA",
+            mb: 1,
+            borderRadius: 1,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: 2,
+            py: 1,
+            cursor: "grab",
+        
+          }}
+        >
+          <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Image src="/icon/sequence.png" alt="info" width={12} height={12} />
+            {name}
+          </Typography>
+          <IconButton
+            onClick={() => handleRemoveFromEvent(event, name)}
+            size="small"
+            color="error"
+          >
+            <CancelIcon color="info" />
+          </IconButton>
+        </ListItem>
+      ))}
+    </List>
               )}
             </Paper>
           </Box>
