@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ContestList from "@/components/admin/contestList";
 import Sequence from "@/components/admin/sequence";
 import { Box, Typography, Button } from "@mui/material";
@@ -11,14 +11,27 @@ import { useRouter } from "next/navigation";
 
 export default function AdminPage({ params }: { params: Promise<{ lang: string }> }) {
  const router = useRouter();
-
  const { lang } = use(params);
+const [loading, setLoading] = useState(true);
 
   const [adminList, setAdminList] = useState("contest");
+   useEffect(() => {
+    const adminFlag = localStorage.getItem("isAdmin");
+    if (adminFlag !== "true") {
+      alert("접근 권한이 없습니다");
+      router.replace(`/${lang}/admin_login`);
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
+
   const handleNav = (list: string) => {
     setAdminList(list);
   };
 
+    if (loading) {
+    return <div>Loading...</div>;
+  }
 
 
   const handleLogout = () => {
@@ -26,6 +39,7 @@ export default function AdminPage({ params }: { params: Promise<{ lang: string }
     alert("로그아웃 되었습니다.");
     router.push("/");
   };
+  
 
   return (
     <Box

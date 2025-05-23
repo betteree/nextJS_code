@@ -42,5 +42,6 @@
   "startList":"START LIST",
   "mainDes":"Select your language and user type to\nbegin using the system.",
   "country":"Country",
-  "email":"Email"
+  "email":"Email",
+  "password":"password"
 }

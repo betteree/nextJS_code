@@ -14,9 +14,10 @@ import {
   Typography,
   Box,
     Paper,
+    IconButton,
 } from "@mui/material";
 import Register from "@/components/admin/register";
-import CreateIcon from '@mui/icons-material/Edit'
+import BorderColorOutlinedIcon from '@mui/icons-material/Edit'
 
 export default function ContestList() {
   const [admins, setAdmins] = useState<Admin[]>([]);
@@ -82,9 +83,9 @@ export default function ContestList() {
                     <TableCell>{item.organizer}</TableCell>
                     <TableCell>{item.gender}</TableCell>
                     <TableCell>
-                      <Button variant="outlined" onClick={() => handleModal(item)}>
-                        <CreateIcon/>
-                      </Button>
+                    <IconButton onClick={() => handleModal(item)}>
+                      <BorderColorOutlinedIcon />
+                    </IconButton>
                     </TableCell>
                 </TableRow>
               ))}

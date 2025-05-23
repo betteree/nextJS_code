@@ -82,7 +82,7 @@ export default function HomePage() {
           <InputLabel htmlFor="type">{dict.type}</InputLabel>
           <Select id="type" value={type} onChange={handleType}>
             <MenuItem value={`/${locale}`}>{dict.select}</MenuItem>
-            <MenuItem value={`/${locale}/admin_page`}>{dict.admin}</MenuItem>
+            <MenuItem value={`/${locale}/admin_login`}>{dict.admin}</MenuItem>
             <MenuItem value={`/${locale}/coach_page`}>{dict.coach}</MenuItem>
           </Select>
         </FormControl>

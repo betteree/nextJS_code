@@ -24,7 +24,7 @@ export default function Sequence({lang}:{lang:string}) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [inputValue, setInputValue] = useState("");
   // 검색 필터링
   const filteredData = contestData
     .map((contest) => {
@@ -99,16 +99,19 @@ export default function Sequence({lang}:{lang:string}) {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100%"}}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%", p:8}}>
+      <Typography variant="h5" fontWeight={500} sx={{p:2}}>🏃‍♀️‍ 선수 순서 LIST</Typography>
       <Box sx={{ padding: "20px", display: "flex", gap: "20px" }}>
-        <Typography variant="h5">선수 순서 LIST</Typography>
         <TextField
           variant="outlined"
           label="지도자,대회,학교 검색"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           sx={{ flex: 1 }}
         />
+        <Button variant="contained" onClick={() => setSearchTerm(inputValue)}>
+          Search
+        </Button>
       </Box>
 
       {loading ? (
@@ -130,7 +133,7 @@ export default function Sequence({lang}:{lang:string}) {
       ) : (
         <TableContainer component={Paper} sx={{ margin: "20px" ,width: "auto",}}>
           <Table>
-            <TableHead>
+            <TableHead sx={{bgcolor:"info.light", "& .MuiTableCell-root": { color: "white" }}}>
               <TableRow>
                 <TableCell>대회명</TableCell>
                 <TableCell>#</TableCell>
@@ -162,6 +165,7 @@ export default function Sequence({lang}:{lang:string}) {
                       <Button
                         variant="outlined"
                         onClick={() => handleInfo({ contest, coach })}
+                        sx={{color:"black"}}
                       >
                         보기
                       </Button>
