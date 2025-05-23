@@ -136,8 +136,8 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
           onChange={handleGender}
           aria-label="gender toggle"
         >
-          <ToggleButton value="남" sx={{width:"30px", padding:"5px"}}>{dict.m}</ToggleButton>
-          <ToggleButton value="여" sx={{width:"30px", padding:"5px"}}>{dict.f}</ToggleButton>
+          <ToggleButton value="남" sx={{width:"70px", padding:"5px"}}>{dict.m}</ToggleButton>
+          <ToggleButton value="여" sx={{width:"70px", padding:"5px"}}>{dict.f}</ToggleButton>
         </ToggleButtonGroup>
       </Box>
 

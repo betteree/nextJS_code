@@ -192,7 +192,6 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
         eventCategories[gender].forEach((event) => {
           categorizedData[event] = [];
         });
-        console.log(eventCategories[gender]);
 
         // 데이터 분류
         data.forEach((item) => {

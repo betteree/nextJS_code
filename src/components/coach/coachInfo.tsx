@@ -33,10 +33,9 @@ export default function CoachInfo({dict}:{dict:Record<string, string>}) {
 
       {coachData ? (
         <>
-          <Box sx={{ display: "flex", justifyContent:"space-between",flexWrap: "wrap",gap:1, mb: 5}}>
-            <InfoItem label={dict.name} value={coachData.name} img={"/icon/name.png"}/>
-            <InfoItem label={dict.affiliation} value={coachData.affiliation} img={"/icon/affiliation.png"}/>
-            <InfoItem label={dict.contact} value={coachData.phone} img={"/icon/contact.png"}/>
+          <Box sx={{ display: "flex",flexWrap: "wrap",gap:5, mb: 5}}>
+            <InfoItem label={dict.country} value={coachData.affiliation} img={"/icon/affiliation.png"}/>
+            <InfoItem label={dict.email} value={coachData.email} img={"/icon/name.png"}/>
           </Box>
           <Divider />
           <Box mt={3}>

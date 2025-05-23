@@ -31,7 +31,6 @@ export default function Sequence({lang}:{lang:string}) {
       const filteredCoaches = contest.coaches.filter((coach) => {
         const search = searchTerm.toLowerCase();
         return (
-          coach.name.toLowerCase().includes(search) ||
           coach.affiliation.toLowerCase().includes(search) ||
           contest.title.toLowerCase().includes(search)
         );
@@ -135,9 +134,8 @@ export default function Sequence({lang}:{lang:string}) {
               <TableRow>
                 <TableCell>대회명</TableCell>
                 <TableCell>#</TableCell>
-                <TableCell>지도자</TableCell>
-                <TableCell>학교명</TableCell>
-                <TableCell>전화번호</TableCell>
+                <TableCell>소속</TableCell>
+                <TableCell>이메일</TableCell>
                 <TableCell>순서</TableCell>
               </TableRow>
             </TableHead>
@@ -158,9 +156,8 @@ export default function Sequence({lang}:{lang:string}) {
                       </TableCell>
                     )}
                     <TableCell>{coachIndex + 1}</TableCell>
-                    <TableCell>{coach.name}</TableCell>
                     <TableCell>{coach.affiliation}</TableCell>
-                    <TableCell>{coach.phone}</TableCell>
+                    <TableCell>{coach.email}</TableCell>
                     <TableCell>
                       <Button
                         variant="outlined"

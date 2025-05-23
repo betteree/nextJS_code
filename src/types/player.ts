@@ -68,8 +68,7 @@ export type Admin = {
 // 코치 타입
 export type Coach = {
   affiliation: string;
-  name: string;
-  phone: string;
+  email:string;
 };
 
 // 등록 모달 타입 정의

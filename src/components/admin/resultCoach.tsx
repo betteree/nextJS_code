@@ -15,8 +15,7 @@ import { Coach } from "@/types/player";
 export default function ResultCoach({dict}:{dict: Record<string,string>}) {
   const [coachData, setCoachData] = useState<Coach>({
     affiliation: "",
-    name: "",
-    phone: "",
+    email:"",
   });
   const [contest, setContest] = useState<string | null>("");
 
@@ -71,7 +70,7 @@ export default function ResultCoach({dict}:{dict: Record<string,string>}) {
                 
               }}>{contest}</TableCell>
             </TableRow>
-            <TableRow>
+            {/* <TableRow>
               <TableCell
                 sx={{ border: "3px solid black", fontWeight: "bold", width: "120px",
                   padding:"10px"
@@ -86,7 +85,7 @@ export default function ResultCoach({dict}:{dict: Record<string,string>}) {
               }}>
                 {coachData.name} / {dict.contact} : {coachData.phone}
               </TableCell>
-            </TableRow>
+            </TableRow> */}
           </TableBody>
         </Table>
       </TableContainer>

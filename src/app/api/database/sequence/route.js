@@ -6,8 +6,7 @@ export async function GET() {
     const query = `
       SELECT 
         c.id AS coach_id,
-        c.name AS coach_name,
-        c.phone AS coach_phone,
+        c.email,
         c.affiliation,
         cc.id AS coach_competition_id,
         comp.id AS competition_id,
@@ -28,9 +27,8 @@ export async function GET() {
         competition.coaches.push({
           coach_competition_id: row.coach_competition_id,
           coach_id: row.coach_id,
-          name: row.coach_name,
-          phone: row.coach_phone,
           affiliation: row.affiliation,
+          email:row.email
         });
       } else {
         // 대회가 없다면 새로운 대회 객체를 추가
@@ -41,9 +39,8 @@ export async function GET() {
             {
               coach_competition_id: row.coach_competition_id,
               coach_id: row.coach_id,
-              name: row.coach_name,
-              phone: row.coach_phone,
               affiliation: row.affiliation,
+              email:row.email
             },
           ],
         });
@@ -53,6 +50,7 @@ export async function GET() {
 
     return NextResponse.json(competitions);
   } catch (error) {
+    console.log(error)
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

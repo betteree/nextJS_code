@@ -2,9 +2,8 @@
 export interface Coach {
   coach_competition_id: string;
   coach_id: string;
-  name: string;
   affiliation: string;
-  phone: string;
+  email:string;
 }
 
 // 대회 정보
