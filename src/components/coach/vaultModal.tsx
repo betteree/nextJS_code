@@ -17,6 +17,7 @@ import {
 import CancelIcon from "@mui/icons-material/Cancel";
 import Image from 'next/image';
 import InputAdornment from '@mui/material/InputAdornment';
+import { motion} from "framer-motion";
 
 export default function VaultModal({
   onClose,
@@ -123,201 +124,224 @@ export default function VaultModal({
   };
 
   return (
-     <Box p={3} sx={{
-    border: "2px solid #F7F7F7",
-    borderRadius: 2, 
-    boxShadow: 0,
-    marginTop: 2,
-  }}>
-      <Typography variant="body2" gutterBottom>
-        {dict.clickInfo}
-      </Typography>
 
-      {/* 1차 선수추가 */}
-      <Box mb={2}>
-       <Box sx={{ display: 'flex', alignItems: 'center' ,flexWrap:"wrap"}}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'info.light', mr: 1 }}>
-        {dict.R1}
-      </Typography>
-      <Typography variant="h6">
-        {dict.addPlayer1}
-      </Typography>
-      </Box>
-        {players[gender]?.map((player, index) => (
-          <Button
-            key={index}
-            variant="outlined"
-            size="small"
-            sx={{ m: 0.5, bgcolor:"secondary.light" ,border:0, color:"#425065"}}
-            onClick={() => handleAddPlayer("도마1", player.name)}
-          >
-            {player.name}
-          </Button>
-        ))}
-      </Box>
-
-      <List sx={{
-      }}>
-        {도마1.items.map((player, index) => (
-          <ListItem
-            key={index}
-            draggable
-            onDragStart={() => 도마1.handleDragStart(index, "도마1")}
-            onDragOver={도마1.handleDragOver}
-            onDrop={() => 도마1.handleDrop(index, "도마1")}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-              bgcolor: "info.dark",
-              borderRadius: 1,
-              marginBottom:"5px",
-            }}
-          >
-
-            <Typography sx={{display:"flex", alignItems:"center", gap:1 ,width:"20%"}}>
-              <Image src={`/icon/sequence.png`} alt="info" width={12} height={12} />   
-              
-              {player.player_name}</Typography>
-            <TextField
+  <Box sx={{
+      position: "fixed",
+      top: 0, left: 0, right: 0, bottom: 0,
+      bgcolor: "rgba(0,0,0,0.5)", 
+      zIndex: 900,
+    }}>
+    <motion.div
+    initial={{ opacity: 0, scale: 0.95, x: "-50%", y: "-50%" }}
+    animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
+    transition={{ duration: 0.3, ease: "easeOut" }}
+    style={{
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      zIndex: 1000,
+    }}
+  >
+       <Box p={3} sx={{
+      border: "2px solid #f4f4f4",
+      borderRadius: 2, 
+      boxShadow: 5,
+      marginTop: 2,
+      bgcolor:"white",
+      width: { xs: "90vw", sm: 400 },
+      p:{xs:2},
+    }}>
+        <Typography variant="body2" gutterBottom>
+          {dict.clickInfo}
+        </Typography>
+  
+        {/* 1차 선수추가 */}
+        <Box mb={2}>
+         <Box sx={{ display: 'flex', alignItems: 'center' ,flexWrap:"wrap"}}>
+          <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'info.light', mr: 1 }}>
+          {dict.R1}
+        </Typography>
+        <Typography variant="h6">
+          {dict.addPlayer1}
+        </Typography>
+        </Box>
+          {players[gender]?.map((player, index) => (
+            <Button
+              key={index}
               variant="outlined"
               size="small"
-              value={player.skill_number}
-              onChange={(e) => {
-                const updatedList = [...도마1.items];
-                updatedList[index].skill_number = e.target.value;
-                도마1.setItems(updatedList);
-                sethint1(isVaultCode(e.target.value, gender));
-              }}
-                placeholder={dict.enterSkill}
-               sx={{bgcolor: "#fff"}}
-               InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-        <Image
-          src="/icon/write.png"
-          alt="info"
-          width={20}
-          height={20}
-          style={{ marginLeft: 4 }}
-        />
-      </InputAdornment>
-    ),
-  }}
-            />
-            <IconButton
-              onClick={() => handleDelete("도마1", index)}
-              size="small"
-              color="info"
-              sx={{ml:"auto"}}
+              sx={{ m: 0.5, bgcolor:"secondary.light" ,border:0, color:"#425065"}}
+              onClick={() => handleAddPlayer("도마1", player.name)}
             >
-              <CancelIcon />
-            </IconButton>
-          </ListItem>
-        ))}
-      </List>
-      {!hint1 && (
-        <Typography color="error" variant="caption" sx={{ ml: 1 }}>
-         {dict.vaultVaild}
+              {player.name}
+            </Button>
+          ))}
+        </Box>
+  
+        <List sx={{
+        }}>
+          {도마1.items.map((player, index) => (
+            <ListItem
+              key={index}
+              draggable
+              onDragStart={() => 도마1.handleDragStart(index, "도마1")}
+              onDragOver={도마1.handleDragOver}
+              onDrop={() => 도마1.handleDrop(index, "도마1")}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                bgcolor: "info.dark",
+                borderRadius: 1,
+                marginBottom:"5px",
+              }}
+            >
+  
+              <Typography sx={{display:"flex", alignItems:"center", gap:1 ,width:"20%"}}>
+                <Image src={`/icon/sequence.png`} alt="info" width={12} height={12} />   
+                
+                {player.player_name}</Typography>
+              <TextField
+                variant="outlined"
+                size="small"
+                value={player.skill_number}
+                onChange={(e) => {
+                  const updatedList = [...도마1.items];
+                  updatedList[index].skill_number = e.target.value;
+                  도마1.setItems(updatedList);
+                  sethint1(isVaultCode(e.target.value, gender));
+                }}
+                  placeholder={dict.enterSkill}
+                 sx={{bgcolor: "#fff"}}
+                 InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+          <Image
+            src="/icon/write.png"
+            alt="info"
+            width={20}
+            height={20}
+            style={{ marginLeft: 4 }}
+          />
+        </InputAdornment>
+      ),
+    }}
+              />
+              <IconButton
+                onClick={() => handleDelete("도마1", index)}
+                size="small"
+                color="info"
+                sx={{ml:"auto"}}
+              >
+                <CancelIcon />
+              </IconButton>
+            </ListItem>
+          ))}
+        </List>
+        {!hint1 && (
+          <Typography color="error" variant="caption" sx={{ ml: 1 }}>
+           {dict.vaultVaild}
+          </Typography>
+        )}
+  
+        {/* 2차 선수추가 */}
+        <Box mt={3} mb={2}>
+          <Box sx={{ display: 'flex', alignItems: 'center',flexWrap:"wrap" }}>
+          <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main', mr: 1 }}>
+          {dict.R2}
         </Typography>
-      )}
-
-      {/* 2차 선수추가 */}
-      <Box mt={3} mb={2}>
-        <Box sx={{ display: 'flex', alignItems: 'center',flexWrap:"wrap" }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main', mr: 1 }}>
-        {dict.R2}
-      </Typography>
-      <Typography variant="h6">
-        {dict.addPlayer2}
-      </Typography>
-      </Box>
-        {players[gender]?.map((player, index) => (
-          <Button
-            key={index}
-            variant="outlined"
-            size="small"
-            sx={{ m: 0.5, bgcolor:"secondary.light" ,border:0, color:"#425065"}}
-            onClick={() => handleAddPlayer("도마2", player.name)}
-          >
-            {player.name}
-          </Button>
-        ))}
-      </Box>
-
-      <List>
-        {도마2.items.map((player, index) => (
-          <ListItem
-            key={index}
-            draggable
-            onDragStart={() => 도마2.handleDragStart(index, "도마2")}
-            onDragOver={도마2.handleDragOver}
-            onDrop={() => 도마2.handleDrop(index, "도마2")}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-              bgcolor: "info.dark",
-              borderRadius: 1,
-              marginBottom:"5px",
-            }}
-          >
-            <Typography sx={{display:"flex", alignItems:"center", gap:1 ,width:"20%"}}>
-              <Image src={`/icon/sequence.png`} alt="info" width={12} height={12} />   
-              {player.player_name}
-              </Typography>
-            <TextField
+        <Typography variant="h6">
+          {dict.addPlayer2}
+        </Typography>
+        </Box>
+          {players[gender]?.map((player, index) => (
+            <Button
+              key={index}
               variant="outlined"
               size="small"
-              value={player.skill_number}
-              onChange={(e) => {
-                const updatedList = [...도마2.items];
-                updatedList[index].skill_number = e.target.value;
-                도마2.setItems(updatedList);
-                sethint2(isVaultCode(e.target.value, gender));
+              sx={{ m: 0.5, bgcolor:"secondary.light" ,border:0, color:"#425065"}}
+              onClick={() => handleAddPlayer("도마2", player.name)}
+            >
+              {player.name}
+            </Button>
+          ))}
+        </Box>
+  
+        <List>
+          {도마2.items.map((player, index) => (
+            <ListItem
+              key={index}
+              draggable
+              onDragStart={() => 도마2.handleDragStart(index, "도마2")}
+              onDragOver={도마2.handleDragOver}
+              onDrop={() => 도마2.handleDrop(index, "도마2")}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                bgcolor: "info.dark",
+                borderRadius: 1,
+                marginBottom:"5px",
               }}
-              placeholder={dict.enterSkill}
-               sx={{bgcolor: "#fff"}}
-                 InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-        <Image
-          src="/icon/write.png"
-          alt="info"
-          width={20}
-          height={20}
-          style={{ marginLeft: 4 }}
-        />
-      </InputAdornment>
-    ),
-  }}
-                
-            />
-            <IconButton
-              onClick={() => handleDelete("도마2", index)}
-              size="small"
-              color="info"
-              sx={{ml:"auto"}}
->
-              <CancelIcon />
-            </IconButton>
-          </ListItem>
-        ))}
-      </List>
-     {!hint2 && (
-        <Typography color="error" variant="caption" sx={{ ml: 1 }}>
-         {dict.vaultVaild}
-        </Typography>
-      )}
-      {/* 하단 버튼 */}
-      <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
-        <Button variant="outlined" onClick={onClose} sx={{color:"black"}}>
-          Close
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleSave}>
-          Save
-        </Button>
+            >
+              <Typography sx={{display:"flex", alignItems:"center", gap:1 ,width:"20%"}}>
+                <Image src={`/icon/sequence.png`} alt="info" width={12} height={12} />   
+                {player.player_name}
+                </Typography>
+              <TextField
+                variant="outlined"
+                size="small"
+                value={player.skill_number}
+                onChange={(e) => {
+                  const updatedList = [...도마2.items];
+                  updatedList[index].skill_number = e.target.value;
+                  도마2.setItems(updatedList);
+                  sethint2(isVaultCode(e.target.value, gender));
+                }}
+                placeholder={dict.enterSkill}
+                 sx={{bgcolor: "#fff"}}
+                   InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+          <Image
+            src="/icon/write.png"
+            alt="info"
+            width={20}
+            height={20}
+            style={{ marginLeft: 4 }}
+          />
+        </InputAdornment>
+      ),
+    }}
+                  
+              />
+              <IconButton
+                onClick={() => handleDelete("도마2", index)}
+                size="small"
+                color="info"
+                sx={{ml:"auto"}}
+  >
+                <CancelIcon />
+              </IconButton>
+            </ListItem>
+          ))}
+        </List>
+       {!hint2 && (
+          <Typography color="error" variant="caption" sx={{ ml: 1 }}>
+           {dict.vaultVaild}
+          </Typography>
+        )}
+        {/* 하단 버튼 */}
+        <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
+          <Button variant="outlined" onClick={onClose} sx={{color:"black"}}>
+            Close
+          </Button>
+          <Button variant="contained" color="primary" onClick={handleSave}>
+            Save
+          </Button>
+        </Box>
       </Box>
-    </Box>
+      </motion.div>
+</Box>
   );
 }

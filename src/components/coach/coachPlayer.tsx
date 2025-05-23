@@ -289,7 +289,8 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   }
 
   return (
-   <Box sx={{ p: { xs: 2, sm: 4 } }}>
+  <>
+   <Box sx={{ p: { xs: 2, sm: 4 }}}>
   {/* 성별 선택 */}
   <Box display="flex" justifyContent="center" gap={2} mb={3}>
     <Button
@@ -520,25 +521,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
       })}
     </Box>
 
-  {/* Vault Modal */}
-  {isVault && (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-    >
-      <VaultModal
-        onClose={handleValutModal}
-        players={players}
-        gender={gender}
-        vaultList={detailVault}
-        onSave={(newList) => {
-          setDetailVault(newList);
-        }}
-        dict={dict}
-      />
-    </motion.div>
-  )}
+
 
   {/* 하단 제출/최종 버튼 */}
   <Box
@@ -568,6 +551,21 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
     </Button>
   </Box>
 </Box>
-
+  {/* Vault Modal */}
+  {isVault && (
+   
+      <VaultModal
+        onClose={handleValutModal}
+        players={players}
+        gender={gender}
+        vaultList={detailVault}
+        onSave={(newList) => {
+          setDetailVault(newList);
+        }}
+        dict={dict}
+      />
+   
+  )}
+  </>
   );
 }

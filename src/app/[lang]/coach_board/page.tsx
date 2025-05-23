@@ -75,6 +75,7 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
       borderRadius: 2,
       width: "80%",
       p: 3,
+      position:"relative"
     }}
   >
     <CoachPlayer lang={lang} dict={dict} />
