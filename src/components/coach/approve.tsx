@@ -65,7 +65,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
     if (result.success) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("userId", result.id);
-      alert("Login successful");
+      alert("LOGIN SUCESSFUL");
       window.location.reload();
     } else {
       console.error(result);

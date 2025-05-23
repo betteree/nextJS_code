@@ -3,17 +3,19 @@
 import { useState, useEffect } from "react";
 import ContestList from "@/components/admin/contestList";
 import Sequence from "@/components/admin/sequence";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React ,{ use }from 'react';
 import { useRouter } from "next/navigation";
+import { getDictionary } from "@/components/dictionaries/dictionaries";
 import { ClipLoader } from "react-spinners";
-
+import NavBar from "@/components/public/navBar";
 
 
 export default function AdminPage({ params }: { params: Promise<{ lang: string }> }) {
  const router = useRouter();
  const { lang } = use(params);
-const [loading, setLoading] = useState(true);
+ const dict = getDictionary(lang as 'ko' | 'en');
+  const [loading, setLoading] = useState(true);
 
   const [adminList, setAdminList] = useState("contest");
    useEffect(() => {
@@ -37,13 +39,6 @@ const [loading, setLoading] = useState(true);
       <ClipLoader size={50} color="#36d7b7" />
     </div>;
   }
-
-
-  const handleLogout = () => {
-    localStorage.clear();
-    alert("로그아웃 되었습니다.");
-    router.push("/");
-  };
   
 
   return (
@@ -54,28 +49,7 @@ const [loading, setLoading] = useState(true);
         height: "100%",
       }}
     >
-      <Box
-        component="nav"
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: 2,
-         background: 'linear-gradient(90deg, #0200BA 0%, #6103B0 100%)',
-        }}
-      >
-        <Typography variant="h4" fontWeight={500} sx={{color:"white"}}>
-          관리자
-        </Typography>
-
-        <Button
-            variant="contained"
-            onClick={handleLogout}
-            sx={{ fontWeight: "bold" ,bgcolor:"#fff", color:"#6003B0", borderRadius:"0"}}
-          >
-          LOGOUT
-          </Button>
-      </Box>
+     <NavBar dict={dict} type={dict.admin}/>
         <Box component="ul" sx={{ display: "flex",justifyContent:"end", gap: 2, listStyle: "none", mt: 8, pr: 10 ,borderBottom:"1px solid #CECECE" }}>
           <li>
             <Button

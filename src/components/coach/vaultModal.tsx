@@ -148,7 +148,7 @@ export default function VaultModal({
       boxShadow: 5,
       marginTop: 2,
       bgcolor:"white",
-      width: { xs: "90vw", sm: 400 },
+      width: { xs: "90vw" },
       p:{xs:2},
     }}>
         <Typography variant="body2" gutterBottom>

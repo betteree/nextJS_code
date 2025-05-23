@@ -2,6 +2,7 @@ import { PlayerEventData, ResultRow } from "@/types/result";
 import { getOrderData } from "./orderData";
 import { toast } from "react-hot-toast";
 
+// 전송 함수
 async function handleSave(data: ResultRow[]) {
   const toastId = toast.loading("전송 중...");
   try {
@@ -32,6 +33,7 @@ async function handleSave(data: ResultRow[]) {
   }
 }
 
+// 데이터 가공 함수
 export async function getClassdata(data: PlayerEventData[], contestId: string) {
   const resultMap = new Map<number, ResultRow>();
 
@@ -45,11 +47,14 @@ export async function getClassdata(data: PlayerEventData[], contestId: string) {
       player_name,
       sequence,
     } = item;
+
     const { divisionName, divisionCode } = getDivisionInfo(
       coach_affiliation,
       event_gender
     );
+
     const SEX_CD = getGender(event_gender); //성별 1,2로 변환
+
     const { name, BASE_CLASS_CD } = getBaseClassCd(event_name); //종목 코드로 변환
     const { first, second } = getOrderData(item); //도마 1차시,2차시로 나누기
     const formattedSeq = String(sequence).padStart(2, "0"); //순서 01,02로 포멧
@@ -142,8 +147,9 @@ function getBaseClassCd(eventName: string): {
 } {
   const rawName = eventName || "";
 
+
   // 도마1, 도마2는 도마로 통일되도록 함
-  const normalizedEventName = rawName.includes("도마") ? "도마" : rawName;
+  const normalizedEventName = rawName.includes("도마") ? "Vault" : rawName;
 
   const eventNameToBaseClassCdMap: Record<string, string> = {
     FE: "02",

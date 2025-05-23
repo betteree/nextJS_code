@@ -6,7 +6,7 @@ import Approve from "@/components/coach/approve";
 import SelectContest from "@/components/coach/selectContest";
 import { getDictionary } from "@/components/dictionaries/dictionaries";
 import { use } from 'react';
-
+import NavBar from "@/components/public/navBar";
 export default function CoachPage({ params }: { params: Promise<{ lang: string }> }) {
   
   const { lang } = use(params);
@@ -29,8 +29,13 @@ export default function CoachPage({ params }: { params: Promise<{ lang: string }
         position: "relative",
       }}
     >
+      
       {token ? 
-      <SelectContest lang={lang} dict={dict}/> : <Approve dict={dict} />}
+      <>
+      <NavBar dict={dict} type={dict.coach}/>
+      <SelectContest lang={lang} dict={dict}/>
+      </>
+       : <Approve dict={dict} />}
     </Box>
   );
 }

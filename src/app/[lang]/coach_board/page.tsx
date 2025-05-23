@@ -1,24 +1,16 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { Box, Button, AppBar, Toolbar, Typography } from "@mui/material";
+import { Box} from "@mui/material";
 import CoachInfo from "@/components/coach/coachInfo";
 import CoachPlayer from "@/components/coach/coachPlayer";
 import { use } from 'react';
 import { getDictionary } from "@/components/dictionaries/dictionaries";
+import NavBar from "@/components/public/navBar";
 
 export default function Contest({ params }: { params: Promise<{ lang: string }> }) {
-  const router = useRouter();
 
   const { lang } = use(params);
   const dict = getDictionary(lang as 'ko' | 'en');
-
-
-  const handleLogout = () => {
-    localStorage.clear();
-    alert("로그아웃 되었습니다.");
-    router.push("/");
-  };
 
   return (
     <Box
@@ -31,19 +23,7 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
         justifyContent: "flex-start",
       }}
     >
-      <AppBar position="static"  sx={{
-    background: 'linear-gradient(90deg, #0200BA 0%, #6103B0 100%)'}}>
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h4" fontWeight={500}>{dict.coach}</Typography>
-          <Button
-            variant="contained"
-            onClick={handleLogout}
-            sx={{ fontWeight: "bold" ,bgcolor:"#fff", color:"#6003B0", borderRadius:"0"}}
-          >
-            {dict.logout}
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <NavBar dict={dict} type={dict.coach}/>
 
      <Box
        sx={{

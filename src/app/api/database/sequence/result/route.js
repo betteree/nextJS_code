@@ -54,8 +54,8 @@ export async function POST(req) {
       CLASS_SUB_CD,
       COMP_CD,
       TO_CD,
-      SEX_CD,
-      KIND_CD,
+      // SEX_CD,
+      // KIND_CD,
       DETAIL_CLASS_CD,
       ID_NO,
       GROUP_CD,
@@ -66,10 +66,10 @@ export async function POST(req) {
       R2_VAULT_VALUE,
       R2_VAULT_YN,
       ROTATION_SEQ,
-      TEAM_CD,
-      TEAM_NM,
-      GROUP_NM,
-      KOR_NM,
+      // TEAM_CD,
+      // TEAM_NM,
+      // GROUP_NM,
+      // KOR_NM,
     } = await req.json();
 
     // lp_class 테이블에 데이터 삽입 (중복된 경우 건너뛰기)
@@ -102,59 +102,59 @@ export async function POST(req) {
     // }
 
     // 겹치는게 있는지 체크하기 위함
-    const [teamExisting] = await db.query(
-      `SELECT 1 FROM lp_team 
-       WHERE CLASS_CD = ? AND CLASS_SUB_CD = ? AND TO_CD = ? AND KIND_CD = ? AND TEAM_CD = ?`,
-      [CLASS_CD, CLASS_SUB_CD, TO_CD, KIND_CD, TEAM_CD]
-    );
+    // const [teamExisting] = await db.query(
+    //   `SELECT 1 FROM lp_team 
+    //    WHERE CLASS_CD = ? AND CLASS_SUB_CD = ? AND TO_CD = ? AND KIND_CD = ? AND TEAM_CD = ?`,
+    //   [CLASS_CD, CLASS_SUB_CD, TO_CD, KIND_CD, TEAM_CD]
+    // );
 
-    if (teamExisting.length === 0) {
-      //lp_team 테이블에 테이터 삽입
-      await db.query(
-        "INSERT INTO lp_team (CLASS_CD, CLASS_SUB_CD, TO_CD, KIND_CD, TEAM_CD, TEAM_NM, SIDO_CD, GROUP_CD, GROUP_NM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        [
-          CLASS_CD,
-          CLASS_SUB_CD,
-          TO_CD,
-          KIND_CD,
-          TEAM_CD,
-          TEAM_NM,
-          1,
-          GROUP_CD,
-          GROUP_NM,
-        ]
-      );
-    }
+    // if (teamExisting.length === 0) {
+    //   //lp_team 테이블에 테이터 삽입
+    //   await db.query(
+    //     "INSERT INTO lp_team (CLASS_CD, CLASS_SUB_CD, TO_CD, KIND_CD, TEAM_CD, TEAM_NM, SIDO_CD, GROUP_CD, GROUP_NM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    //     [
+    //       CLASS_CD,
+    //       CLASS_SUB_CD,
+    //       TO_CD,
+    //       KIND_CD,
+    //       TEAM_CD,
+    //       TEAM_NM,
+    //       1,
+    //       GROUP_CD,
+    //       GROUP_NM,
+    //     ]
+    //   );
+    // }
 
-    const [playerExisting] = await db.query(
-      `SELECT 1 FROM lp_player
-       WHERE CLASS_CD = ? AND TO_CD = ? AND KIND_CD = ? AND ID_NO = ?`,
-      [CLASS_CD, TO_CD, KIND_CD, ID_NO]
-    );
+    // const [playerExisting] = await db.query(
+    //   `SELECT 1 FROM lp_player
+    //    WHERE CLASS_CD = ? AND TO_CD = ? AND KIND_CD = ? AND ID_NO = ?`,
+    //   [CLASS_CD, TO_CD, KIND_CD, ID_NO]
+    // );
 
-    //lp_player 테이블에 데이터 삽입
-    if (playerExisting.length === 0) {
-      await db.query(
-        "INSERT INTO lp_player (CLASS_CD, TO_CD, KIND_CD, ID_NO, BIB_NO, CO_CD, SIDO_CD, KOR_NM, CHN_NM, ENG_NM, E_MAIL,  SEX, GRADE, TEAM_CD, TEAM_NM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        [
-          CLASS_CD,
-          TO_CD,
-          KIND_CD,
-          ID_NO,
-          ID_NO,
-          null,
-          null,
-          KOR_NM,
-          null,
-          null,
-          null,
-          SEX_CD,
-          1,
-          TEAM_CD,
-          TEAM_NM,
-        ]
-      );
-    }
+    // //lp_player 테이블에 데이터 삽입
+    // if (playerExisting.length === 0) {
+    //   await db.query(
+    //     "INSERT INTO lp_player (CLASS_CD, TO_CD, KIND_CD, ID_NO, BIB_NO, CO_CD, SIDO_CD, KOR_NM, CHN_NM, ENG_NM, E_MAIL,  SEX, GRADE, TEAM_CD, TEAM_NM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    //     [
+    //       CLASS_CD,
+    //       TO_CD,
+    //       KIND_CD,
+    //       ID_NO,
+    //       ID_NO,
+    //       null,
+    //       null,
+    //       KOR_NM,
+    //       null,
+    //       null,
+    //       null,
+    //       SEX_CD,
+    //       1,
+    //       TEAM_CD,
+    //       TEAM_NM,
+    //     ]
+    //   );
+    // }
 
 
     const [orderExisting] = await db.query(
