@@ -22,8 +22,15 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   const router = useRouter(); // 페이지 이동 변수 정의
   const [newPlayer, setNewPlayer] = useState(""); // 새로운 선수 추가
   const [gender, setGender] = useState<"남" | "여">("남");
-  const [draggedIndex, setDraggedIndex] = React.useState<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = React.useState<number | null>(null);
+  const [dragState, setDragState] = useState<{
+  category: string | null;
+  draggedIndex: number | null;
+  dragOverIndex: number | null;
+}>({
+  category: null,
+  draggedIndex: null,
+  dragOverIndex: null,
+});
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["FE", "PH", "SR", "Vault", "PB", "HB"],
     여: ["Vault", "UB", "BB", "FE"],
@@ -37,16 +44,18 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   // 코치아이디
   const [coachId, setCoachId] = useState("");
 
-const handleTouchStart = (index: number) => {
-  setDraggedIndex(index);
-  // 터치 시작하면 스크롤 잠금
+const handleTouchStart = (category: string, index: number) => {
+  setDragState({
+    category,
+    draggedIndex: index,
+    dragOverIndex: null,
+  });
   document.body.style.overflow = "hidden";
 };
 
 const handleTouchMove = (e: React.TouchEvent<HTMLLIElement>) => {
-
-
-
+  if (!dragState.category) return;
+  
   const touch = e.touches[0];
   const element = document.elementFromPoint(touch.clientX, touch.clientY);
   if (!element) return;
@@ -58,39 +67,38 @@ const handleTouchMove = (e: React.TouchEvent<HTMLLIElement>) => {
   if (!overIndexStr) return;
 
   const overIndex = Number(overIndexStr);
-  if (overIndex !== dragOverIndex) {
-    setDragOverIndex(overIndex);
+  if (overIndex !== dragState.dragOverIndex) {
+    setDragState(prev => ({ ...prev, dragOverIndex: overIndex }));
   }
 };
 
-const handleTouchEnd = (
-  items: string[],
-  setItems: React.Dispatch<React.SetStateAction<string[]>>
-) => {
+const handleTouchEnd = () => {
+  const { category, draggedIndex, dragOverIndex } = dragState;
   if (
+    !category ||
     draggedIndex === null ||
     dragOverIndex === null ||
     draggedIndex === dragOverIndex
   ) {
-    setDraggedIndex(null);
-    setDragOverIndex(null);
-
-    // 터치 종료하면 스크롤 잠금 해제
+    setDragState({ category: null, draggedIndex: null, dragOverIndex: null });
     document.body.style.overflow = "";
     return;
   }
 
+  const items = eventData[category];
   const newItems = [...items];
   const [movedItem] = newItems.splice(draggedIndex, 1);
   newItems.splice(dragOverIndex, 0, movedItem);
 
-  setItems(newItems);
-  setDraggedIndex(null);
-  setDragOverIndex(null);
+  setEventData(prev => ({
+    ...prev,
+    [category]: newItems,
+  }));
 
-  // 터치 종료하면 스크롤 잠금 해제
+  setDragState({ category: null, draggedIndex: null, dragOverIndex: null });
   document.body.style.overflow = "";
 };
+
 
   // 선수 추가
   const handleAddPlayer = () => {
@@ -501,47 +509,43 @@ const handleTouchEnd = (
                 </Box>
               ) : (
                 <List sx={{ p: 2 }}>
-                  {eventData[event]?.map((name, index) => (
-                    <ListItem
-    key={`${event}-${index}-${name}`}
-    component={motion.li}
-    data-index={index}
-    onTouchStart={() => handleTouchStart(index)}
-    onTouchMove={handleTouchMove}
-    onTouchEnd={() => handleTouchEnd(eventData[event], (newList) =>
-      setEventData((prev) => ({
-        ...prev,
-        [event]: newList as string[],
-      }))
-    )}
-    sx={{
-      bgcolor:
-        dragOverIndex === index
-          ? "#DDEEFF" // 드래그 오버된 아이템 배경색 강조
-          : "#FAFAFA",
-      mb: 1,
-      borderRadius: 1,
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      px: 2,
-      py: 1,
-      cursor: "grab",
-      transition: "transform 0.3s ease-in-out",
-      "&:hover": { transform: "scale(1.05)" },
-      userSelect: "none", // 드래그 시 텍스트 선택 방지
-    }}
-  >
-    <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-      <Image src="/icon/sequence.png" alt="info" width={12} height={12} />
-      {name}
-    </Typography>
-    <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small" color="error">
-      <CancelIcon color="info" />
-    </IconButton>
-  </ListItem>
-                  ))}
-                </List>
+  {eventData[event]?.map((name, index) => (
+    <ListItem
+      key={`${event}-${index}-${name}`}
+      component={motion.li}
+      data-index={index}
+      onTouchStart={() => handleTouchStart(event, index)}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      sx={{
+        bgcolor:
+          dragState.category === event && dragState.dragOverIndex === index
+            ? "#DDEEFF"
+            : "#FAFAFA",
+        mb: 1,
+        borderRadius: 1,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        px: 2,
+        py: 1,
+        cursor: "grab",
+        transition: "transform 0.3s ease-in-out",
+        "&:hover": { transform: "scale(1.05)" },
+        userSelect: "none",
+      }}
+    >
+      <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Image src="/icon/sequence.png" alt="info" width={12} height={12} />
+        {name}
+      </Typography>
+      <IconButton onClick={() => handleRemoveFromEvent(event, name)} size="small" color="error">
+        <CancelIcon color="info" />
+      </IconButton>
+    </ListItem>
+  ))}
+</List>
+
               )}
             </Paper>
           </Box>
