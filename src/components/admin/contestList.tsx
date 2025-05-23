@@ -16,6 +16,7 @@ import {
     Paper,
 } from "@mui/material";
 import Register from "@/components/admin/register";
+import CreateIcon from '@mui/icons-material/Edit'
 
 export default function ContestList() {
   const [admins, setAdmins] = useState<Admin[]>([]);
@@ -43,9 +44,10 @@ export default function ContestList() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%",p:8 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", padding: 2 }}>
-        <Typography variant="h5">대회 LIST</Typography>
+        <Typography variant="h5" fontWeight={500}>📃 대회 LIST</Typography>
         <Button variant="contained" onClick={() => handleModal(null)}>
           대회 추가
         </Button>
@@ -59,12 +61,11 @@ export default function ContestList() {
       ) : (
         <TableContainer component={Paper} sx={{ margin: "20px" ,width: "auto"}}>
           <Table>
-            <TableHead>
-              <TableRow>
+            <TableHead sx={{bgcolor:"info.light", "& .MuiTableCell-root": { color: "white" }}}>
+              <TableRow >
                 <TableCell>#</TableCell>
                 <TableCell>대회명</TableCell>
-                <TableCell>대회시작</TableCell>
-                <TableCell>대회종료</TableCell>
+                <TableCell>대회기간</TableCell>
                 <TableCell>장소</TableCell>
                 <TableCell>주관</TableCell>
                 <TableCell>성별</TableCell>
@@ -73,26 +74,27 @@ export default function ContestList() {
             </TableHead>
             <TableBody>
               {admins.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{item.title}</TableCell>
-                  <TableCell>{item.start_date}</TableCell>
-                  <TableCell>{item.end_date}</TableCell>
-                  <TableCell>{item.location}</TableCell>
-                  <TableCell>{item.organizer}</TableCell>
-                  <TableCell>{item.gender}</TableCell>
-                  <TableCell>
-                    <Button variant="outlined" onClick={() => handleModal(item)}>
-                      수정
-                    </Button>
-                  </TableCell>
+                <TableRow key={index} sx={{}}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.title}</TableCell>
+                    <TableCell>{item.start_date} ~ {item.end_date}</TableCell>
+                    <TableCell>{item.location}</TableCell>
+                    <TableCell>{item.organizer}</TableCell>
+                    <TableCell>{item.gender}</TableCell>
+                    <TableCell>
+                      <Button variant="outlined" onClick={() => handleModal(item)}>
+                        <CreateIcon/>
+                      </Button>
+                    </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       )}
-      {isOpen && <Register itemData={itemData} isClose={handleModal} />}
     </Box>
-  );
+    {isOpen && <Register itemData={itemData} isClose={handleModal} />}
+  
+  </>
+    );
 }

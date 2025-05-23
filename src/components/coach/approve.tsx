@@ -95,7 +95,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
             />
 
             <FormControl variant="outlined" required sx={{bgcolor:'white'}}>
-              <InputLabel id="affiliation-label">{dict.affiliation}</InputLabel>
+              <InputLabel id="affiliation-label">{dict.country}</InputLabel>
               <Select
                 labelId="affiliation-label"
                 value={affiliation}

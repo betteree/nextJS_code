@@ -47,16 +47,17 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
 
      <Box
        sx={{
+         border:"1px solid red",
         display: "flex",
         flexDirection: "column",
-       alignItems: "center",
+        alignItems: "center",
         gap: 4, 
         width: "100%",
         mt: 5, 
         mb:5,
       }}
   >
-  <Box
+   <Box
     sx={{
       backgroundColor: "white",
       boxShadow: 1,

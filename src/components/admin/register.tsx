@@ -43,12 +43,9 @@ export default function Register({ itemData, isClose }: RegisterProps) {
   };
 
   return (
-    <Box sx={{ position: "absolute", right: 0, width: "100%", height: "100%", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
-      <Box sx={{ backgroundColor: "white", padding: 3, width: "50%", margin: "auto", display: "flex", flexDirection: "column", gap: 2 }}>
-        <Button variant="contained" color="secondary" onClick={() => isClose(null)} sx={{ alignSelf: "flex-end" }}>
-          닫기
-        </Button>
-        <form onSubmit={(e) => handleSubmit(e, itemData?.id)}>
+    <Box sx={{ position: "absolute",right: 0, width: "100%", height: "100%", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+      <Box sx={{ backgroundColor: "white", padding: 5, width: "60%", margin: "auto", display: "flex", flexDirection: "column", gap: 2 ,mt:20}}>
+        <form onSubmit={(e) => handleSubmit(e, itemData?.id)} style={{padding:"20px"}}>
           <TextField
             label="대회명"
             name="title"
@@ -114,9 +111,14 @@ export default function Register({ itemData, isClose }: RegisterProps) {
               label="여자"
             />
           </Box>
-          <Button variant="contained" type="submit" fullWidth>
-            {itemData === null ? "등록" : "수정"}
-          </Button>
+          <Box sx={{display:"flex", gap:2}}>
+             <Button variant="outlined" color="secondary" onClick={() => isClose(null)} fullWidth>
+            닫기
+           </Button>
+            <Button variant="contained" type="submit" fullWidth sx={{background: 'linear-gradient(90deg, #0200BA 0%, #6103B0 100%)'}}>
+              {itemData === null ? "등록" : "수정"}
+            </Button>
+          </Box>
         </form>
       </Box>
     </Box>
