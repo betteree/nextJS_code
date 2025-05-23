@@ -15,11 +15,10 @@ import {
 
 export default function Approve({dict}:{dict: Record<string, string>}) {
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [affiliation, setAffiliation] = useState("");
 
-  const schoolList = [
+  const countryList = [
     "북부초등학교",
     "남부초등학교",
     "대구체육고등학교",
@@ -32,8 +31,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
     e.preventDefault();
 
     const requestData = {
-      name,
-      phone,
+      email,
       affiliation,
     };
 
@@ -77,19 +75,10 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
         <form onSubmit={handleLogin}>
           <Box display="flex" flexDirection="column" gap={3}>
             <TextField
-              label={dict.name}
+              label={dict.email}
               variant="outlined"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              sx={{bgcolor:'white'}}
-            />
-
-            <TextField
-              label={dict.contact}
-              variant="outlined"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               sx={{bgcolor:'white'}}
             />
@@ -104,7 +93,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
                 <MenuItem value="">
                   <em>{dict.select}</em>
                 </MenuItem>
-                {schoolList.map((item, index) => (
+                {countryList.map((item, index) => (
                   <MenuItem key={index} value={item}>
                     {item}
                   </MenuItem>
