@@ -52,11 +52,12 @@ const VaultDraggableList: React.FC<VaultDraggableListProps> = ({
   };
 
   return (
-    <ListItem ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <ListItem ref={setNodeRef} style={style} >
       <Typography
         sx={{ display: "flex", alignItems: "center", gap: 1, width: "20%" }}
+        {...attributes} {...listeners}
       >
-        <Box component="span" sx={{ display: "flex", alignItems: "center" }}>
+        <Box component="span" sx={{ display: "flex", alignItems: "center" }} >
           <Image
             src="/icon/sequence.png"
             alt="drag handle"
