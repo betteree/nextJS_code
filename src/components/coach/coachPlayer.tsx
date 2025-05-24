@@ -1,18 +1,17 @@
 "use client";
 
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect} from "react";
 import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, Typography, TextField, Button,IconButton,
   List,
-  ListItem,
   Paper } from "@mui/material";
 
 import CancelIcon from "@mui/icons-material/Cancel";
 import Image from 'next/image';
-
+import DraggableList from "./drag/draggableList";
 
 export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string, string>}) {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
@@ -37,47 +36,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   // 코치아이디
   const [coachId, setCoachId] = useState("");
 
-   const dragItem = useRef<number | null>(null);
-  const dragOverItem = useRef<number | null>(null);
-const [currentCategory, setCurrentCategory] = useState<string | null>(null);
-
-  // 드래그 시작: 드래그하는 아이템 index 저장
-  const dragStart = (e: React.DragEvent<HTMLLIElement>, index: number, category: string) => {
-    dragItem.current = index;
-    setCurrentCategory(category);
-  };
-
-  // 드래그 엔터: 드래그 오버 중인 아이템 index 저장
-  const dragEnter = (e: React.DragEvent<HTMLLIElement>, index: number) => {
-    dragOverItem.current = index;
-  };
-
-  // 드래그 오버: 기본 이벤트 막아 드롭 가능하게 함
-  const dragOver = (e: React.DragEvent<HTMLLIElement>) => {
-    e.preventDefault();
-  };
-
- const drop = (e: React.DragEvent<HTMLLIElement>, category: string) => {
-    e.preventDefault();
-    if (dragItem.current === null || dragOverItem.current === null) return;
-
-    if (category !== currentCategory) return;
-
-    const newList = [...eventData[category]];
-    const draggedItem = newList[dragItem.current];
-
-    newList.splice(dragItem.current, 1);
-    newList.splice(dragOverItem.current, 0, draggedItem);
-
-    setEventData((prev) => ({
-      ...prev,
-      [category]: newList,
-    }));
-
-    dragItem.current = null;
-    dragOverItem.current = null;
-  };
-
+   
   // 선수 추가
   const handleAddPlayer = () => {
     if (!newPlayer.trim()) return;
@@ -486,42 +445,14 @@ const [currentCategory, setCurrentCategory] = useState<string | null>(null);
                   </Button>
                 </Box>
               ) : (
-                <List sx={{ p: 2 }}>
-      {eventData[event]?.map((name, index) => (
-        <ListItem
-          key={`${event}-${index}-${name}`}
-          component="li"
-          draggable
-          onDragStart={(e) => dragStart(e, index,event)}
-          onDragEnter={(e) => dragEnter(e, index)}
-          onDragOver={dragOver}
-          onDrop={(e) => drop(e, event)}
-          sx={{
-            bgcolor: "#FAFAFA",
-            mb: 1,
-            borderRadius: 1,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            px: 2,
-            py: 1,
-            cursor: "grab",
-        
-          }}
-        >
-          <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Image src="/icon/sequence.png" alt="info" width={12} height={12} />
-            {name}
-          </Typography>
-          <IconButton
-            onClick={() => handleRemoveFromEvent(event, name)}
-            size="small"
-            color="error"
-          >
-            <CancelIcon color="info" />
-          </IconButton>
-        </ListItem>
-      ))}
+                <List sx={{ p:0 }}>
+      <DraggableList
+    key={event}
+    event={event}
+    eventData={eventData}
+    setEventData={setEventData}
+    handleRemoveFromEvent={handleRemoveFromEvent}
+  />
     </List>
               )}
             </Paper>
@@ -559,6 +490,7 @@ const [currentCategory, setCurrentCategory] = useState<string | null>(null);
      {dict.submit}
     </Button>
   </Box>
+
 </Box>
   {/* Vault Modal */}
   {isVault && (

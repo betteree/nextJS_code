@@ -30,6 +30,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1",
     "react-dom": "^19.0.0",
+    "react-draggable": "^4.4.6",
     "react-hot-toast": "^2.5.2",
     "react-spinners": "^0.17.0",
     "react-world-flags": "^1.6.0",
