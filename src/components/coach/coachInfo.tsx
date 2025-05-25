@@ -35,7 +35,7 @@ export default function CoachInfo({dict}:{dict:Record<string, string>}) {
         <>
           <Box sx={{ display: "flex",flexWrap: "wrap",gap:5, mb: 5}}>
             <InfoItem label={dict.country} value={coachData.affiliation} img={"/icon/affiliation.png"}/>
-            <InfoItem label={dict.email} value={coachData.email} img={"/icon/name.png"}/>
+            <InfoItem label={"FIG Code"} value={coachData.figCode} img={"/icon/name.png"}/>
           </Box>
           <Divider />
           <Box mt={3}>

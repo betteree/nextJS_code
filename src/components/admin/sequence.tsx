@@ -140,7 +140,7 @@ export default function Sequence({lang}:{lang:string}) {
                 <TableCell>대회명</TableCell>
                 <TableCell>#</TableCell>
                 <TableCell>소속</TableCell>
-                <TableCell>이메일</TableCell>
+                <TableCell>FIG 코드</TableCell>
                 <TableCell>순서</TableCell>
               </TableRow>
             </TableHead>
@@ -162,7 +162,7 @@ export default function Sequence({lang}:{lang:string}) {
                     )}
                     <TableCell>{coachIndex + 1}</TableCell>
                     <TableCell>{coach.affiliation}</TableCell>
-                    <TableCell>{coach.email}</TableCell>
+                    <TableCell>{coach.figCode}</TableCell>
                     <TableCell>
                       <Button
                         variant="outlined"

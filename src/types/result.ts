@@ -3,7 +3,7 @@ export interface Coach {
   coach_competition_id: string;
   coach_id: string;
   affiliation: string;
-  email:string;
+  figCode:string;
 }
 
 // 대회 정보

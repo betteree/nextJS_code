@@ -16,7 +16,7 @@ import Flag from "react-world-flags";
 
 export default function Approve({dict}:{dict: Record<string, string>}) {
 
-  const [email, setEmail] = useState("");
+  const [figCode, setFigCode] = useState("");
   const [affiliation, setAffiliation] = useState("");
 
   const countryList = [
@@ -53,7 +53,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
     e.preventDefault();
 
     const requestData = {
-      email,
+      figCode,
       affiliation,
     };
 
@@ -71,7 +71,6 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
       alert("LOGIN SUCESSFUL");
       window.location.reload();
     } else {
-      console.error(result);
       alert(result.message);
     }
   };
@@ -124,14 +123,17 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
             </FormControl>
             
             <TextField
-                  label={dict.email}
-                  variant="outlined"
-                  value={email}
-                   type="email"  
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  sx={{bgcolor:'white'}}
-                />
+            label="FIG code"
+            variant="outlined"
+            value={figCode}
+            type="text" // `text`로 바꾸고 숫자 필터링 직접 제어
+            onChange={(e) => {
+              const onlyNums = e.target.value.replace(/[^0-9]/g, "");
+                  setFigCode(onlyNums);
+            }}
+  required
+  sx={{ bgcolor: 'white' }}
+/>
 
             <Button
               variant="contained"

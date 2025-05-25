@@ -6,7 +6,7 @@ export async function GET() {
     const query = `
       SELECT 
         c.id AS coach_id,
-        c.email,
+        c.figCode,
         c.affiliation,
         cc.id AS coach_competition_id,
         comp.id AS competition_id,
@@ -28,7 +28,7 @@ export async function GET() {
           coach_competition_id: row.coach_competition_id,
           coach_id: row.coach_id,
           affiliation: row.affiliation,
-          email:row.email
+          figCode:row.figCode
         });
       } else {
         // 대회가 없다면 새로운 대회 객체를 추가
@@ -40,7 +40,7 @@ export async function GET() {
               coach_competition_id: row.coach_competition_id,
               coach_id: row.coach_id,
               affiliation: row.affiliation,
-              email:row.email
+              figCode:row.figCode
             },
           ],
         });

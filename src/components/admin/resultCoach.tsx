@@ -15,7 +15,7 @@ import { Coach } from "@/types/player";
 export default function ResultCoach({dict}:{dict: Record<string,string>}) {
   const [coachData, setCoachData] = useState<Coach>({
     affiliation: "",
-    email:"",
+    figCode:"",
   });
   const [contest, setContest] = useState<string | null>("");
 

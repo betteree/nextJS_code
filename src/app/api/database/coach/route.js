@@ -37,9 +37,9 @@ export async function GET(req) {
 // POST 함수
 export async function POST(req) {
   try {
-    const { email, affiliation } = await req.json();
+    const { figCode, affiliation } = await req.json();
 
-    if (!email|| !affiliation) {
+    if (!figCode|| !affiliation) {
       return NextResponse.json(
         { success: false, message: "모든 필드를 입력해주세요." },
         { status: 400 }
@@ -47,8 +47,8 @@ export async function POST(req) {
     }
 
     const [rows] = await db.query(
-      "SELECT * FROM coach WHERE email = ? AND affiliation = ? ",
-      [email, affiliation]
+      "SELECT * FROM coach WHERE figCode = ? AND affiliation = ? ",
+      [figCode, affiliation]
     );
 
     if (rows.length > 0) {
