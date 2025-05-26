@@ -69,16 +69,19 @@ export default function DraggableList({
         items={eventData[event] || []}
         strategy={verticalListSortingStrategy}
       >
-        <List sx={{ p: 2 ,display:"flex",flexFlow:"column",gap:1 }}>
-          {(eventData[event] || []).map((name) => (
-            <SortableItem
-              key={name}
-              id={name}
-              name={name}
-              event={event}
-              handleRemoveFromEvent={handleRemoveFromEvent}
-            />
-          ))}
+        <List>
+          <Typography sx={{borderBottom:"2px solid #F7F7F7" ,textAlign:"center",fontWeight:600,color:"#425065",pb:"8px"}}>Players: {eventData[event].length}</Typography>
+          <Box sx={{p:2, display:"flex",flexFlow:"column",gap:1}}>
+            {(eventData[event] || []).map((name) => (
+              <SortableItem
+                key={name}
+                id={name}
+                name={name}
+                event={event}
+                handleRemoveFromEvent={handleRemoveFromEvent}
+              />
+            ))}
+          </Box>
         </List>
       </SortableContext>
     </DndContext>
@@ -121,6 +124,7 @@ function SortableItem({
     opacity: isDragging ? 0.8 : 1,
   }} {...attributes} {...listeners}>
       <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+       
         <Box
           component="span"
           sx={{ display: "flex", alignItems: "center" }}

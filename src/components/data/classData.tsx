@@ -56,7 +56,7 @@ export async function getClassdata(data: PlayerEventData[], contestId: string) {
     const SEX_CD = getGender(event_gender); //성별 1,2로 변환
 
     const { name, BASE_CLASS_CD } = getBaseClassCd(event_name); //종목 코드로 변환
-    const { first, second } = getOrderData(item); //도마 1차시,2차시로 나누기
+    const { first, second, firstValue, secondValue } = getOrderData(item, event_gender); //도마 1차시,2차시로 나누기
     const formattedSeq = String(sequence).padStart(2, "0"); //순서 01,02로 포멧
 
     // 도마 종목 처리
@@ -86,9 +86,9 @@ export async function getClassdata(data: PlayerEventData[], contestId: string) {
           GROUP_CD: country_code + BASE_CLASS_CD,
           ENTRANT_SEQ: formattedSeq,
           R1_VAULT_ID: first || null,
-          R1_VAULT_VALUE: null,
+          R1_VAULT_VALUE: firstValue,
           R2_VAULT_ID: second || null,
-          R2_VAULT_VALUE: null,
+          R2_VAULT_VALUE: secondValue,
           R2_VAULT_YN: second ? "Y" : null,
           ROTATION_SEQ: null,
           // team 테이블

@@ -1,0 +1,494 @@
+[
+  {
+    "Code": 101,
+    "Value": 2.4,
+    "Name": "Hdspr. tucked. 1/2t.(Cuervo t.)",
+    "Group": "I"
+  },
+  {
+    "Code": 102,
+    "Value": 2.8,
+    "Name": "Hdspr. tucked 1/1t.(Cuervo t.w.1/2t.)",
+    "Group": "I"
+  },
+  {
+    "Code": 103,
+    "Value": 3.2,
+    "Name": "Hdspr. tucked 3/2t.(Kroll)",
+    "Group": "I"
+  },
+  {
+    "Code": 104,
+    "Value": 3.6,
+    "Name": "Hdspr. tucked 2/1t.(Canbas)",
+    "Group": "I"
+  },
+  {
+    "Code": 107,
+    "Value": 2.8,
+    "Name": "Hdspr. piked. 1/2t.(Cuervo p.)",
+    "Group": "I"
+  },
+  {
+    "Code": 108,
+    "Value": 3.2,
+    "Name": "Hdspr. piked 1/1t.",
+    "Group": "I"
+  },
+  {
+    "Code": 109,
+    "Value": 3.6,
+    "Name": "Hdspr. piked 3/2t.",
+    "Group": "I"
+  },
+  {
+    "Code": 113,
+    "Value": 3.6,
+    "Name": "Hdspr. str. 1/2t.(Cuervo str.)",
+    "Group": "I"
+  },
+  {
+    "Code": 114,
+    "Value": 4.0,
+    "Name": "Hdspr. str. 1/1t.(Cuervo str.1/2t.)",
+    "Group": "I"
+  },
+  {
+    "Code": 115,
+    "Value": 4.4,
+    "Name": "Hdspr. str. 3/2t.(Lou Yun)",
+    "Group": "I"
+  },
+  {
+    "Code": 116,
+    "Value": 4.8,
+    "Name": "Hdspr. str. 2/1t.(Cuervo str.3/2t.)",
+    "Group": "I"
+  },
+  {
+    "Code": 117,
+    "Value": 5.2,
+    "Name": "Hdspr. str. 5/2t.(Yeo 2)",
+    "Group": "I"
+  },
+  {
+    "Code": 118,
+    "Value": 5.6,
+    "Name": "Hdspr. str. 3/1t.(Yang Hak Seon)",
+    "Group": "I"
+  },
+  {
+    "Code": 119,
+    "Value": 2.4,
+    "Name": "Tsuk. tucked 1/1t.(Kasamatsu)",
+    "Group": "I"
+  },
+  {
+    "Code": 120,
+    "Value": 2.8,
+    "Name": "Tsuk. tucked 3/2t.",
+    "Group": "I"
+  },
+  {
+    "Code": 121,
+    "Value": 3.2,
+    "Name": "Tsuk. tucked 2/1 t.(Barbieri)",
+    "Group": "I"
+  },
+  {
+    "Code": 122,
+    "Value": 3.6,
+    "Name": "Tsuk. tucked 5/2 t.",
+    "Group": "I"
+  },
+  {
+    "Code": 125,
+    "Value": 3.6,
+    "Name": "Tsuk. str. 1/1 t.",
+    "Group": "I"
+  },
+  {
+    "Code": 126,
+    "Value": 4.0,
+    "Name": "Tsuk. str. 3/2 t.",
+    "Group": "I"
+  },
+  {
+    "Code": 127,
+    "Value": 4.4,
+    "Name": "Tsuk. str. 2/1 t.(Akopian)",
+    "Group": "I"
+  },
+  {
+    "Code": 131,
+    "Value": 4.8,
+    "Name": "Tsuk. str. 5/2 t.(Driggs)",
+    "Group": "I"
+  },
+  {
+    "Code": 132,
+    "Value": 5.2,
+    "Name": "Tsuk. str. 3/1 t.(Lopez)",
+    "Group": "I"
+  },
+  {
+    "Code": 133,
+    "Value": 5.6,
+    "Name": "Tsuk. str. 7/2 t.(Yonekura)",
+    "Group": "I"
+  },
+  {
+    "Code": 201,
+    "Value": 1.2,
+    "Name": "Handspring",
+    "Group": "II"
+  },
+  {
+    "Code": 202,
+    "Value": 1.4,
+    "Name": "Hdspr. 1/2t.",
+    "Group": "II"
+  },
+  {
+    "Code": 203,
+    "Value": 1.6,
+    "Name": "Hdspr. 1/1t.",
+    "Group": "II"
+  },
+  {
+    "Code": 204,
+    "Value": 1.8,
+    "Name": "Hdspr. 3/2t.",
+    "Group": "II"
+  },
+  {
+    "Code": 205,
+    "Value": 2.0,
+    "Name": "Hdspr. 2/1t.",
+    "Group": "II"
+  },
+  {
+    "Code": 206,
+    "Value": 2.2,
+    "Name": "Hdspr. 5/2t.(Tsygnkov)",
+    "Group": "II"
+  },
+  {
+    "Code": 207,
+    "Value": 2.0,
+    "Name": "Hdspr. tucked.",
+    "Group": "II"
+  },
+  {
+    "Code": 213,
+    "Value": 2.4,
+    "Name": "Hdspr. piked.",
+    "Group": "II"
+  },
+  {
+    "Code": 219,
+    "Value": 3.2,
+    "Name": "Hdspr. str.",
+    "Group": "II"
+  },
+  {
+    "Code": 225,
+    "Value": 4.8,
+    "Name": "Hdspr. dbl. salto.(Roche)",
+    "Group": "II"
+  },
+  {
+    "Code": 226,
+    "Value": 5.2,
+    "Name": "Roche 1/2t.(Dragulescu)",
+    "Group": "II"
+  },
+  {
+    "Code": 228,
+    "Value": 5.2,
+    "Name": "Hdspr. 1/2t. bwd.(Zimmerman)",
+    "Group": "II"
+  },
+  {
+    "Code": 231,
+    "Value": 5.2,
+    "Name": "Hdspr. dbl. piked.(Blanik)",
+    "Group": "II"
+  },
+  {
+    "Code": 232,
+    "Value": 5.6,
+    "Name": "Dragulescu piked.(RI Se Gwang2)",
+    "Group": "II"
+  },
+  {
+    "Code": 301,
+    "Value": 1.2,
+    "Name": "Hdspr. sw. 1/4t.",
+    "Group": "III"
+  },
+  {
+    "Code": 302,
+    "Value": 1.4,
+    "Name": "Hdspr. 3/4t.",
+    "Group": "III"
+  },
+  {
+    "Code": 303,
+    "Value": 1.6,
+    "Name": "Hdspr. sw. 5/4t.",
+    "Group": "III"
+  },
+  {
+    "Code": 307,
+    "Value": 1.8,
+    "Name": "Tsuk. Tucked.(Tsukahara)",
+    "Group": "III"
+  },
+  {
+    "Code": 308,
+    "Value": 2.0,
+    "Name": "Tsuk. piked.",
+    "Group": "III"
+  },
+  {
+    "Code": 309,
+    "Value": 2.0,
+    "Name": "Tsuk. tucked 1/2t.",
+    "Group": "III"
+  },
+  {
+    "Code": 313,
+    "Value": 2.8,
+    "Name": "Tsuk. str.",
+    "Group": "III"
+  },
+  {
+    "Code": 314,
+    "Value": 3.2,
+    "Name": "Tsuk. str. 1/2t.",
+    "Group": "III"
+  },
+  {
+    "Code": 319,
+    "Value": 4.8,
+    "Name": "Tsuk. dbl. tucked.(Yeo)",
+    "Group": "III"
+  },
+  {
+    "Code": 320,
+    "Value": 5.2,
+    "Name": "Tsuk. dbl. piked.(Lu Yu Fu)",
+    "Group": "III"
+  },
+  {
+    "Code": 321,
+    "Value": 5.6,
+    "Name": "Tsuk. dbl. 1/1t.(Ri Se Gwang)",
+    "Group": "III"
+  },
+  {
+    "Code": 401,
+    "Value": 2.4,
+    "Name": "Yur. tucked 1/1t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 402,
+    "Value": 2.8,
+    "Name": "Yur. tucked 3/2t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 403,
+    "Value": 3.2,
+    "Name": "Yur. tucked 2/1t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 404,
+    "Value": 3.6,
+    "Name": "Yur. tucked 5/2t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 405,
+    "Value": 3.6,
+    "Name": "Yur. str. 1/1t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 406,
+    "Value": 4.0,
+    "Name": "Yur. str. 3/2t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 407,
+    "Value": 4.4,
+    "Name": "Yur. str. 2/1t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 408,
+    "Value": 4.8,
+    "Name": "Yur. str. 5/2t.(Shewfelt)",
+    "Group": "IV"
+  },
+  {
+    "Code": 409,
+    "Value": 5.2,
+    "Name": "Yur. str. 3/1t.(Shirai, KIM Hee Hoon)",
+    "Group": "IV"
+  },
+  {
+    "Code": 410,
+    "Value": 5.6,
+    "Name": "Yur. str. 7/2t.(Shirai 2)",
+    "Group": "IV"
+  },
+  {
+    "Code": 413,
+    "Value": 2.6,
+    "Name": "Rou. off, 1/2t. tucked. 1/2t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 414,
+    "Value": 3.0,
+    "Name": "Rou. off, 1/2t. piked. 1/2t.(Nemov)",
+    "Group": "IV"
+  },
+  {
+    "Code": 415,
+    "Value": 3.8,
+    "Name": "Rou. off, 1/2t. str. 1/2t.(Hutcheon)",
+    "Group": "IV"
+  },
+  {
+    "Code": 416,
+    "Value": 4.2,
+    "Name": "Rou. off, 1/2t. str. 1/1t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 417,
+    "Value": 4.6,
+    "Name": "Rou. off, 1/2t. str. 3/2t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 419,
+    "Value": 5.0,
+    "Name": "Rou. off, 1/2t. str. 2/1t.",
+    "Group": "IV"
+  },
+  {
+    "Code": 420,
+    "Value": 5.4,
+    "Name": "Rou. off, 1/2t. str. 5/2t.(Li Xiao Peng)",
+    "Group": "IV"
+  },
+  {
+    "Code": 501,
+    "Value": 1.2,
+    "Name": "Rou. off, hdspr. bwd.",
+    "Group": "V"
+  },
+  {
+    "Code": 502,
+    "Value": 1.4,
+    "Name": "Rou. off, hdspr. bwd. 1/2t.",
+    "Group": "V"
+  },
+  {
+    "Code": 503,
+    "Value": 1.6,
+    "Name": "Rou. off, hdspr. bwd. 1/1t.",
+    "Group": "V"
+  },
+  {
+    "Code": 507,
+    "Value": 1.8,
+    "Name": "Rou. off, tucked salto.(Yurchenko)",
+    "Group": "V"
+  },
+  {
+    "Code": 508,
+    "Value": 2.0,
+    "Name": "Yur. tucked 1/2t.",
+    "Group": "V"
+  },
+  {
+    "Code": 509,
+    "Value": 2.0,
+    "Name": "Yur. piked.",
+    "Group": "V"
+  },
+  {
+    "Code": 510,
+    "Value": 2.8,
+    "Name": "Yur. str.",
+    "Group": "V"
+  },
+  {
+    "Code": 511,
+    "Value": 3.2,
+    "Name": "Yur. str. 1/2t.",
+    "Group": "V"
+  },
+  {
+    "Code": 513,
+    "Value": 1.4,
+    "Name": "Rou. off, 1/2t. hdspr.",
+    "Group": "V"
+  },
+  {
+    "Code": 514,
+    "Value": 1.6,
+    "Name": "Rou. off, 1/2t. hdspr. 1/2t.",
+    "Group": "V"
+  },
+  {
+    "Code": 515,
+    "Value": 1.8,
+    "Name": "Rou. off, 1/2t. hdspr. 1/1t.",
+    "Group": "V"
+  },
+  {
+    "Code": 516,
+    "Value": 2.2,
+    "Name": "Rou. off, 1/2t. tucked.",
+    "Group": "V"
+  },
+  {
+    "Code": 517,
+    "Value": 2.6,
+    "Name": "Rou. off, 1/2t. piked.",
+    "Group": "V"
+  },
+  {
+    "Code": 518,
+    "Value": 3.4,
+    "Name": "Rou. off, 1/2t. str.",
+    "Group": "V"
+  },
+  {
+    "Code": 519,
+    "Value": 4.8,
+    "Name": "Yur. dbl. tucked.(Melissanidis)",
+    "Group": "V"
+  },
+  {
+    "Code": 520,
+    "Value": 5.2,
+    "Name": "Yur. dbl. piked.(Yang Wei)",
+    "Group": "V"
+  },
+  {
+    "Code": 521,
+    "Value": 5.0,
+    "Name": "Rou. off, 1/2t. dbl. salto.",
+    "Group": "V"
+  }
+]

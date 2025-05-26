@@ -31,6 +31,8 @@ export type PlayerEventData = {
 export type ResultType = {
   first: string | null;
   second: string | null;
+  firstValue: number|null,
+  secondValue: number |null,
 };
 
 // 데이터 가공 타입
@@ -50,9 +52,9 @@ export type ResultRow = {
   GROUP_CD: string;
   ENTRANT_SEQ: string;
   R1_VAULT_ID: string | null;
-  R1_VAULT_VALUE: null;
+  R1_VAULT_VALUE: number | null;
   R2_VAULT_ID: string | null;
-  R2_VAULT_VALUE: null;
+  R2_VAULT_VALUE: number | null;
   R2_VAULT_YN: string | null;
   ROTATION_SEQ: null;
   TEAM_CD: number;

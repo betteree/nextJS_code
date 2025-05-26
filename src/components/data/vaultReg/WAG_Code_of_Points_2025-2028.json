@@ -1,0 +1,500 @@
+[
+  {
+    "Code": 100,
+    "Value": 1.6,
+    "Name": "Handspring fwd",
+    "Group": "I"
+  },
+  {
+    "Code": 101,
+    "Value": 2.0,
+    "Name": "Handspring fwd on - 1/2 turn (180°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 102,
+    "Value": 2.6,
+    "Name": "Handspring fwd on - 1/1 turn (360°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 103,
+    "Value": 3.2,
+    "Name": "Handspring fwd on - 3/2 turn (540°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 104,
+    "Value": 3.6,
+    "Name": "Handspring fwd on - 2/1 turn (720°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 105,
+    "Value": 4.0,
+    "Name": "Handspring fwd on - 5/2 turn (900°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 110,
+    "Value": 2.0,
+    "Name": "Yamashita",
+    "Group": "I"
+  },
+  {
+    "Code": 111,
+    "Value": 2.4,
+    "Name": "Yamashita with 1/2 turn (180°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 112,
+    "Value": 2.8,
+    "Name": "Yamashita with 1/1 turn (360°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 120,
+    "Value": 1.6,
+    "Name": "Handspring fwd with 1/2 turn (180°) on - repulsion off",
+    "Group": "I"
+  },
+  {
+    "Code": 121,
+    "Value": 2.4,
+    "Name": "Handspring fwd with 1/2 turn (180°) on - 1/2 turn (180°) off (in either direction)",
+    "Group": "I"
+  },
+  {
+    "Code": 122,
+    "Value": 2.6,
+    "Name": "Handspring fwd with 1/2 turn (180°) on - 1/1 turn (360°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 123,
+    "Value": 3.2,
+    "Name": "Handspring fwd with 1/2 turn (180°) on - 3/2 turn (540°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 124,
+    "Value": 3.6,
+    "Name": "Handspring fwd with 1/2 turn (180°) on - 2/1 turn (720°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 130,
+    "Value": 3.2,
+    "Name": "Handspring fwd with 1/1 turn (360°) on - Handspring fwd off",
+    "Group": "I"
+  },
+  {
+    "Code": 131,
+    "Value": 3.6,
+    "Name": "Handspring fwd with 1/1 turn (360°) on -  1/1 turn (360°) off (Korbut)",
+    "Group": "I"
+  },
+  {
+    "Code": 140,
+    "Value": 2.0,
+    "Name": "Round-off, flic-flac on - repulsion off",
+    "Group": "I"
+  },
+  {
+    "Code": 150,
+    "Value": 2.2,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - Handspring fwd off",
+    "Group": "I"
+  },
+  {
+    "Code": 151,
+    "Value": 2.6,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - 1/2 turn (180°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 152,
+    "Value": 3.0,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - 1/1 turn (360°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 153,
+    "Value": 3.4,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - 3/2 turn (540°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 160,
+    "Value": 2.4,
+    "Name": "Round-off, flic-flac with 1/1 turn (360°) on - repulsion off",
+    "Group": "I"
+  },
+  {
+    "Code": 161,
+    "Value": 2.8,
+    "Name": "Round-off, flic-flac with 1/1 turn (360°) on - 1/2 turn (180°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 162,
+    "Value": 3.2,
+    "Name": "Round-off, flic-flac with 1/1 turn (360°) on - 1/1 turn (360°) off",
+    "Group": "I"
+  },
+  {
+    "Code": 210,
+    "Value": 3.6,
+    "Name": "Handspring fwd on - tucked salto fwd off",
+    "Group": "II"
+  },
+  {
+    "Code": 211,
+    "Value": 3.8,
+    "Name": "Handspring fwd on - tucked salto fwd with 1/2 twist (180°) off, also - 1/2 turn (180°) and tucked salto bwd off",
+    "Group": "II"
+  },
+  {
+    "Code": 212,
+    "Value": 4.2,
+    "Name": "Handspring fwd on - tucked salto fwd with 1/1 twist (360°) off",
+    "Group": "II"
+  },
+  {
+    "Code": 213,
+    "Value": 4.6,
+    "Name": "Handspring fwd on - tucked salto fwd with 3/2 twist (540°) off",
+    "Group": "II"
+  },
+  {
+    "Code": 220,
+    "Value": 3.8,
+    "Name": "Handspring fwd on - piked salto fwd off",
+    "Group": "II"
+  },
+  {
+    "Code": 221,
+    "Value": 4.0,
+    "Name": "Handspring fwd on - piked salto fwd with 1/2 twist (180°) off, also - 1/2 turn (180°) and piked salto bwd off",
+    "Group": "II"
+  },
+  {
+    "Code": 222,
+    "Value": 4.4,
+    "Name": "Handspring fwd on - piked salto fwd with 1/1 twist (360°) off",
+    "Group": "II"
+  },
+  {
+    "Code": 230,
+    "Value": 4.4,
+    "Name": "Handspring fwd on - stretched salto fwd off (Evdokimova)",
+    "Group": "II"
+  },
+  {
+    "Code": 231,
+    "Value": 4.6,
+    "Name": "Handspring fwd on - stretched salto fwd with 1/2 twist (180°) off (Wang)",
+    "Group": "II"
+  },
+  {
+    "Code": 232,
+    "Value": 5.0,
+    "Name": "Handspring fwd on - stretched salto fwd with 1/1 twist (360°) off",
+    "Group": "II"
+  },
+  {
+    "Code": 233,
+    "Value": 5.4,
+    "Name": "Handspring fwd on - stretched salto fwd with 3/2 twist (540°) off (Chusovitina)",
+    "Group": "II"
+  },
+  {
+    "Code": 234,
+    "Value": 5.8,
+    "Name": "Handspring fwd on - stretched salto fwd with 2/1 twist (720°) off (Yeo)",
+    "Group": "II"
+  },
+  {
+    "Code": 240,
+    "Value": 4.8,
+    "Name": "Handspring fwd with 1/1 turn (360°) on - tucked salto fwd off (Davydova)",
+    "Group": "II"
+  },
+  {
+    "Code": 241,
+    "Value": 5.2,
+    "Name": "Handspring fwd with 1/1 turn (360°) on - piked salto fwd off",
+    "Group": "II"
+  },
+  {
+    "Code": 250,
+    "Value": 6.0,
+    "Name": "Handspring fwd on - tucked double salto fwd off (Produnova)",
+    "Group": "II"
+  },
+  {
+    "Code": 310,
+    "Value": 3.2,
+    "Name": "Tsukahara tucked (Tourischeva)",
+    "Group": "III"
+  },
+  {
+    "Code": 311,
+    "Value": 3.4,
+    "Name": "Tsukahara tucked with 1/2 twist (180°) off",
+    "Group": "III"
+  },
+  {
+    "Code": 312,
+    "Value": 3.8,
+    "Name": "Tsukahara tucked with 1/1 twist (360°) off (Kim)",
+    "Group": "III"
+  },
+  {
+    "Code": 313,
+    "Value": 4.2,
+    "Name": "Tsukahara tucked with 3/2 twist (540°) off",
+    "Group": "III"
+  },
+  {
+    "Code": 314,
+    "Value": 4.6,
+    "Name": "Tsukahara tucked with 2/1 twist (720°) off",
+    "Group": "III"
+  },
+  {
+    "Code": 320,
+    "Value": 3.4,
+    "Name": "Tsukahara piked",
+    "Group": "III"
+  },
+  {
+    "Code": 330,
+    "Value": 3.8,
+    "Name": "Tsukahara stretched",
+    "Group": "III"
+  },
+  {
+    "Code": 331,
+    "Value": 4.0,
+    "Name": "Tsukahara stretched with 1/2 twist (180°) off",
+    "Group": "III"
+  },
+  {
+    "Code": 332,
+    "Value": 4.4,
+    "Name": "Tsukahara stretched with 1/1 twist (360°) off (Kim)",
+    "Group": "III"
+  },
+  {
+    "Code": 333,
+    "Value": 4.8,
+    "Name": "Tsukahara stretched with 3/2 twist (540°) off",
+    "Group": "III"
+  },
+  {
+    "Code": 334,
+    "Value": 5.2,
+    "Name": "Tsukahara stretched with 2/1 twist (720°) off (Zamolodchikova)",
+    "Group": "III"
+  },
+  {
+    "Code": 335,
+    "Value": 5.6,
+    "Name": "Tsukahara stretched with 5/2 twist (900°) off",
+    "Group": "III"
+  },
+  {
+    "Code": 410,
+    "Value": 3.0,
+    "Name": "Round-off, flic-flac on - tucked salto bwd off (Yurchenko)",
+    "Group": "IV"
+  },
+  {
+    "Code": 411,
+    "Value": 3.2,
+    "Name": "Round-off, flic-flac on - tucked salto bwd with 1/2 twist (180°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 412,
+    "Value": 3.6,
+    "Name": "Round-off, flic-flac on - tucked salto bwd with 1/1 twist (360°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 413,
+    "Value": 4.0,
+    "Name": "Round-off, flic-flac on - tucked salto bwd with 3/2 twist (540°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 414,
+    "Value": 4.4,
+    "Name": "Round-off, flic-flac on - tucked salto bwd with 2/1 twist (720°) off (Dungelova)",
+    "Group": "IV"
+  },
+  {
+    "Code": 420,
+    "Value": 3.2,
+    "Name": "Round-off, flic-flac on - piked salto bwd off",
+    "Group": "IV"
+  },
+  {
+    "Code": 430,
+    "Value": 3.6,
+    "Name": "Round-off, flic-flac on - stretched salto bwd off",
+    "Group": "IV"
+  },
+  {
+    "Code": 431,
+    "Value": 3.8,
+    "Name": "Round-off, flic-flac on - stretched salto bwd with ½ twist (180°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 432,
+    "Value": 4.2,
+    "Name": "Round-off, flic-flac on - stretched salto bwd with 1/1 twist (360°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 433,
+    "Value": 4.6,
+    "Name": "Round-off, flic-flac on - stretched salto bwd with 3/2 twist (540°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 434,
+    "Value": 5.0,
+    "Name": "Round-off, flic-flac on - stretched salto bwd with 2/1 twist (720°) off (Baitova)",
+    "Group": "IV"
+  },
+  {
+    "Code": 435,
+    "Value": 5.4,
+    "Name": "Round-off, flic-flac on - stretched salto bwd with 5/2 twist (900°) off (Amanar)",
+    "Group": "IV"
+  },
+  {
+    "Code": 440,
+    "Value": 3.6,
+    "Name": "Round-off, flic-flac with 3/4 turn (270°) on - tucked salto bwd off (Luconi)",
+    "Group": "IV"
+  },
+  {
+    "Code": 441,
+    "Value": 4.0,
+    "Name": "Round-off, flic-flac with 3/4 turn (270°) on - tucked salto bwd with 1/2 twist (180°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 442,
+    "Value": 4.2,
+    "Name": "Round-off, flic-flac with 3/4 turn (270°) on - tucked salto bwd with 1/1 twist (360°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 450,
+    "Value": 3.8,
+    "Name": "Round-off, flic-flac 3/4 turn (270°) on - piked salto bwd off",
+    "Group": "IV"
+  },
+  {
+    "Code": 451,
+    "Value": 4.2,
+    "Name": "Round-off, flic-flac 3/4 turn (270°) on - stretched salto bwd off",
+    "Group": "IV"
+  },
+  {
+    "Code": 452,
+    "Value": 4.6,
+    "Name": "Round-off, flic-flac with 3/4 turn (270°) on - stretched salto bwd with 1/2 twist (180°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 453,
+    "Value": 5.0,
+    "Name": "Round-off, flic-flac with 3/4 turn (270°) on - stretched salto bwd with 1/1 twist (360°) off",
+    "Group": "IV"
+  },
+  {
+    "Code": 462,
+    "Value": 6.4,
+    "Name": "Round-off, flic-flac on - double piked salto bwd off (Biles)",
+    "Group": "IV"
+  },
+  {
+    "Code": 510,
+    "Value": 3.8,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - tucked salto fwd off (Ivantcheva)",
+    "Group": "V"
+  },
+  {
+    "Code": 511,
+    "Value": 4.0,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - tucked salto fwd with 1/2 twist (180°) off, also - 1/2 turn (180°) and tucked salto bwd off (Servente)",
+    "Group": "V"
+  },
+  {
+    "Code": 512,
+    "Value": 4.4,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - tucked salto fwd with 1/1 twist (360°) off",
+    "Group": "V"
+  },
+  {
+    "Code": 513,
+    "Value": 4.8,
+    "Name": "Round-off flic-flac with 1/2 turn (180°) on - tucked salto fwd with 3/2 twist (540°) off (Khorkina)",
+    "Group": "V"
+  },
+  {
+    "Code": 520,
+    "Value": 4.0,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - piked salto fwd off (Omelianchik)",
+    "Group": "V"
+  },
+  {
+    "Code": 521,
+    "Value": 4.2,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - piked salto fwd with 1/2 twist (180°) off, also - 1/2 turn (180°) and piked salto bwd off (Podkopayeva)",
+    "Group": "V"
+  },
+  {
+    "Code": 522,
+    "Value": 4.6,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - piked salto fwd with 1/1 twist (360°) off",
+    "Group": "V"
+  },
+  {
+    "Code": 530,
+    "Value": 4.6,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - stretched salto fwd off",
+    "Group": "V"
+  },
+  {
+    "Code": 531,
+    "Value": 4.8,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - salto fwd stretched with 1/2 twist (180°) off",
+    "Group": "V"
+  },
+  {
+    "Code": 532,
+    "Value": 5.2,
+    "Name": "Round-off, flic-flac with 1/2 turn (180°) on - salto fwd stretched with 1/1 twist (360°) off",
+    "Group": "V"
+  },
+  {
+    "Code": 533,
+    "Value": 5.6,
+    "Name": "Round-off flic-flac with 1/2 turn (180°) on - stretched salto fwd with 3/2 twist (540°) off (Cheng)",
+    "Group": "V"
+  },
+  {
+    "Code": 534,
+    "Value": 6.0,
+    "Name": "Round off flic-flac with 1/2 turn (180°) on - stretched salto fwd with 2/1 twist (720°) off (Biles)",
+    "Group": "V"
+  }
+]
