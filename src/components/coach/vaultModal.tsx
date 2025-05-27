@@ -19,7 +19,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-
+import { capitalizeWords } from "./capitalWords/capitalWords";
 export default function VaultModal({
   onClose,
   gender,
@@ -145,10 +145,10 @@ export default function VaultModal({
                 key={index}
                 variant="outlined"
                 size="small"
-                sx={{ m: 0.5, bgcolor: "secondary.light", border: 0, color: "#425065" }}
+                sx={{ m: 0.5, bgcolor: "secondary.light", border: 0, color: "#425065" ,textTransform: "none"}}
                 onClick={() => handleAddPlayer("도마1", player.name)}
               >
-                {player.name}
+               {capitalizeWords(player.name)}
               </Button>
             ))}
           </Box>
@@ -166,10 +166,10 @@ export default function VaultModal({
                 key={index}
                 variant="outlined"
                 size="small"
-                sx={{ m: 0.5, bgcolor: "secondary.light", border: 0, color: "#425065" }}
+                sx={{ m: 0.5, bgcolor: "secondary.light", border: 0, color: "#425065" ,textTransform: "none"}}
                 onClick={() => handleAddPlayer("도마2", player.name)}
               >
-                {player.name}
+                {capitalizeWords(player.name)}
               </Button>
             ))}
           </Box>

@@ -13,39 +13,13 @@ import {
   FormControl,
 } from "@mui/material";
 import Flag from "react-world-flags";
-
+import { countryList } from "../data/country/countryList";
 export default function Approve({dict}:{dict: Record<string, string>}) {
 
   const [figCode, setFigCode] = useState("");
   const [affiliation, setAffiliation] = useState("");
 
-  const countryList = [
-  { code: "BD", name: "Bangladesh" },
-  { code: "CN", name: "China" },
-  { code: "TW", name: "Chinese Taipei" },
-  { code: "HK", name: "Hong Kong" },
-  { code: "ID", name: "Indonesia" },
-  { code: "IN", name: "India" },
-  { code: "IR", name: "Iran" },
-  { code: "JO", name: "Jordan" },
-  { code: "JP", name: "Japan" },
-  { code: "KZ", name: "Kazakhstan" },
-  { code: "KG", name: "Kyrgyzstan" },
-  { code: "KR", name: "South Korea" },
-  { code: "KW", name: "Kuwait" },
-  { code: "MY", name: "Malaysia" },
-  { code: "MN", name: "Mongolia" },
-  { code: "MM", name: "Myanmar" },
-  { code: "PH", name: "Philippines" },
-  { code: "QA", name: "Qatar" },
-  { code: "SG", name: "Singapore" },
-  { code: "LK", name: "Sri Lanka" },
-  { code: "SY", name: "Syria" },
-  { code: "TH", name: "Thailand" },
-  { code: "UZ", name: "Uzbekistan" },
-  { code: "VN", name: "Vietnam" },
-  { code: "YE", name: "Yemen" }
-];
+ 
 
 
 
@@ -68,7 +42,6 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
     if (result.success) {
       localStorage.setItem("token", result.token);
       localStorage.setItem("userId", result.id);
-      alert("LOGIN SUCESSFUL");
       window.location.reload();
     } else {
       alert(result.message);
@@ -105,7 +78,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
                  MenuProps={{
                 PaperProps: {
               sx: {
-               maxHeight: 200,  overflowY: "auto"
+               maxHeight: 200,  overflowY: "auto",
             }
          }
           }}
@@ -114,8 +87,8 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
       <em>{dict.select}</em>
     </MenuItem>
     {countryList.map(({ code, name }) => (
-      <MenuItem key={code} value={name} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Flag code={code} style={{ width: 24, height: 16 }} />
+      <MenuItem key={code} value={name} sx={{ display: "flex", alignItems: "center", gap: 1 ,fontSize:"18px"}}>
+        <Flag code={code} style={{ width: 24, height: 16, marginRight:8}} />
         {name}
          </MenuItem>
         ))}
@@ -126,13 +99,13 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
             label="FIG code"
             variant="outlined"
             value={figCode}
-            type="text" // `text`로 바꾸고 숫자 필터링 직접 제어
+            type="text" // text로 바꾸고 숫자 필터링 직접 제어
             onChange={(e) => {
               const onlyNums = e.target.value.replace(/[^0-9]/g, "");
                   setFigCode(onlyNums);
             }}
   required
-  sx={{ bgcolor: 'white' }}
+  sx={{ bgcolor: 'white',fontSize:"18px" }}
 />
 
             <Button

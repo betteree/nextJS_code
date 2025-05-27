@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Image from "next/image";
-
+import { capitalizeWords } from "../capitalWords/capitalWords";
 interface VaultDraggableListProps {
   id: string;
   player_name: string;
@@ -65,14 +65,14 @@ const VaultDraggableList: React.FC<VaultDraggableListProps> = ({
             height={12}
           />
         </Box>
-        {player_name}
+        {capitalizeWords(player_name)}
       </Typography>
       <TextField
         variant="outlined"
         size="small"
         value={skill_number}
-        onChange={(e) => onSkillChange(e.target.value)}
-        placeholder="기술 번호 입력"
+        onChange={(e) =>{ onSkillChange(e.target.value)}}
+        placeholder="Skill number"
         sx={{ bgcolor: "#fff" }}
         InputProps={{
           endAdornment: (

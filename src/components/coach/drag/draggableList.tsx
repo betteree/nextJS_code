@@ -18,6 +18,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { List, ListItem, Typography, Box, IconButton } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Image from "next/image";
+import { capitalizeWords } from "../capitalWords/capitalWords";
 
 interface Props {
   event: string;
@@ -70,7 +71,7 @@ export default function DraggableList({
         strategy={verticalListSortingStrategy}
       >
         <List>
-          <Typography sx={{borderBottom:"2px solid #F7F7F7" ,textAlign:"center",fontWeight:600,color:"#425065",pb:"8px"}}>Players: {eventData[event].length}</Typography>
+          <Typography sx={{borderBottom:"2px solid #F7F7F7" ,textAlign:"center",fontWeight:600,color:"#425065",pb:"8px"}}>{event}: {eventData[event].length}</Typography>
           <Box sx={{p:2, display:"flex",flexFlow:"column",gap:1}}>
             {(eventData[event] || []).map((name) => (
               <SortableItem
@@ -139,7 +140,7 @@ function SortableItem({
             style={{ userSelect: "none", pointerEvents: "none" }}
           />
         </Box>
-        {name}
+        {capitalizeWords(name)}
       </Typography>
       <IconButton
         onClick={() => handleRemoveFromEvent(event, name)}

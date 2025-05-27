@@ -58,13 +58,13 @@ export async function POST(req) {
       );
       return NextResponse.json({
         success: true,
-        message: "로그인 성공",
+        message: "Login success",
         token,
         id: rows[0].id,
       });
     } else {
       return NextResponse.json(
-        { success: false, message: "일치하는 사용자가 없습니다." },
+        { success: false, message: "Login failed" },
         { status: 401 }
       );
     }

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { Box, Typography, Paper, Divider } from "@mui/material";
 import { Coach } from "@/types/player";
 import Image from 'next/image';
+import { getCodeByName } from "../data/country/countryList";
+import Flag from "react-world-flags";
 export default function CoachInfo({dict}:{dict:Record<string, string>}) {
   const [coachData, setCoachData] = useState<Coach | null>(null);
   const [contest, setContest] = useState<string | null>("");
@@ -24,6 +26,9 @@ export default function CoachInfo({dict}:{dict:Record<string, string>}) {
       });
   }, []);
 
+
+  
+
   return (
     <Paper elevation={3} sx={{ padding: 3, margin: 1 , boxShadow:"0"}}>
       <Typography variant="h5" fontWeight={600} color="black" sx={{ display:"flex" ,gap:2, alignItems:"center", mb: 3 }} gutterBottom>
@@ -34,7 +39,7 @@ export default function CoachInfo({dict}:{dict:Record<string, string>}) {
       {coachData ? (
         <>
           <Box sx={{ display: "flex",flexWrap: "wrap",gap:5, mb: 5}}>
-            <InfoItem label={dict.country} value={coachData.affiliation} img={"/icon/affiliation.png"}/>
+            <InfoItem label={dict.country} value={coachData.affiliation} />
             <InfoItem label={"FIG Code"} value={coachData.figCode} img={"/icon/name.png"}/>
           </Box>
           <Divider />
@@ -50,17 +55,19 @@ export default function CoachInfo({dict}:{dict:Record<string, string>}) {
 }
 
 
-function InfoItem({ label, value ,img}: {label:string,value:string,img:string}) {
+function InfoItem({ label, value ,img}: {label:string,value:string,img?:string}) {
   return (
     <Box sx={{ display: 'flex', gap:2}}>
-    {img&& 
+    {img && 
     <Image src={img} alt="name" width={20} height={20} />
     }
-    <Box>
+    <Box sx={{display:"flex", alignItems:"center"}}> 
       <Typography variant="body2" color="text.secondary">
-        {label}
-      </Typography>
-      <Typography variant="body1">{value}</Typography>
+    {label === "Country"
+    ?  <Flag code={`${getCodeByName(value)}`} style={{ width: 24, height: 16, marginRight:8,lineHeight:0}} />
+    : `${label} : `}
+    </Typography>
+      <Typography variant="body1" sx={{fontSize:"18px"}}> {value}</Typography>
     </Box>
     </Box>
   );

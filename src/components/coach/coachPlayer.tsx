@@ -5,11 +5,11 @@ import VaultModal from "./vaultModal";
 import { VaultItem, Player, PlayerEvent } from "@/types/player";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Box, Typography, TextField, Button,IconButton,
+import { Box, Typography, Button,
   List,
   Paper } from "@mui/material";
 
-import CancelIcon from "@mui/icons-material/Cancel";
+
 import Image from 'next/image';
 import DraggableList from "./drag/draggableList";
 
@@ -19,7 +19,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
     여: [],
   });
   const router = useRouter(); // 페이지 이동 변수 정의
-  const [newPlayer, setNewPlayer] = useState(""); // 새로운 선수 추가
+  // const [newPlayer, setNewPlayer] = useState(""); // 새로운 선수 추가
   const [gender, setGender] = useState<"남" | "여">("남");
 
   const eventCategories: Record<"남" | "여", string[]> = {
@@ -38,34 +38,34 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
 
    
   // 선수 추가
-  const handleAddPlayer = () => {
-    if (!newPlayer.trim()) return;
+  // const handleAddPlayer = () => {
+  //   if (!newPlayer.trim()) return;
 
-    const isDuplicate = players[gender].some(
-      (player) => player.name === newPlayer.trim()
-    );
+  //   const isDuplicate = players[gender].some(
+  //     (player) => player.name === newPlayer.trim()
+  //   );
 
-    if (isDuplicate) {
-      alert("이미 존재하는 선수입니다.");
-      return;
-    }
-    setPlayers((prev) => ({
-      ...prev,
-      [gender]: [...(prev[gender] || []), { name: newPlayer }],
-    }));
+  //   if (isDuplicate) {
+  //     alert("이미 존재하는 선수입니다.");
+  //     return;
+  //   }
+  //   setPlayers((prev) => ({
+  //     ...prev,
+  //     [gender]: [...(prev[gender] || []), { name: newPlayer }],
+  //   }));
 
-    // setEventData((prev) => {
-    //   const updatedData = { ...prev };
+  //   // setEventData((prev) => {
+  //   //   const updatedData = { ...prev };
 
-    //   eventCategories[gender].forEach((event) => {
-    //     updatedData[event] = [...(updatedData[event] || []), newPlayer];
-    //   });
+  //   //   eventCategories[gender].forEach((event) => {
+  //   //     updatedData[event] = [...(updatedData[event] || []), newPlayer];
+  //   //   });
 
-    //   return updatedData;
-    // });
+  //   //   return updatedData;
+  //   // });
 
-    setNewPlayer("");
-  };
+  //   setNewPlayer("");
+  // };
 
   // 랜덤 배치
   const handleShffle = () => {
@@ -82,23 +82,23 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   };
 
   // 삭제
-  const handleRemove = (removePlayer: string) => {
-    setPlayers((prev) => ({
-      ...prev,
-      [gender]: prev[gender].filter((player) => player.name !== removePlayer),
-    }));
+  // const handleRemove = (removePlayer: string) => {
+  //   setPlayers((prev) => ({
+  //     ...prev,
+  //     [gender]: prev[gender].filter((player) => player.name !== removePlayer),
+  //   }));
 
-    setEventData((prev) => {
-      const updatedData = { ...prev };
+  //   setEventData((prev) => {
+  //     const updatedData = { ...prev };
 
-      eventCategories[gender].forEach((event) => {
-        updatedData[event] =
-          updatedData[event]?.filter((name) => name !== removePlayer) || [];
-      });
+  //     eventCategories[gender].forEach((event) => {
+  //       updatedData[event] =
+  //         updatedData[event]?.filter((name) => name !== removePlayer) || [];
+  //     });
 
-      return updatedData;
-    });
-  };
+  //     return updatedData;
+  //   });
+  // };
 
   // 종목별 삭제
   const handleRemoveFromEvent = (event: string, playerName: string) => {
@@ -288,7 +288,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   </Box>
 
   {/* 선수 등록 헤더 */}
-  <Box component="header" mb={4}>
+  {/* <Box component="header" mb={4}>
     <Typography variant="h5" fontWeight={500} gutterBottom>
       💡{dict.playerRegistration}
     </Typography>
@@ -307,7 +307,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
         {dict.add}
       </Button>
     </Box>
-  </Box>
+  </Box> */}
 
   {/* 선수 목록 */}
   <Box
@@ -350,7 +350,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
             }}
           >
             {player.name}
-            <IconButton
+            {/* <IconButton
               onClick={() => handleRemove(player.name)}
               sx={{
                 pl: 1,
@@ -359,7 +359,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
               }}
             >
               <CancelIcon color="secondary" sx={{ width: 25, height: 25 }} />
-            </IconButton>
+            </IconButton> */}
           </motion.li>
         ))}
       </AnimatePresence>
