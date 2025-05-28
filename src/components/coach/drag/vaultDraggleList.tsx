@@ -54,7 +54,7 @@ const VaultDraggableList: React.FC<VaultDraggableListProps> = ({
   return (
     <ListItem ref={setNodeRef} style={style} >
       <Typography
-        sx={{ display: "flex", alignItems: "center", gap: 1, width: "20%" }}
+        sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%" }}
         {...attributes} {...listeners}
       >
         <Box component="span" sx={{ display: "flex", alignItems: "center" }} >
@@ -73,7 +73,8 @@ const VaultDraggableList: React.FC<VaultDraggableListProps> = ({
         value={skill_number}
         onChange={(e) =>{ onSkillChange(e.target.value)}}
         placeholder="Skill number"
-        sx={{ bgcolor: "#fff" }}
+        sx={{ bgcolor: "#fff"
+         }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
