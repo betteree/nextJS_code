@@ -124,7 +124,7 @@ function SortableItem({
     alignItems: "center",
     opacity: isDragging ? 0.8 : 1,
   }} {...attributes} {...listeners}>
-      <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Typography sx={{ display: "flex", alignItems: "center", gap: 1 ,WebkitTouchCallout: "none",WebkitUserSelect: "none"}}>
        
         <Box
           component="span"
@@ -137,10 +137,14 @@ function SortableItem({
             alt="drag handle"
             width={12}
             height={12}
-            style={{ userSelect: "none", pointerEvents: "none" }}
+            style={{ touchAction: "none" }}
           />
         </Box>
+        <Box component="span" sx={{WebkitTouchCallout: "none",touchAction: "none",WebkitUserSelect: "none"}}>
+
         {capitalizeWords(name)}
+
+        </Box>
       </Typography>
       <IconButton
         onClick={() => handleRemoveFromEvent(event, name)}

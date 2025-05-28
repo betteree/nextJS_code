@@ -54,7 +54,7 @@ const VaultDraggableList: React.FC<VaultDraggableListProps> = ({
   return (
     <ListItem ref={setNodeRef} style={style} >
       <Typography
-        sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%" }}
+        sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%" ,WebkitTouchCallout: "none",WebkitUserSelect: "none"}}
         {...attributes} {...listeners}
       >
         <Box component="span" sx={{ display: "flex", alignItems: "center" }} >
@@ -63,9 +63,14 @@ const VaultDraggableList: React.FC<VaultDraggableListProps> = ({
             alt="drag handle"
             width={12}
             height={12}
+            style={{ touchAction: "none" }}
           />
         </Box>
-        {capitalizeWords(player_name)}
+       <Box component="span" sx={{WebkitTouchCallout: "none",touchAction: "none",WebkitUserSelect: "none"}}>
+       
+               {capitalizeWords(player_name)}
+       
+               </Box>
       </Typography>
       <TextField
         variant="outlined"
