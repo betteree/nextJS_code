@@ -6,6 +6,10 @@
 
 
 html, body {
-  touch-action: manipulation; /* 확대/축소 제스처 차단 */
+  touch-action: manipulation;
   overscroll-behavior: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }

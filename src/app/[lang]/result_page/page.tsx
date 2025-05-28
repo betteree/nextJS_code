@@ -21,7 +21,7 @@ import { VaultItem, VaultFormatted, PlayerEvent } from "@/types/player";
 import { use } from 'react';
 import { getDictionary } from "@/components/dictionaries/dictionaries";
 import PrintIcon from '@mui/icons-material/Print';
-import '@/app/globals.css'
+import '@/app/global.css'
 
 export default function Result({ params }: { params: Promise<{ lang: string }> }) {
   const [gender, setGender] = useState<"남" | "여">("남");
