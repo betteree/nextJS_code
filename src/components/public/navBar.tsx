@@ -10,7 +10,7 @@ export default function NavBar({ dict,type }:{dict:Record<string, string>,type:s
     const router = useRouter();
     const handleLogout = () => {
     localStorage.clear();
-    alert("로그아웃 되었습니다.");
+    alert("Logged out.");
     router.push("/");
   };
 
