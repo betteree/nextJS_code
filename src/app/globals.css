@@ -3,3 +3,9 @@
       display: none !important;
     }
 }
+
+
+html, body {
+  touch-action: manipulation; /* 확대/축소 제스처 차단 */
+  overscroll-behavior: none;
+}

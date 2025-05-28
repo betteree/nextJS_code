@@ -21,6 +21,7 @@ export default function Contest({ params }: { params: Promise<{ lang: string }> 
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
+        touchAction: "manipulation"
       }}
     >
       <NavBar dict={dict} type={dict.coach}/>
