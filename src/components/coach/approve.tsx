@@ -96,7 +96,7 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
             </FormControl>
             
             <TextField
-            label="FIG code"
+            label="FIG ID"
             variant="outlined"
             value={figCode}
             type="text" // text로 바꾸고 숫자 필터링 직접 제어

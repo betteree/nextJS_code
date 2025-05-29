@@ -152,7 +152,7 @@ function getBaseClassCd(eventName: string): {
   const normalizedEventName = rawName.includes("도마") ? "Vault" : rawName;
 
   const eventNameToBaseClassCdMap: Record<string, string> = {
-    FE: "02",
+    FX: "02",
     BB: "03",
     HB: "04",
     PB: "05",

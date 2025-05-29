@@ -83,7 +83,7 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
         {dict.contestSelect}
       </Typography>
 
-      <Typography textAlign={"center"} mb={7}>Please select a contest to manage player orders <br/>
+      <Typography textAlign={"center"} mb={7}>Please select a competition to manage player orders <br/>
       and match details.</Typography>
 
 

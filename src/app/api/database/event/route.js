@@ -63,7 +63,7 @@ export async function POST(req) {
       // event_list_id 설정
       let eventListId = null;
       if (gender === "남") {
-        if (eventName === "FE") eventListId = 1;
+        if (eventName === "FX") eventListId = 1;
         else if (eventName === "PH") eventListId = 2;
         else if (eventName === "SR") eventListId = 3;
         else if (eventName === "도마1") eventListId = 4;
@@ -75,7 +75,7 @@ export async function POST(req) {
         else if (eventName === "도마2") eventListId = 9;
         else if (eventName === "UB") eventListId = 10;
         else if (eventName === "BB") eventListId = 11;
-        else if (eventName === "FE") eventListId = 12;
+        else if (eventName === "FX") eventListId = 12;
       }
 
       if (!eventListId) {

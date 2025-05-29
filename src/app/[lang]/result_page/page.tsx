@@ -35,8 +35,8 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
   const titleGender = gender==="남" ? dict.m :dict.f
 
   const eventCategories: Record<"남" | "여", string[]> = {
-    남: ["FE", "PH", "SR", "Vault", "PB", "HB"],
-    여: ["Vault", "UB", "BB", "FE"],
+    남: ["FX", "PH", "SR", "Vault", "PB", "HB"],
+    여: ["Vault", "UB", "BB", "FX"],
   };
 
   // 도마 1차시, 2차시
@@ -240,12 +240,12 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
                       </>
                     ) : (
                       <TableRow>
-                        <TableCell colSpan={5}>정보가 없습니다.</TableCell>
+                        <TableCell colSpan={5}>There is no information.</TableCell>
                       </TableRow>
                     )
                   ) : data.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={3}>정보가 없습니다.</TableCell>
+                      <TableCell colSpan={3}>There is no information.</TableCell>
                     </TableRow>
                   ) : (
                     data.map((name, index) => (
