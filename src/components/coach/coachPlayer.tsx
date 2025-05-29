@@ -12,6 +12,7 @@ import { Box, Typography, Button,
 
 import Image from 'next/image';
 import DraggableList from "./drag/draggableList";
+import { capitalizeWords } from "./capitalWords/capitalWords";
 
 export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string, string>}) {
   const [players, setPlayers] = useState<Record<string, Player[]>>({
@@ -23,8 +24,8 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   const [gender, setGender] = useState<"남" | "여">("남");
 
   const eventCategories: Record<"남" | "여", string[]> = {
-    남: ["FE", "PH", "SR", "Vault", "PB", "HB"],
-    여: ["Vault", "UB", "BB", "FE"],
+    남: ["FX", "PH", "SR", "Vault", "PB", "HB"],
+    여: ["Vault", "UB", "BB", "FX"],
   };
 
   // 각 종목의 순서 리스트데이터
@@ -349,7 +350,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
               backgroundColor:"#F7F7F7"
             }}
           >
-            {player.name}
+            {capitalizeWords(player.name)}
             {/* <IconButton
               onClick={() => handleRemove(player.name)}
               sx={{
