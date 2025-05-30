@@ -69,6 +69,7 @@ export type Admin = {
 export type Coach = {
   affiliation: string;
   figCode:string;
+  name:string;
 };
 
 // 등록 모달 타입 정의

@@ -6,6 +6,8 @@ import { Coach } from "@/types/player";
 import Image from 'next/image';
 import { getCodeByName } from "../data/country/countryList";
 import Flag from "react-world-flags";
+
+
 export default function CoachInfo({dict}:{dict:Record<string, string>}) {
   const [coachData, setCoachData] = useState<Coach | null>(null);
   const [contest, setContest] = useState<string | null>("");
@@ -33,7 +35,7 @@ export default function CoachInfo({dict}:{dict:Record<string, string>}) {
     <Paper elevation={3} sx={{ padding: 3, margin: 1 , boxShadow:"0"}}>
       <Typography variant="h5" fontWeight={600} color="black" sx={{ display:"flex" ,gap:2, alignItems:"center", mb: 3 }} gutterBottom>
          <Image src="/icon/info.png" alt="info" width={35} height={35} />
-          {dict.coachInfo}
+          {coachData?.name}
       </Typography>
 
       {coachData ? (
