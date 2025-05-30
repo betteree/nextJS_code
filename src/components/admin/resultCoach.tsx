@@ -16,6 +16,7 @@ export default function ResultCoach({dict}:{dict: Record<string,string>}) {
   const [coachData, setCoachData] = useState<Coach>({
     affiliation: "",
     figCode:"",
+    name:"",
   });
   const [contest, setContest] = useState<string | null>("");
 
