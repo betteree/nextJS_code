@@ -53,7 +53,7 @@ export default function HomePage() {
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        height: '100%',
+        height: '100vh',
         gap: 2,
         backgroundColor:"#F8F9FD"
       }}
