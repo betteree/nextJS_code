@@ -79,7 +79,7 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
         padding: "100px 10%",
       }}
     >
-      <Typography variant="h4" fontWeight={600} mb={2}>
+      <Typography variant="h4" fontWeight={600} mb={2} textAlign={"center"}>
         {dict.contestSelect}
       </Typography>
 
