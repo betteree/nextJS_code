@@ -2,16 +2,23 @@
 
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
-
+import { usePathname } from 'next/navigation';
 
 
 export default function NavBar({ dict,type }:{dict:Record<string, string>,type:string}) {
 
     const router = useRouter();
+    const pathname = usePathname();
+
     const handleLogout = () => {
     localStorage.clear();
     alert("Logged out.");
-    router.push("/");
+     if (pathname === '/en/coach_page') {
+      window.location.reload();
+      
+    } else {
+      router.push('/');
+    }
   };
 
     return (
