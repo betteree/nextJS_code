@@ -22,6 +22,7 @@ import { use } from 'react';
 import { getDictionary } from "@/components/dictionaries/dictionaries";
 import PrintIcon from '@mui/icons-material/Print';
 import '@/app/global.css'
+import { capitalizeWords } from "@/components/coach/capitalWords/capitalWords";
 
 export default function Result({ params }: { params: Promise<{ lang: string }> }) {
   const [gender, setGender] = useState<"남" | "여">("남");
@@ -213,7 +214,7 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
                                 </TableCell>
                               )}
                               <TableCell>{index + 1}</TableCell>
-                              <TableCell>{firstItem.player_name}</TableCell>
+                              <TableCell>{capitalizeWords(firstItem.player_name)}</TableCell>
                               <TableCell>{firstItem.skill_number}</TableCell>
                               <TableCell >{secondItem?.skill_number || "-"}</TableCell>
                             </TableRow>
@@ -252,7 +253,7 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
                       <TableRow key={`${event}-${index}`}>
                         {index === 0 && <TableCell rowSpan={data.length}>{event}</TableCell>}
                         <TableCell>{sequence[index]}</TableCell>
-                        <TableCell>{name}</TableCell>
+                        <TableCell>{capitalizeWords(name)}</TableCell>
                       </TableRow>
                     ))
                   )}
