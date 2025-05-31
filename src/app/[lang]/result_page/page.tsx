@@ -23,6 +23,7 @@ import { getDictionary } from "@/components/dictionaries/dictionaries";
 import PrintIcon from '@mui/icons-material/Print';
 import '@/app/global.css'
 import { capitalizeWords } from "@/components/coach/capitalWords/capitalWords";
+import Image from 'next/image';
 
 export default function Result({ params }: { params: Promise<{ lang: string }> }) {
   const [gender, setGender] = useState<"남" | "여">("남");
@@ -157,109 +158,98 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
           const sequence = Array.from({ length: data.length }, (_, i) => i + 1);
 
           return (
-            <TableContainer component={Paper} key={event} sx={{ my: 3 ,border : "3px solid black" , margin:"0"}}>
-              <Table>
-                <TableHead sx={{
-                borderBottom : "3px solid black",
-                "& th": {
-                    padding: "10px",},
-              }}>
-                  <TableRow>
-                    <TableCell >{dict.event}</TableCell>
-                    <TableCell>{dict.sequence}</TableCell>
-                    <TableCell>{dict.name}</TableCell>
-                    {event === "Vault" && (
-                      <>
-                        <TableCell>{dict.Vault1}</TableCell>
-                        <TableCell>{dict.Vault2}</TableCell>
-                      </>
-                    )}
-                  </TableRow>
-                </TableHead>
-                <TableBody
-           sx={{
-              "& td": {
-              fontSize: "14px",
-              fontWeight:"500",
-              padding:"5px",
-               },
-                }}
-                >
-                  {event === "Vault" ? (
-                    detailVault.first.length > 0 || detailVault.second.length > 0 ? (
-                      <>
-                        {detailVault.first.map((firstItem, index) => {
-                          const secondItem = detailVault.second.find(
-                            (item) => item.player_name === firstItem.player_name
-                          );
-
-                          return (
-                            <TableRow key={`vault-${index}`}
-                       
-                            >
-                              {index === 0 && (
-                                <TableCell
-                                
-                                  rowSpan={
-                                    detailVault.first.length +
-                                    detailVault.second.filter(
-                                      (s) =>
-                                        !detailVault.first.some(
-                                          (f) => f.player_name === s.player_name
-                                        )
-                                    ).length
-                                  }
-                                >
-                                  {event}
-                                </TableCell>
-                              )}
-                              <TableCell>{index + 1}</TableCell>
-                              <TableCell>{capitalizeWords(firstItem.player_name)}</TableCell>
-                              <TableCell>{firstItem.skill_number}</TableCell>
-                              <TableCell >{secondItem?.skill_number || "-"}</TableCell>
-                            </TableRow>
-                          );
-                        })}
-
-                        {detailVault.second
-                          .filter(
-                            (s) =>
-                              !detailVault.first.some(
-                                (f) => f.player_name === s.player_name
-                              )
-                          )
-                          .map((secondItem, idx) => (
-                            <TableRow key={`vault-second-${idx}`}>
-                              <TableCell>{
-                                idx + detailVault.first.length + 1
-                              }</TableCell>
-                              <TableCell>{secondItem.player_name}</TableCell>
-                              <TableCell>-</TableCell>
-                              <TableCell>{secondItem.skill_number}</TableCell>
-                            </TableRow>
-                          ))}
-                      </>
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={5}>There is no information.</TableCell>
-                      </TableRow>
-                    )
-                  ) : data.length === 0 ? (
+           <Box key={event}>
+           <Box sx={{display:"flex" , alignItems:"center",gap:2}}>
+              <Image src={`/icon/eventDark/${event}.png`} alt="info" width={45} height={45} />   
+                <Typography sx={{fontSize:"16px",fontWeight:"bold"}}>{event}</Typography>
+              </Box>
+              <TableContainer component={Paper} sx={{ my: 3  , margin:"0",boxShadow:0}}>
+                <Table>
+                  <TableHead sx={{
+                  borderBottom : "3px solid black",
+                  "& th": {
+                      padding: "5px",},
+                }}>
                     <TableRow>
-                      <TableCell colSpan={3}>There is no information.</TableCell>
+                      <TableCell>#</TableCell>
+                      <TableCell>{dict.name}</TableCell>
+                      {event === "Vault" && (
+                        <>
+                          <TableCell>{dict.Vault1}</TableCell>
+                          <TableCell>{dict.Vault2}</TableCell>
+                        </>
+                      )}
                     </TableRow>
-                  ) : (
-                    data.map((name, index) => (
-                      <TableRow key={`${event}-${index}`}>
-                        {index === 0 && <TableCell rowSpan={data.length}>{event}</TableCell>}
-                        <TableCell>{sequence[index]}</TableCell>
-                        <TableCell>{capitalizeWords(name)}</TableCell>
+                  </TableHead>
+                  <TableBody
+             sx={{
+                "& td": {
+                fontSize: "14px",
+                fontWeight:"500",
+                padding:"5px",
+                 },
+                  }}
+                  >
+                    {event === "Vault" ? (
+                      detailVault.first.length > 0 || detailVault.second.length > 0 ? (
+                        <>
+                          {detailVault.first.map((firstItem, index) => {
+                            const secondItem = detailVault.second.find(
+                              (item) => item.player_name === firstItem.player_name
+                            );
+  
+                            return (
+                              <TableRow key={`vault-${index}`}
+                         
+                              >
+                               
+                                <TableCell>{index + 1}</TableCell>
+                                <TableCell>{capitalizeWords(firstItem.player_name)}</TableCell>
+                                <TableCell>{firstItem.skill_number}</TableCell>
+                                <TableCell >{secondItem?.skill_number || "-"}</TableCell>
+                              </TableRow>
+                            );
+                          })}
+  
+                          {detailVault.second
+                            .filter(
+                              (s) =>
+                                !detailVault.first.some(
+                                  (f) => f.player_name === s.player_name
+                                )
+                            )
+                            .map((secondItem, idx) => (
+                              <TableRow key={`vault-second-${idx}`}>
+                                <TableCell>{
+                                  idx + detailVault.first.length + 1
+                                }</TableCell>
+                                <TableCell>{secondItem.player_name}</TableCell>
+                                <TableCell>-</TableCell>
+                                <TableCell>{secondItem.skill_number}</TableCell>
+                              </TableRow>
+                            ))}
+                        </>
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={5}>There is no information.</TableCell>
+                        </TableRow>
+                      )
+                    ) : data.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={3}>There is no information.</TableCell>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                    ) : (
+                      data.map((name, index) => (
+                        <TableRow key={`${event}-${index}`}>
+                          <TableCell>{sequence[index]}</TableCell>
+                          <TableCell>{capitalizeWords(name)}</TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+           </Box>
           );
         })}
       </Box>
