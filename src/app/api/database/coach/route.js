@@ -41,7 +41,7 @@ export async function POST(req) {
 
     if (!figCode|| !affiliation) {
       return NextResponse.json(
-        { success: false, message: "모든 필드를 입력해주세요." },
+        { success: false, message: "Please fill out all fields." },
         { status: 400 }
       );
     }
