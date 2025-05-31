@@ -1,8 +1,8 @@
   export const countryList = [
   { code: "BD", name: "Bangladesh" },
-  { code: "CN", name: "China" },
+  { code: "CN", name: "People's Republic of China" },
   { code: "TW", name: "Chinese Taipei" },
-  { code: "HK", name: "Hong Kong" },
+  { code: "HK", name: "Hong Kong, China" },
   { code: "ID", name: "Indonesia" },
   { code: "IN", name: "India" },
   { code: "IR", name: "Iran" },
