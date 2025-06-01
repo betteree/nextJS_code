@@ -62,3 +62,13 @@ export type ResultRow = {
   GROUP_NM: string;
   KOR_NM: string;
 };
+
+
+
+export type Competition = {
+  title:string;
+  start_date:string;
+  end_date:string;
+  location:string;
+  organizer:string;
+}

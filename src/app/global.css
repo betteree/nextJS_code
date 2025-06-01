@@ -1,6 +1,9 @@
 @media print {
-    .no-print {
-      display: none !important;
+    .no-print { 
+      display: none !important;/* 프린트할 때 안보임 */
+    }
+    .print-only {
+      display: block !important; /* 프린트할 때만 보임 */
     }
 }
 

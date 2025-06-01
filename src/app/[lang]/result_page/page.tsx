@@ -16,7 +16,8 @@ import {
   Paper,
   Button
 } from "@mui/material";
-import ResultCoach from "@/components/admin/resultCoach";
+import ResultNav from "@/components/result/resultNav";
+import ResultFooter from "@/components/result/resultFooter";
 import { VaultItem, VaultFormatted, PlayerEvent } from "@/types/player";
 import { use } from 'react';
 import { getDictionary } from "@/components/dictionaries/dictionaries";
@@ -28,24 +29,35 @@ import Image from 'next/image';
 export default function Result({ params }: { params: Promise<{ lang: string }> }) {
   const [gender, setGender] = useState<"남" | "여">("남");
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
- 
   
   
   const { lang } = use(params);
   const dict = getDictionary(lang as 'ko' | 'en');
-  
-  const titleGender = gender==="남" ? dict.m :dict.f
 
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["FX", "PH", "SR", "Vault", "PB", "HB"],
     여: ["Vault", "UB", "BB", "FX"],
   };
 
+  // 종목풀네임
+  const eventNameMap: Record<string, string> = {
+  FX: "Floor Exercise",
+  PH: "Pommel Horse",
+  SR: "Rings",
+  Vault: "Vault",
+  PB: "Parallel Bars",
+  HB: "Horizontal Bar",
+  UB: "Uneven Bars",
+  BB: "Balance Beam",
+}
+
   // 도마 1차시, 2차시
   const [detailVault, setDetailVault] = useState<VaultFormatted>({
     first: [],
     second: [],
   });
+
+
 
 
   // 성별 전환
@@ -59,7 +71,7 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
   };
 
 
-  // 데이터 받아오기
+  // 선수 순서 데이터 받아오기
   useEffect(() => {
     const coachId = localStorage.getItem("coach") as string;
     if (!gender || !coachId) return;
@@ -106,32 +118,19 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
   };
 
 
+  
+
 
   // 프린트 함수
    const handlePrint = () => {
     window.print(); 
   };
   return (
-    <Box p={3}>
-      <Typography 
-      variant="h4" 
-      mb={2} 
-      color={gender === "여" ? "secondary" : "initial"}
-      sx={{
-        borderTop: "7px solid #ff6565",
-        borderBottom: "7px solid #001694",
-        paddingBlock: "20px",
-        textAlign: "center",
-        fontWeight: 600,
-        fontSize: "35px",
-        color: "#333399", 
-      }}>
-        {dict.startList} [{titleGender}]
-      </Typography>
+    <Box >
 
-      <ResultCoach dict={dict}/>
+      < ResultNav dict={dict} gender={gender}/>
 
-      <Box my={2} className="no-print">
+      <Box my={2} className="no-print" paddingInline={3}  display={"flex"} justifyContent={"space-between"}>
         <ToggleButtonGroup
           value={gender}
           exclusive
@@ -141,11 +140,15 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
           <ToggleButton value="남" sx={{width:"70px", padding:"5px"}}>{dict.m}</ToggleButton>
           <ToggleButton value="여" sx={{width:"70px", padding:"5px"}}>{dict.f}</ToggleButton>
         </ToggleButtonGroup>
+
+        
+      <Button variant="outlined"  startIcon={<PrintIcon />}  onClick={handlePrint} >Print</Button>
       </Box>
 
       <Box
       sx={{
     display: "grid",
+    paddingInline:3,
     gridTemplateColumns: {
       xs: "1fr",
       sm: "repeat(2, 1fr)",
@@ -158,10 +161,10 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
           const sequence = Array.from({ length: data.length }, (_, i) => i + 1);
 
           return (
-           <Box key={event}>
+           <Box key={event} >
            <Box sx={{display:"flex" , alignItems:"center",gap:2}}>
-              <Image src={`/icon/eventDark/${event}.png`} alt="info" width={45} height={45} />   
-                <Typography sx={{fontSize:"16px",fontWeight:"bold"}}>{event}</Typography>
+              <Image src={`/icon/eventDark/${event}.png`} alt="info" width={35} height={35} />   
+                <Typography sx={{fontSize:"16px",fontWeight:"bold"}}>{eventNameMap[event]}</Typography>
               </Box>
               <TableContainer component={Paper} sx={{ my: 3  , margin:"0",boxShadow:0}}>
                 <Table>
@@ -184,7 +187,7 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
                   <TableBody
              sx={{
                 "& td": {
-                fontSize: "14px",
+                fontSize: "12px",
                 fontWeight:"500",
                 padding:"5px",
                  },
@@ -254,8 +257,8 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
         })}
       </Box>
 
-      <Button variant="outlined"  startIcon={<PrintIcon />}  onClick={handlePrint}
-      sx={{ mt: 2}} className="no-print">Print</Button>
+
+      <ResultFooter/>
     </Box>
   );
 }
