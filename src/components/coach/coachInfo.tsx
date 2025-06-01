@@ -66,7 +66,7 @@ function InfoItem({ label, value ,img}: {label:string,value:string,img?:string})
     <Box sx={{display:"flex", alignItems:"center"}}> 
       <Typography variant="body2" color="text.secondary">
     {label === "Country"
-    ?  <Flag code={`${getCodeByName(value)}`} style={{ width: 24, height: 16, marginRight:8,lineHeight:0}} />
+    ?  <Flag code={`${getCodeByName(value)}`} style={{ width: 24, height: 16, marginRight:8,lineHeight:0,boxShadow: "0 0 2px rgba(0, 0, 0, 0.3)"}} />
     : `${label} : `}
     </Typography>
       <Typography variant="body1" sx={{fontSize:"18px"}}> {value}</Typography>

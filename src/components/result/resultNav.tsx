@@ -9,7 +9,8 @@ import Image from 'next/image';
 import { Competition } from "@/types/result";
 import { Coach } from "@/types/player";
 import { capitalizeWords } from "../coach/capitalWords/capitalWords";
-
+import { getCodeByName } from "../data/country/countryList";
+import Flag from "react-world-flags";
 
 export default function ResultNav({dict,gender}:{dict: Record<string,string>,gender:string}) {
   const [coachData, setCoachData] = useState<Coach>({
@@ -102,19 +103,20 @@ export default function ResultNav({dict,gender}:{dict: Record<string,string>,gen
               margin:0,
               textAlign: "center",
               fontWeight: 600,
-              fontSize: 20,
+              fontSize: 25,
             }}>
               {dict.startList}
             </Typography>
              <Typography variant="body1" 
              sx={{
-            
+            fontSize:20,
             textAlign: "center",
             
              }}> {titleAge} {titleGender}</Typography>
 
              <Typography textAlign={"center"}></Typography>
-             <Typography textAlign={"center"} marginInline={4} marginTop={2}>{coachData.affiliation} / {capitalizeWords(coachData.name)} </Typography>
+             
+             <Typography fontSize={20} marginInline={4} marginTop={2} display={"flex"} justifyContent={"center"} alignItems={"center"}><Flag code={`${getCodeByName(coachData.affiliation)}`} style={{ width: 24, height: 16, marginRight:8,lineHeight:0 ,boxShadow: "0 0 2px rgba(0, 0, 0, 0.3)",}} />{coachData.affiliation} / {capitalizeWords(coachData.name)} </Typography>
     </Box>
   );
 }
