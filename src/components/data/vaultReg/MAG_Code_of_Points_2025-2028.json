@@ -490,5 +490,11 @@
     "Value": 5.0,
     "Name": "Rou. off, 1/2t. dbl. salto.",
     "Group": "V"
+  },
+  {
+    "Code": 522,
+    "Value": 5.6,
+    "Name": "Yur. dbl. tucked 1/1 t.",
+    "Group": "V"
   }
 ]
