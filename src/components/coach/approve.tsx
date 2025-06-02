@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import Flag from "react-world-flags";
 import { countryList } from "../data/country/countryList";
+import Image from "next/image";
 export default function Approve({dict}:{dict: Record<string, string>}) {
 
   const [figCode, setFigCode] = useState("");
@@ -88,7 +89,11 @@ export default function Approve({dict}:{dict: Record<string, string>}) {
     </MenuItem>
     {countryList.map(({ code, name }) => (
       <MenuItem key={code} value={name} sx={{ display: "flex", alignItems: "center", gap: 1 ,fontSize:"18px"}}>
-        <Flag code={code} style={{ width: 24, height: 16, marginRight:8}} />
+        {
+          code ==="TW" ? <Image src={"/country/TPE.png"} alt="" width={24} height={16} style={{ marginRight: 8 }}/>
+          :<Flag code={code} style={{ width: 24, height: 16, marginRight:8}} />
+        }
+        
         {name}
          </MenuItem>
         ))}

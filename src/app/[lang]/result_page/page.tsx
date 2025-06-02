@@ -189,7 +189,7 @@ export default function Result({ params }: { params: Promise<{ lang: string }> }
                 "& td": {
                 fontSize: "12px",
                 fontWeight:"500",
-                padding:"5px",
+                padding:"3px",
                  },
                   }}
                   >

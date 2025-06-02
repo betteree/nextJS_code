@@ -22,17 +22,15 @@ const getFormattedDateTime = () => {
 
   return (
       <Box sx={{
+        display:"flex",flexFlow:"column",alignItems:"center",
         width: '100%',zIndex:10, background:"white",
         '@media print': {
-          display: 'block',
           position: 'fixed',
         bottom:0}
           }}>
-          <Typography  
-          
-          textAlign={"center"} width={100} marginLeft={"auto"} marginRight={4} marginBlock={5} borderTop={1} fontSize={14}>Signature</Typography>
+          <Typography textAlign={"center"} width={100} marginBlock={5} marginBottom={2} borderTop={1} fontSize={14}>Signature</Typography>
 
-        <Box  borderTop={2}>
+        <Box  borderTop={2} width={"100%"}>
            <Box sx={{display:"flex" ,paddingInline:2,justifyContent:"space-between" ,alignItems:"center"}}>
                 <Typography fontSize={12} width={200}>
                    Date {getFormattedDateTime()}
@@ -50,7 +48,7 @@ const getFormattedDateTime = () => {
                 </Typography>
            </Box>
           
-         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} paddingInline={"20%"} marginTop={1}>
+         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} paddingInline={"20%"} paddingBottom={1}>
             <Image src={"/logo/QIG.png"} alt="QIG" width={100} height={50}></Image>
             <Image src={"/logo/TaiShan.png"} alt="TaiShan" width={100} height={20}></Image>
             <Image src={"/logo/lample.jpg"} alt="lample" width={100} height={30}></Image>

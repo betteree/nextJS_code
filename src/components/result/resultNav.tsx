@@ -69,7 +69,7 @@ export default function ResultNav({dict,gender}:{dict: Record<string,string>,gen
     <Box sx={{ mb: 1 }}>
 
       
-      <Box p={3} mb={3} sx={{display:"flex" ,alignItems:"center",justifyContent:"space-between",paddingInline:2 ,borderBottom:2}}> 
+      <Box p={3} mb={1.5} sx={{display:"flex" ,alignItems:"center",justifyContent:"space-between",paddingInline:2 ,borderBottom:2}}> 
       {/* 로고 1 */}  
         <Image src={"/logo/AGU.png"} alt="ASIAN GYMNASTICS UNION" width={100} height={70}/>
               {/* 대회 정보 */}
@@ -116,7 +116,23 @@ export default function ResultNav({dict,gender}:{dict: Record<string,string>,gen
 
              <Typography textAlign={"center"}></Typography>
              
-             <Typography fontSize={20} marginInline={4} marginTop={2} display={"flex"} justifyContent={"center"} alignItems={"center"}><Flag code={`${getCodeByName(coachData.affiliation)}`} style={{ width: 24, height: 16, marginRight:8,lineHeight:0 ,boxShadow: "0 0 2px rgba(0, 0, 0, 0.3)",}} />{coachData.affiliation} / {capitalizeWords(coachData.name)} </Typography>
+             <Typography fontSize={20} marginInline={4} marginTop={1} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                {
+                   getCodeByName(coachData.affiliation) === "TW" ? (
+                        <Image
+                          src="/country/TPE.png"
+                          alt="Chinese Taipei"
+                          width={24}
+                          height={15}
+                          style={{ marginRight: 8,boxShadow: "0 0 2px rgba(0, 0, 0, 0.3)" }}
+                        />
+                      ) :
+                    <Flag code={`${getCodeByName(coachData.affiliation)}`} style={{ width: 24, height: 14, marginRight:8,lineHeight:0 ,boxShadow: "0 0 2px rgba(0, 0, 0, 0.3)",}} />
+                }
+                
+                {coachData.affiliation} / {capitalizeWords(coachData.name)} 
+              
+            </Typography>
     </Box>
   );
 }
