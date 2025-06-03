@@ -17,7 +17,7 @@ export default function AdminPage({ params }: { params: Promise<{ lang: string }
  const dict = getDictionary(lang as 'ko' | 'en');
   const [loading, setLoading] = useState(true);
 
-  const [adminList, setAdminList] = useState("contest");
+  const [adminList, setAdminList] = useState("sequence");
    useEffect(() => {
     const adminFlag = localStorage.getItem("isAdmin");
     if (adminFlag !== "true") {
