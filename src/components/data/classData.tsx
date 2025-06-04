@@ -65,6 +65,7 @@ export async function getClassdata(data: PlayerEventData[], contestId: string) {
       if (existing) {
         if (second) {
           existing.R2_VAULT_ID = second;
+          existing.R2_VAULT_VALUE=secondValue;
           existing.R2_VAULT_YN = "Y";
         }
       } else {
