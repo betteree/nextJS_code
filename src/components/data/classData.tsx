@@ -90,7 +90,7 @@ export async function getClassdata(data: PlayerEventData[], contestId: string) {
           R1_VAULT_VALUE: firstValue,
           R2_VAULT_ID: second || null,
           R2_VAULT_VALUE: secondValue,
-          R2_VAULT_YN: second ? "Y" : null,
+          R2_VAULT_YN: second ? "Y" : "N",
           ROTATION_SEQ: null,
           // team 테이블
           TEAM_CD: coach_id,
