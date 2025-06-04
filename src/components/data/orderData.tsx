@@ -9,8 +9,7 @@ export function getOrderData(data: PlayerEventData,event_gender:string) {
     secondValue: null,
   };
   
-  
-  const codeTable = event_gender === "남자" ? MAG_CODES : WAG_CODES;
+  const codeTable = event_gender === "남" ? MAG_CODES : WAG_CODES;
   const matched = codeTable.find((item) => String(item.Code) === String(data.skill_number));
   const value = matched ? matched.Value : null;
 
@@ -21,6 +20,7 @@ export function getOrderData(data: PlayerEventData,event_gender:string) {
     result.second = data.skill_number;
      result.secondValue = value;
   }
+
 
   return {first: result.first,second: result.second,firstValue: result.firstValue,secondValue: result.secondValue};
 }
