@@ -24,7 +24,7 @@ export default function Sequence({lang}:{lang:string}) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
-  const [inputValue, setInputValue] = useState("");
+
   // 검색 필터링
   const filteredData = contestData
     .map((contest) => {
@@ -100,6 +100,8 @@ export default function Sequence({lang}:{lang:string}) {
     }
   };
 
+
+  
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%", p:8}}>
       <Typography variant="h5" fontWeight={500} sx={{p:2}}>🏃‍♀️‍ 선수 순서 LIST</Typography>
@@ -107,11 +109,16 @@ export default function Sequence({lang}:{lang:string}) {
         <TextField
           variant="outlined"
           label="지도자,대회,학교 검색"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => {
+          if (e.key === "Enter") {
+              setSearchTerm(searchTerm);
+          }
+          }}
           sx={{ flex: 1 }}
         />
-        <Button variant="contained" onClick={() => setSearchTerm(inputValue)}>
+        <Button variant="contained" onClick={() => setSearchTerm(searchTerm)}>
           Search
         </Button>
       </Box>
