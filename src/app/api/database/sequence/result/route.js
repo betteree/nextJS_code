@@ -19,7 +19,7 @@ export async function GET(req) {
          e.id AS event_id,
          e.name AS event_name,
          e.gender AS event_gender,
-         p.id AS player_id,
+         p.FIGID AS player_id,
          p.name AS player_name,
          p.coach_id,
          pe.sequence AS sequence,
