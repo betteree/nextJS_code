@@ -15,6 +15,10 @@ import {
 import Image from 'next/image';
 
 export default function SelectContest({lang,dict}:{lang:string,dict: Record<string, string>}) {
+  const allowedIds = [17847, 17848];
+  
+  
+  
   const [competition, setCompetition] = useState<Contest[]>([]);
   const router = useRouter();
 
@@ -31,7 +35,7 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
 
   const handleSubmit = async (contest: Contest) => {
     localStorage.setItem("selectedCompetition", contest.title);
-    localStorage.setItem("competitionId", contest.id);
+    localStorage.setItem("competitionId", contest.id.toString());
     const coachId = localStorage.getItem("userId");
 
     const competitionData = {
@@ -98,7 +102,7 @@ export default function SelectContest({lang,dict}:{lang:string,dict: Record<stri
           }}
         >
           <List disablePadding>
-            {competition.map((item, index) => (
+            {competition.filter((item) => allowedIds.includes(item.id)).map((item, index) => (
               <motion.div key={index} variants={itemVariants}>
                 <ListItem disableGutters  onClick={() => handleSubmit(item)} sx={{ mb: 1, 
                 border:"1px solid",

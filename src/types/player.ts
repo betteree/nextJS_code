@@ -81,7 +81,7 @@ export interface RegisterProps {
 // 대회 title,id 타입
 export type Contest = {
   title: string;
-  id: string;
+  id: number;
 };
 
 // 드래그 인수 타입
