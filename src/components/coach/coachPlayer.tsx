@@ -21,7 +21,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
   });
   const router = useRouter(); // 페이지 이동 변수 정의
   // const [newPlayer, setNewPlayer] = useState(""); // 새로운 선수 추가
-  const [gender, setGender] = useState<"남" | "여">("남");
+  const [gender, setGender] = useState<"남" | "여">("여");
 
   const eventCategories: Record<"남" | "여", string[]> = {
     남: ["FX", "PH", "SR", "Vault", "PB", "HB"],
