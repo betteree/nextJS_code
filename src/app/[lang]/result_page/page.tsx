@@ -27,7 +27,7 @@ import { capitalizeWords } from "@/components/coach/capitalWords/capitalWords";
 import Image from 'next/image';
 
 export default function Result({ params }: { params: Promise<{ lang: string }> }) {
-  const [gender, setGender] = useState<"남" | "여">("남");
+  const [gender, setGender] = useState<"남" | "여">("여");
   const [eventData, setEventData] = useState<Record<string, string[]>>({});
   
   
