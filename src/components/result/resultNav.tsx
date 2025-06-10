@@ -41,7 +41,7 @@ export default function ResultNav({dict,gender}:{dict: Record<string,string>,gen
           .then((res) => res.json())
           .then((data) => {
               setCoachData(data.data);
-              console.log(data.data)
+              
               localStorage.setItem("division", data.data.affiliation);
             })
             .catch((err) => {

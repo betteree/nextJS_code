@@ -2,6 +2,7 @@ export interface Player {
   id?: number;
   name: string;
   coach_id?: number;
+  FIGID:number;
   gender?: "남" | "여";
 }
 

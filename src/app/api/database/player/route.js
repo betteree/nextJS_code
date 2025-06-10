@@ -21,7 +21,7 @@ export async function GET(req) {
   try {
     // 선수 테이블에서 코치 ID와 성별로 필터링
     const [rows] = await pool.query(
-      `SELECT id, name FROM player WHERE coach_id = ? AND gender = ?`,
+      `SELECT id, name, FIGID FROM player WHERE coach_id = ? AND gender = ?`,
       [coachId, gender]
     );
 
@@ -61,9 +61,9 @@ export async function POST(req) {
 
     // 새로운 선수 데이터 추가
     for (const player of body) {
-      const { name, coachId } = player;
+      const { name, coachId,FIGID } = player;
 
-      if (!name || !coachId) {
+      if (!name || !coachId || !FIGID) {
         return NextResponse.json(
           { error: "Name and Coach ID are required" },
           { status: 400 }
@@ -71,8 +71,8 @@ export async function POST(req) {
       }
 
       await pool.query(
-        "INSERT INTO player (name, gender, coach_id) VALUES (?, ?, ?)",
-        [name, gender, coachId]
+        "INSERT INTO player (name, gender, coach_id,FIGID) VALUES (?, ?, ?,?)",
+        [name, gender, coachId,FIGID]
       );
     }
 
