@@ -188,30 +188,30 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
 
   async function handleSubmit() {
     try {
-      // const playersToSave = [...players[gender]]; //선수 목록 가져오기
-      // const competitionId = localStorage.getItem("competitionId");
+      const playersToSave = [...players[gender]]; //선수 목록 가져오기
+      const competitionId = localStorage.getItem("competitionId");
 
       // 데이터
-      // const playerData = playersToSave.map((player) => ({
-      //   name: player.name,
-      //   gender: gender,
-      //   coachId: coachId,
-      //   competitionId: competitionId,
-      // }));
+      const playerData = playersToSave.map((player) => ({
+        name: player.name,
+        gender: gender,
+        coachId: coachId,
+        competitionId: competitionId,
+      }));
 
       // 선수 정보 저장
-      // const playerResponse = await fetch("/api/database/player", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(playerData),
-      // });
+      const playerResponse = await fetch("/api/database/player", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(playerData),
+      });
 
-      // const playerResponseData = await playerResponse.json();
-      // if (!playerResponse.ok) {
-      //   throw new Error(playerResponseData.error || "선수 저장 실패");
-      // }
+      const playerResponseData = await playerResponse.json();
+      if (!playerResponse.ok) {
+        throw new Error(playerResponseData.error || "선수 저장 실패");
+      }
 
       // eventData 수정
       const formattedEventData: {
