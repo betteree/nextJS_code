@@ -21,7 +21,7 @@ export default function AdminLogin({ params }: { params: Promise<{ lang: string 
     e.preventDefault();
 
     // 예: 비밀번호가 "admin123"일 때 로그인 성공 처리
-    if (password === "Keywordlab!2") {
+    if (password === "admin123") {
       // 로그인 상태 저장 (예: localStorage)
       localStorage.setItem("isAdmin", "true");
       // 관리자 페이지로 이동

@@ -176,6 +176,7 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
         });
         setDetailVault(vaultData);
         setEventData(categorizedData);
+   
       })
       .catch((err) => {
         console.error("Error fetching event list:", err);
@@ -410,10 +411,11 @@ export default function CoachPlayer({lang,dict}:{lang:string,dict:Record<string,
 
   {/* 종목 별 리스트 */}
   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+   
       {eventCategories[gender].map((event) => {
         const playersInEvent = eventData[event];
         const isVaultEvent = event === "Vault";
-        if (!isVaultEvent && (!playersInEvent || playersInEvent.length === 0)) {
+        if (!isVaultEvent && (!playersInEvent)) {
           return null;
         }
 
