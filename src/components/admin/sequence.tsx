@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Coach, Contest } from "@/types/result";
 import { getClassdata } from "../data/classData";
 import { RotateLoader } from "react-spinners";
+import FilterBar from "./filter/filterBox";
 import {
   Box,
   Button,
@@ -25,26 +26,46 @@ export default function Sequence({lang}:{lang:string}) {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
 
-  // 검색 필터링
-  const filteredData = contestData
-    .map((contest) => {
-      const filteredCoaches = contest.coaches.filter((coach) => {
-        const search = searchTerm.toLowerCase();
-        return (
-          coach.affiliation.toLowerCase().includes(search) ||
-          contest.title.toLowerCase().includes(search)
-        );
-      });
 
-      if (filteredCoaches.length > 0) {
-        return {
-          ...contest,
-          coaches: filteredCoaches,
-        };
-      }
-      return null;
-    })
-    .filter((contest) => contest !== null);
+  const [filters, setFilters] = useState({
+  contest: "",
+  school: "",
+});
+
+
+  // 검색 필터링
+ const filteredData = contestData
+  .map((contest) => {
+    const filteredCoaches = contest.coaches.filter((coach) => {
+      const search = searchTerm.toLowerCase();
+
+      const matchesSearch =
+        coach.affiliation?.toLowerCase().includes(search) ||
+        contest.title?.toLowerCase().includes(search);
+
+     
+      const matchesSchoolFilter =
+        !filters.school || coach.affiliation === filters.school;
+      const matchesContestFilter =
+        !filters.contest || contest.title === filters.contest;
+
+      return (
+        matchesSearch &&
+        matchesSchoolFilter &&
+        matchesContestFilter
+      );
+    });
+
+    if (filteredCoaches.length > 0) {
+      return {
+        ...contest,
+        coaches: filteredCoaches,
+      };
+    }
+    return null;
+  })
+  .filter((contest) => contest !== null);
+
 
   // 대회 데이터 받아오기
   useEffect(() => {
@@ -122,7 +143,7 @@ export default function Sequence({lang}:{lang:string}) {
           Search
         </Button>
       </Box>
-
+       <FilterBar data={contestData} filters={filters} setFilters={setFilters} />
       {loading ? (
         <Box
           sx={{

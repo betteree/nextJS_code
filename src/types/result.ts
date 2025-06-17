@@ -64,11 +64,23 @@ export type ResultRow = {
 };
 
 
-
+// 대회
 export type Competition = {
   title:string;
   start_date:string;
   end_date:string;
   location:string;
   organizer:string;
+}
+
+// 필터 
+export interface Filters {
+  contest: string;
+  school: string;
+}
+
+export interface FilterBarProps {
+  data: Contest[];
+  filters: Filters;
+  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
 }
